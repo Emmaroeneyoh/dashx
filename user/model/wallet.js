@@ -1,0 +1,79 @@
+const { userWalletModel } = require("../core/db/wallet");
+const { userwallethistoryModel } = require("../core/db/wallethistory");
+
+
+
+const userwithdrawwalletModel = async (data, res) => {
+  try {
+    const { userid, walletid, amount, status , trx_type } = data;
+
+    //add to wallet history
+    const form = await new userwallethistoryModel({
+      userid,
+      walletid,
+      status,
+      amount, trx_type
+    });
+    await form.save();
+
+    if (status) {
+      await userWalletModel.findOneAndUpdate(
+        { userid, _id: walletid },
+        { $inc: { balance: -amount } }
+      );
+    }
+
+    return "order";
+  } catch (error) {
+    console.log("error", error);
+    return error.message;
+  }
+};
+const userfundwalletModel = async (data, res) => {
+  try {
+    const { userid, walletid, amount, status , trx_type } = data;
+
+    //add to wallet history
+    const form = await new userwallethistoryModel({
+      userid,
+      walletid,
+      status,
+      amount, trx_type
+    });
+    await form.save();
+
+    if (status) {
+      await userWalletModel.findOneAndUpdate(
+        { userid, _id: walletid },
+        { $inc: { balance: amount } }
+      );
+    }
+
+    return "order";
+  } catch (error) {
+    console.log("error", error);
+    return error.message;
+  }
+};
+
+
+const userwalletfundhistoryModel = async (data, res) => {
+  try {
+    const { userid, walletid } = data;
+
+    const wallethistory = await userwallethistoryModel.find({
+      userid,
+      walletid,
+    });
+
+    return wallethistory;
+  } catch (error) {
+    console.log("error", error);
+    return error.message;
+  }
+};
+
+module.exports = {
+    userwithdrawwalletModel ,
+    userwalletfundhistoryModel , userfundwalletModel
+};

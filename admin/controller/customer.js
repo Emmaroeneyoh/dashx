@@ -1,0 +1,80 @@
+const { userModel } = require("../../user/core/db/user");
+const { handleError } = require("../core/utils");
+const { adminretrievesingleuserModel } = require("../model/customer");
+
+const adminretrievealluserController = async (req, res, next) => {
+  try {
+    let trainee = await userModel.find();
+    return res.status(200).json({
+      status_code: 200,
+      status: true,
+      message: "signup process successful",
+      data: trainee,
+    });
+  } catch (error) {
+    console.log(error);
+    return handleError(error.message)(res);
+  }
+};
+const adminretrievesingleuserController = async (req, res, next) => {
+  try {
+    const { userid } = req.body;
+    const data = { userid };
+    let trainee = await adminretrievesingleuserModel(data, res);
+    return res.status(200).json({
+      status_code: 200,
+      status: true,
+      message: "signup process successful",
+      data: trainee,
+    });
+  } catch (error) {
+    console.log(error);
+    return handleError(error.message)(res);
+  }
+};
+const adminblockuserController = async (req, res, next) => {
+  try {
+    const { userid } = req.body;
+    const data = { userid };
+    await userModel.findByIdAndUpdate(userid, {
+      $set: {
+        user_blocked: true,
+      },
+    });
+    return res.status(200).json({
+      status_code: 200,
+      status: true,
+      message: "signup process successful",
+      data: trainee,
+    });
+  } catch (error) {
+    console.log(error);
+    return handleError(error.message)(res);
+  }
+};
+const adminunblockuserController = async (req, res, next) => {
+  try {
+    const { userid } = req.body;
+    const data = { userid };
+    await userModel.findByIdAndUpdate(userid, {
+      $set: {
+        user_blocked: false,
+      },
+    });
+    return res.status(200).json({
+      status_code: 200,
+      status: true,
+      message: "signup process successful",
+      data: trainee,
+    });
+  } catch (error) {
+    console.log(error);
+    return handleError(error.message)(res);
+  }
+};
+
+module.exports = {
+  adminunblockuserController,
+  adminblockuserController,
+  adminretrievesingleuserController, adminretrievealluserController
+};
