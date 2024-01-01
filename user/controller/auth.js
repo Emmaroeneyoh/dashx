@@ -132,6 +132,15 @@ const userLoginController = async (req, res, next) => {
     const userDetails = await userModel.findOne({
       email: userEmail,
     });
+    if (!userDetails) {
+        return res.status(400).json({
+          status_code: 400,
+          status: false,
+          message: "user dont exist on our application",
+          data: [],
+          error: "user dont exist on our application",
+        });
+      }
         //check if the email is verified
         if (!userDetails.auth.auth_verified) {
             return res.status(400).json({
@@ -142,15 +151,7 @@ const userLoginController = async (req, res, next) => {
                 error: "user email is not veirified",
               });
     }
-    if (!userDetails) {
-      return res.status(400).json({
-        status_code: 400,
-        status: false,
-        message: "user dont exist on our application",
-        data: [],
-        error: "user dont exist on our application",
-      });
-    }
+   
 
     const checkPassword = await bcrypt.compare(
       password,

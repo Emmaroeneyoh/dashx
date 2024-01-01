@@ -19,7 +19,7 @@ const usercreateorderController = async (req, res, next) => {
     receivercity,
     receiverlandmark,
     delivery_fee,
-    userid,  commison_fee
+    userid,  total_fee
   } = req.body;
   try {
     const data = {
@@ -36,7 +36,7 @@ const usercreateorderController = async (req, res, next) => {
       receivercity,
       receiverlandmark,
       delivery_fee,
-      userid,  commison_fee
+      userid,  total_fee
     };
 
     let trainee = await usercreateorderModel(data, res);

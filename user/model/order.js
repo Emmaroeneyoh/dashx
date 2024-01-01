@@ -18,7 +18,7 @@ const usercreateorderModel = async (data, res) => {
         receiverphone,
         receiveraddress,
         receivercity,
-        receiverlandmark, delivery_fee , userid , commison_fee
+        receiverlandmark, delivery_fee , userid , total_fee
        
       } = data;
       const form = await new userorderModel ({
@@ -33,7 +33,7 @@ const usercreateorderModel = async (data, res) => {
         receiverphone,
         receiveraddress,
         receivercity,
-        receiverlandmark, delivery_fee , userid , commison_fee
+        receiverlandmark, delivery_fee , userid , total_fee
       });
       const userDetails = await form.save()
       return userDetails;

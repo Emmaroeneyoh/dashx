@@ -14,7 +14,7 @@ const usercreateorderValidation = (req, res, next) => {
     senderlandmark: joi.string().required(),
     userid: joi.string().required(),
     delivery_fee: joi.number().required(),
-    commison_fee: joi.number().required(),
+    total_fee: joi.number().required(),
     receivername: joi.string().required(),
     receiverphone: joi.string().required(),
     receiveraddress: joi.string().required(),

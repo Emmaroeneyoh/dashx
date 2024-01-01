@@ -44,7 +44,7 @@ const Wallet_schema = new schema({
         delivery_fee: {
             type:Number, 
     },
-        commison_fee: {
+        total_fee: {
             type:Number, 
     },
     order_status: {
