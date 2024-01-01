@@ -130,6 +130,18 @@ const dispatchLoginController = async (req, res, next) => {
   const { email, password } = req.body;
   const dispatchEmail = email.toLowerCase();
   try {
+    const userDetails = await dispatchModel.findOne({
+      email: dispatchEmail,
+    });
+        //check if the email is verified
+        if (!userDetails.auth.auth_verified) {
+            return res.status(400).json({
+                status_code: 400,
+                status: false,
+                message: "dispatch email is not veirified",
+                error: "dispatch email is not veirified",
+              });
+    }
     const dispatchDetails = await dispatchModel.findOne({
       email: dispatchEmail,
     });
