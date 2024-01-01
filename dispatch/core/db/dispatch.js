@@ -14,6 +14,9 @@ const Riderschema = new schema({
         type: Boolean,
         default: false
       },
+      personel_account: {
+        type: Boolean,
+      },
         email: {
             type:String,
         },

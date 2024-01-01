@@ -9,13 +9,13 @@ const dispatchSignupModel = async (data, res) => {
     const {
         dispatchEmail,
         Harshpassword,
-        phone, name , code
+        phone, name , code , personel_account
      
     } = data;
     const form = await new dispatchModel ({
         email:dispatchEmail,
        password : Harshpassword,
-        phone, name
+        phone, name , personel_account
     });
    
       const userDetails = await form.save()

@@ -8,6 +8,7 @@ const ridersignupValidation = (req, res, next) => {
     phone: joi.string().required(),
     email: joi.string().required(),
     password: joi.string().required(),
+    personel_account: joi.boolean().required(),
   });
   const { error } = schema.validate(req.body);
   if (error) {

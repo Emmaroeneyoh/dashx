@@ -1,25 +1,34 @@
 const { appPassword, riderpasswordjwt } = require("../../helper/utils");
 const { dispatchModel } = require("../core/db/dispatch");
-const { dispatch_emailModel } = require("../core/db/dispatch_email");
 const { handleError, generateRandomString } = require("../core/utils");
 const bcrypt = require("bcrypt");
 const nodemailer = require("nodemailer");
 const jwt = require("jsonwebtoken");
-const { DispatchSignupModel, dispatchLoginModel, dispatchsendconfirmemailModel, dispatchSignupModel } = require("../model/auth");
+const {  dispatchLoginModel, dispatchSignupModel } = require("../model/auth");
 const { dispatchWalletModel } = require("../core/db/wallet");
 
 
 
 const dispatchSignupController = async (req, res, next) => {
-  const {  email, password, phone, name  } = req.body;
+  const {  email, password, phone, name , personel_account } = req.body;
   const dispatchEmail = email.toLowerCase();
   const code = generateRandomString(5);
-    try {
+  try {
+    const dispatch = await dispatchModel.findOne({ email: dispatchEmail });
+    if (dispatch) {
+      return res.status(400).json({
+        status_code: 400,
+        status: false,
+        message: "email already exist",
+        data: [],
+        error: "email already exist",
+      });
+    }
        //start of nodemailer email verification
     var transporter = nodemailer.createTransport({
         service: "Gmail",
         auth: {
-          dispatch: "emmaroeneyoh@gmail.com",
+          user: "emmaroeneyoh@gmail.com",
   
           pass: appPassword,
         },
@@ -53,21 +62,12 @@ const dispatchSignupController = async (req, res, next) => {
         //end of verification email
     const salt = await bcrypt.genSalt();
     const Harshpassword = await bcrypt.hash(password, salt);
-    const dispatch = await dispatchModel.findOne({ email: dispatchEmail });
-    if (dispatch) {
-      return res.status(400).json({
-        status_code: 400,
-        status: false,
-        message: "email already exist",
-        data: [],
-        error: "email already exist",
-      });
-    }
+   
   
     const data = {
     dispatchEmail,
       Harshpassword,
-      phone, name , code
+      phone, name , code , personel_account
     };
 
     let trainee = await dispatchSignupModel(data, res);
