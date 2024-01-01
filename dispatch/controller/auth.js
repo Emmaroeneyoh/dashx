@@ -15,7 +15,7 @@ const dispatchSignupController = async (req, res, next) => {
   const code = generateRandomString(5);
   try {
     const dispatch = await dispatchModel.findOne({ email: dispatchEmail });
-    if (dispatch) {
+    if (dispatch && dispatch.auth.auth_verified) {
       return res.status(400).json({
         status_code: 400,
         status: false,

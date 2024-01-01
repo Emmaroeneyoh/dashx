@@ -59,7 +59,17 @@ const Riderschema = new schema({
                 type:Boolean , default : false
             },
         },
-       
+        cordinate:{
+            latitude:{
+                type:String , default : ''
+            },
+            longitude:{
+                type:String , default : ''
+            },
+        },
+        driver_status:{
+            type:String , default : ''
+        },
    
     createdAt : {
         type: Date,
