@@ -212,7 +212,7 @@ const dispatchNewPasswordLink = async (req, res) => {
     };
     const riderid = client._id;
     const token = jwt.sign(payload, secret, { expiresIn: "50m" });
-    const code = generateRandomString(6);
+    const code = generateRandomString(5);
     //updating the user auth
     const form = await dispatchModel.findByIdAndUpdate(riderid, {
       $set: {

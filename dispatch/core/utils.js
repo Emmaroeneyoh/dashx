@@ -34,7 +34,15 @@ const checkdata = (data,res) => {
 }
 
 function generateRandomString(length) {
-  return [...Array(length)].map(() => Math.random().toString(36).charAt(2)).join('');
+    let result = '';
+    const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+  
+    for (let i = 0; i < length; i++) {
+      const randomIndex = Math.floor(Math.random() * characters.length);
+      result += characters.charAt(randomIndex);
+    }
+  
+    return result;
   }
 // const crypto = require('crypto');
 

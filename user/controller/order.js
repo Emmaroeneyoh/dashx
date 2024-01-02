@@ -43,7 +43,7 @@ const usercreateorderController = async (req, res, next) => {
     const wallet = await userWalletModel.findOne({ userid })
     const balance = wallet.balance
    
-      if (price > balance) {
+      if (total_fee > balance) {
         return res.status(400).json({
           status_code: 400,
           status: false,
