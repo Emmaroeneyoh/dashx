@@ -42,7 +42,6 @@ const usercreateorderController = async (req, res, next) => {
         //check if the customer balance is enough
     const wallet = await userWalletModel.findOne({ userid })
     const balance = wallet.balance
-   
       if (total_fee > balance) {
         return res.status(400).json({
           status_code: 400,

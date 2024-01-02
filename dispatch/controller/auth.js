@@ -23,7 +23,7 @@ const dispatchSignupController = async (req, res, next) => {
         data: [],
         error: "email already exist",
       });
-    }
+    } 
        //start of nodemailer email verification
     var transporter = nodemailer.createTransport({
         service: "Gmail",
@@ -60,6 +60,19 @@ const dispatchSignupController = async (req, res, next) => {
         }
       });
         //end of verification email
+    if (dispatch && !dispatch.auth.auth_verified) {
+          //update the user code so you can verify him
+    await dispatchModel.findByIdAndUpdate(dispatch._id, {
+        $set: {
+          'auth.auth_code': code,
+        },
+      });
+          return res.status(400).json({
+            status_code: 400,
+            status: false,
+            message: "check your email",
+          });
+        }
     const salt = await bcrypt.genSalt();
     const Harshpassword = await bcrypt.hash(password, salt);
    

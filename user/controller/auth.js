@@ -13,6 +13,16 @@ const userSignupController = async (req, res, next) => {
   const userEmail = email.toLowerCase();
   const code = generateRandomString(5);
     try {
+        const people = await userModel.findOne({ email: userEmail });
+        if (people && people.auth.auth_verified) {
+            return res.status(400).json({
+              status_code: 400,
+              status: false,
+              message: "email already exist",
+              data: [],
+              error: "email already exist",
+            });
+          } 
        //start of nodemailer email verification
     var transporter = nodemailer.createTransport({
         service: "Gmail",
@@ -48,6 +58,19 @@ const userSignupController = async (req, res, next) => {
             console.log('succes :' )
         }
       });
+      if (people && !people.auth.auth_verified) {
+        //update the user code so you can verify him
+  await userModel.findByIdAndUpdate(people._id, {
+      $set: {
+        'auth.auth_code': code,
+      },
+    });
+        return res.status(400).json({
+          status_code: 400,
+          status: false,
+          message: "check your email",
+        });
+      }
         //end of verification email
     const salt = await bcrypt.genSalt();
     const Harshpassword = await bcrypt.hash(password, salt);

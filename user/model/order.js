@@ -1,5 +1,6 @@
 const { userorderModel } = require("../core/db/order");
 const { userModel } = require("../core/db/user");
+const { userWalletModel } = require("../core/db/wallet");
 
 
 
@@ -35,7 +36,15 @@ const usercreateorderModel = async (data, res) => {
         receivercity,
         receiverlandmark, delivery_fee , userid , total_fee
       });
-      const userDetails = await form.save()
+        const userDetails = await form.save()
+        
+        //update wallet of user
+        //find the wallet of the user
+        const wallet = await userWalletModel.findOne({ userid })
+        const walletid = wallet._id
+        await userWalletModel.findByIdAndUpdate(walletid, 
+            { $inc: { balance: -price } }
+          );
       return userDetails;
     } catch (error) {
       console.log('error' , error);
