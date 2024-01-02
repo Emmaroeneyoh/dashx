@@ -6,14 +6,14 @@ const { adminupdatesubadminprofileModel, adminupdateprofileModel, adminUpdatepas
 
 
 const adminupdatesubadminprofileController = async (req, res, next) => {
-  const {  email, phone, name, subadminid} =
+  const {  email, phone, name, subadminid , roles} =
     req.body;
   const userEmail = email.toLowerCase();
 
   try {
     const data = {
       userEmail,
-    phone, name, subadminid
+    phone, name, subadminid , roles
     };
 
     let trainee = await adminupdatesubadminprofileModel(data, res);

@@ -22,13 +22,13 @@ const adminupdatesubadminprofileModel = async (data, res) => {
 const adminupdateprofileModel = async (data, res) => {
   try {
     const {   userEmail,
-        phone, name, adminid} = data;
+        phone, name, adminid , roles} = data;
 
     const form = await adminModel.findByIdAndUpdate(adminid, {
       $set: {
         email: userEmail,
         phone,
-        name,
+        name, roles
       },
     });
 

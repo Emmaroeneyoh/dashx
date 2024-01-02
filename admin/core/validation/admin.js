@@ -8,6 +8,7 @@ const adminupdatesubadminprofilValidation = (req, res, next) => {
     adminid: joi.string().required(),
     name: joi.string().required(),
     phone: joi.string().required(),
+    roles: joi.array().required(),
   });
   const { error } = schema.validate(req.body);
   if (error) {
