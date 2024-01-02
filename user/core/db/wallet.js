@@ -7,6 +7,9 @@ const Wallet_schema = new schema({
         balance: {
             type:Number, default : 0
         },
+        account_number: {
+            type:String, default : ''
+        },
         userid: {
             type:  mongoose.Schema.Types.ObjectId,
             ref:'user'

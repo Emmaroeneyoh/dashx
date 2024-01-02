@@ -28,7 +28,10 @@ const Riderschema = new schema({
             auth_verified:{
                 type:Boolean , default : false
             },
-        },
+    },
+    flutterwaveid:{
+        type:String , default : ''
+    },
        
    
     createdAt : {

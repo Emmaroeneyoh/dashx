@@ -6,6 +6,7 @@ const jwt = require("jsonwebtoken");
 const { userSignupModel, userLoginModel } = require("../model/auth");
 const { userModel } = require("../core/db/user");
 const { userWalletModel } = require("../core/db/wallet");
+const { userfulteraccount } = require("../../helper/flutterwave/account");
 
 
 const userSignupController = async (req, res, next) => {
@@ -134,7 +135,8 @@ const userconfirmemailcontroller = async (req, res) => {
       userid : checkcode._id
       
     });
-   const userwallet =   await wallet.save()
+        const userwallet = await wallet.save()
+         const createaccount = await userfulteraccount(checkcode._id)
       return res.status(200).json({
         status_code: 200,
         status: true,
