@@ -199,7 +199,9 @@ const dispatchdeliveredorderController = async (req, res, next) => {
 
 const dispatchlistorderController = async (req, res, next) => {
   try {
-    let trainee = await dispatchordermodel.find({ order_taken: false });
+    const { city, dispatchid } = req.body
+    const sendercity = city.toLowerCase();
+    let trainee = await userorderModel.find({ order_taken: false , sendercity });
     return res.status(200).json({
       status_code: 200,
       status: true,

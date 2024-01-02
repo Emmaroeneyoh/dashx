@@ -1,6 +1,6 @@
 const { dashxcreateorderController, dispatchacceptorderController, dispatchlistorderController, dispatchaddordereventController, dispatchpickuporderController, dispatchdeliveredorderController, dispatchstartdispatchController } = require("../controller/order");
 const { dashxorder_token, dispatch_check_token } = require("../core/authorization");
-const { dashxcreateorderValidation, dispatchacceptorderValidation, dispatchaddordereventValidation, dispatchpickuporderValidation, dispatchdeliverorderValidation, dispatchstartorderValidation } = require("../core/validation/order");
+const { dashxcreateorderValidation, dispatchacceptorderValidation, dispatchaddordereventValidation, dispatchpickuporderValidation, dispatchdeliverorderValidation, dispatchstartorderValidation, dispatchlistorderValidation } = require("../core/validation/order");
 const { dispatchValidation } = require("../core/validation/profile");
 
 
@@ -21,7 +21,7 @@ router.post(
 );
 router.post(
   "/list/order",
-  dispatchValidation,
+  dispatchlistorderValidation,
   dispatch_check_token,
   dispatchlistorderController
 );

@@ -22,14 +22,15 @@ const usercreateorderController = async (req, res, next) => {
     delivery_fee,
     userid,  total_fee
   } = req.body;
-  try {
+    try {
+        const city = sendercity.toLowerCase();
     const data = {
       vehicle_type,
       sendername,
       productname,
       senderphone,
       senderaddress,
-      sendercity,
+     city,
       senderlandmark,
       receivername,
       receiverphone,
@@ -40,7 +41,8 @@ const usercreateorderController = async (req, res, next) => {
       userid,  total_fee
     };
         //check if the customer balance is enough
-    const wallet = await userWalletModel.findOne({ userid })
+      const wallet = await userWalletModel.findOne({ userid })
+    
     const balance = wallet.balance
       if (total_fee > balance) {
         return res.status(400).json({
