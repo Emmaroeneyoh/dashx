@@ -43,7 +43,7 @@ const usercreateorderModel = async (data, res) => {
         const wallet = await userWalletModel.findOne({ userid })
         const walletid = wallet._id
         await userWalletModel.findByIdAndUpdate(walletid, 
-            { $inc: { balance: -price } }
+            { $inc: { balance: -total_fee } }
           );
       return userDetails;
     } catch (error) {

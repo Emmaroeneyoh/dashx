@@ -229,7 +229,7 @@ const dispatchNewPasswordLink = async (req, res) => {
     //updating the user auth
     const form = await dispatchModel.findByIdAndUpdate(riderid, {
       $set: {
-        auth: { auth_token: token, auth_code: code },
+        auth: { auth_token: token, auth_code: code , auth_verified:true },
       },
     });
 
