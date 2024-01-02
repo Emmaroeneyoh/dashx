@@ -10,12 +10,12 @@ const {
 const { handleError } = require("../core/utils");
 
 const dispatchupdatevehicleController = async (req, res, next) => {
-  const { vehicle_number, vehicle_type, dispatchid } = req.body;
+  const { vehicle_number, vehicle_type, dispatchid  , driving_license} = req.body;
   try {
     const data = {
       vehicle_number,
       vehicle_type,
-      dispatchid,
+      dispatchid, driving_license
     };
 
     let trainee = await dispatchUpdatevehicleModel(data, res);

@@ -6,6 +6,7 @@ const dispatchupdatevehicleValidation = (req, res, next) => {
     dispatchid: joi.string().required(),
     vehicle_number: joi.string().required(),
     vehicle_type: joi.string().required(),
+    driving_license: joi.string().required(),
   });
   const { error } = schema.validate(req.body);
   if (error) {

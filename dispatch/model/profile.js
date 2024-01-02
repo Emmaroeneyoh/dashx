@@ -2,13 +2,13 @@ const { dispatchModel } = require("../core/db/dispatch");
 
 const dispatchUpdatevehicleModel = async (data, res) => {
   try {
-    const { vehicle_number, vehicle_type, dispatchid } = data;
+    const { vehicle_number, vehicle_type, dispatchid  , driving_license} = data;
 
     const form = await dispatchModel.findByIdAndUpdate(dispatchid, {
       $set: {
         vehicle: {
           vehicle_number,
-          vehicle_type,
+          vehicle_type, driving_license
         },
       },
     });

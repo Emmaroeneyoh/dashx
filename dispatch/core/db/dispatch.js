@@ -39,6 +39,9 @@ const Riderschema = new schema({
             vehicle_type:{
                 type:String , default : ''
             },
+            driving_license:{
+                type:String , default : ''
+            },
         },
         kin:{
             kin_number:{
