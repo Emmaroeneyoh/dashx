@@ -9,7 +9,14 @@ const {
 } = require("../model/wallet");
 
 const userwithdrawwalletController = async (req, res, next) => {
-  const { userid, amount , narration , destinationBankCode , destinationAccountNumber , sourceAccountNumber ,} = req.body;
+  const {
+    userid,
+    amount,
+    narration,
+    destinationBankCode,
+    destinationAccountNumber,
+    sourceAccountNumber,
+  } = req.body;
   try {
     //check if the user balance is enough
     // const wallet = await userWalletModel.findOne({ userid });
@@ -22,7 +29,12 @@ const userwithdrawwalletController = async (req, res, next) => {
     //   });
     // }
     const data = {
-        userid, amount , narration , destinationBankCode , destinationAccountNumber , sourceAccountNumber ,
+      userid,
+      amount,
+      narration,
+      destinationBankCode,
+      destinationAccountNumber,
+      sourceAccountNumber,
     };
     let comment = await userwithdrawwalletModel(data, res);
     return res.status(200).json({
@@ -119,5 +131,6 @@ module.exports = {
   userwithdrawwalletController,
   userwithdrawwallethistoryController,
   userfundwalletController,
-  userretrievebankaccountController,  userretrieveaccountbalanceController
+  userretrievebankaccountController,
+  userretrieveaccountbalanceController,
 };

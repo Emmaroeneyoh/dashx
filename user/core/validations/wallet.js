@@ -5,10 +5,11 @@ const { handleError } = require("../utils");
 const userwithdrawwalletValidation = (req, res, next) => {
   const schema = joi.object({
     userid: joi.string().required(),
-    walletid: joi.string().required(),
+    narration: joi.string().required(),
     amount: joi.number().required(),
-    status: joi.boolean().required(),
-    trx_type: joi.string().required(),
+    destinationBankCode: joi.string().required(),
+    destinationAccountNumber: joi.string().required(),
+    sourceAccountNumber: joi.string().required(),
   });
   const { error } = schema.validate(req.body);
   if (error) {

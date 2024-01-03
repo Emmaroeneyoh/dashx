@@ -37,31 +37,20 @@ const usercreateorderModel = async (data, res) => {
         receiverphone,
         receiveraddress,
         receivercity,
-        receiverlandmark, delivery_fee , userid , total_fee ,   receivercordinate: {
-            receiverlat: {
-                type:String
-        },
-            receiverlong: {
-                type:String
-        },     sendercordinate: {
-            senderlat: {
-                type:String
-        },
-            senderlong: {
-                type:String
-        },
-    },
-    },
+          receiverlandmark, delivery_fee, userid, total_fee,
+          sendercordinate : {  senderlat,
+            senderllong, } ,  receivercordinate: {    receiverlat,
+                receiverllong, }
       });
         const userDetails = await form.save()
         
         //update wallet of user
         //find the wallet of the user
-        const wallet = await userWalletModel.findOne({ userid })
-        const walletid = wallet._id
-        await userWalletModel.findByIdAndUpdate(walletid, 
-            { $inc: { balance: -total_fee } }
-          );
+        // const wallet = await userWalletModel.findOne({ userid })
+        // const walletid = wallet._id
+        // await userWalletModel.findByIdAndUpdate(walletid, 
+        //     { $inc: { balance: -total_fee } }
+        //   );
       return userDetails;
     } catch (error) {
       console.log('error' , error);
