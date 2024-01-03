@@ -28,7 +28,7 @@ async function createMonnifyVirtualAccount(username) {
     // Step 2: Create Virtual Account using the Access Token
     const createAccountEndpoint = `${monnifyBaseUrl}/api/v1/bank-transfer/reserved-accounts`;
     const createAccountPayload = {
-        accountReference: username,
+        accountReference: 'piru',
         accountName: `dashx_${username}`,
         currencyCode: 'NGN',
         contractCode: '4996347007', // Add your specific contract code

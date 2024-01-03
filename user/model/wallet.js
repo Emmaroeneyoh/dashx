@@ -1,18 +1,22 @@
+const {
+  getVirtualAccountDetails,
+  getBankDetails,
+  retrievebalance,
+} = require("../../helper/flutterwave/retrieve");
 const { userWalletModel } = require("../core/db/wallet");
 const { userwallethistoryModel } = require("../core/db/wallethistory");
 
-
-
 const userwithdrawwalletModel = async (data, res) => {
   try {
-    const { userid, walletid, amount, status , trx_type } = data;
+    const { userid, walletid, amount, status, trx_type } = data;
 
     //add to wallet history
     const form = await new userwallethistoryModel({
       userid,
       walletid,
       status,
-      amount, trx_type
+      amount,
+      trx_type,
     });
     await form.save();
 
@@ -31,14 +35,15 @@ const userwithdrawwalletModel = async (data, res) => {
 };
 const userfundwalletModel = async (data, res) => {
   try {
-    const { userid, walletid, amount, status , trx_type } = data;
+    const { userid, walletid, amount, status, trx_type } = data;
 
     //add to wallet history
     const form = await new userwallethistoryModel({
       userid,
       walletid,
       status,
-      amount, trx_type
+      amount,
+      trx_type,
     });
     await form.save();
 
@@ -56,7 +61,6 @@ const userfundwalletModel = async (data, res) => {
   }
 };
 
-
 const userwalletfundhistoryModel = async (data, res) => {
   try {
     const { userid, walletid } = data;
@@ -72,8 +76,43 @@ const userwalletfundhistoryModel = async (data, res) => {
     return error.message;
   }
 };
+const userretrievebankaccountModel = async (data, res) => {
+  try {
+    const { userid } = data;
+
+    const wallethistory = await userWalletModel.findOne({
+      userid,
+    });
+    const accountnumber = wallethistory.account_number;
+    const details = await getBankDetails();
+
+    return details;
+  } catch (error) {
+    console.log("error", error);
+    return error.message;
+  }
+};
+const userretrieveaccountbalanceModel = async (data, res) => {
+  try {
+    const { userid } = data;
+
+    const wallethistory = await userWalletModel.findOne({
+      userid,
+    });
+      const accountnumber = wallethistory.account_number;
+      console.log('aos' , accountnumber)
+    const details = await retrievebalance(accountnumber);
+
+    return details;
+  } catch (error) {
+    console.log("error", error);
+    return error.message;
+  }
+};
 
 module.exports = {
-    userwithdrawwalletModel ,
-    userwalletfundhistoryModel , userfundwalletModel
+  userwithdrawwalletModel,
+  userwalletfundhistoryModel,
+  userfundwalletModel,
+  userretrievebankaccountModel,  userretrieveaccountbalanceModel
 };

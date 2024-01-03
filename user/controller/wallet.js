@@ -1,7 +1,12 @@
 const { sellerWalletModel, userWalletModel } = require("../core/db/wallet");
 const { handleError } = require("../core/utils");
-const { userwithdrawwalletModel, userwalletfundhistoryModel, userfundwalletModel } = require("../model/wallet");
-
+const {
+  userwithdrawwalletModel,
+  userwalletfundhistoryModel,
+  userfundwalletModel,
+  userretrievebankaccountModel,
+  userretrieveaccountbalanceModel,
+} = require("../model/wallet");
 
 const userwithdrawwalletController = async (req, res, next) => {
   const { userid, walletid, amount, status, trx_type } = req.body;
@@ -32,7 +37,7 @@ const userwithdrawwalletController = async (req, res, next) => {
     });
   } catch (error) {
     console.log(error);
-   return handleError(error.message)(res);
+    return handleError(error.message)(res);
   }
 };
 
@@ -78,7 +83,45 @@ const userfundwalletController = async (req, res, next) => {
     handleError(error.message)(res);
   }
 };
+const userretrievebankaccountController = async (req, res, next) => {
+  const { userid } = req.body;
+  try {
+    const data = {
+      userid,
+    };
+    let comment = await userretrievebankaccountModel(data, res);
+    return res.status(200).json({
+      status_code: 200,
+      status: true,
+      message: "customer successfully retrieved",
+      data: comment,
+    });
+  } catch (error) {
+    console.log(error);
+    handleError(error.message)(res);
+  }
+};
+const userretrieveaccountbalanceController = async (req, res, next) => {
+  const { userid } = req.body;
+  try {
+    const data = {
+      userid,
+    };
+    let comment = await userretrieveaccountbalanceModel(data, res);
+    return res.status(200).json({
+      status_code: 200,
+      status: true,
+      message: "customer successfully retrieved",
+      data: comment,
+    });
+  } catch (error) {
+    console.log(error);
+    handleError(error.message)(res);
+  }
+};
 module.exports = {
   userwithdrawwalletController,
-  userwithdrawwallethistoryController,   userfundwalletController
+  userwithdrawwallethistoryController,
+  userfundwalletController,
+  userretrievebankaccountController,  userretrieveaccountbalanceController
 };

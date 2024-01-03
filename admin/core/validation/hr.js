@@ -3,6 +3,7 @@ const joi = require("joi");
 const admincreateadminValidation = (req, res, next) => {
   const schema = joi.object({
     // adminId: joi.string().required(),
+    adminid: joi.string().required(),
     name: joi.string().required(),
     email: joi.string().required(),
     password: joi.string().required(),

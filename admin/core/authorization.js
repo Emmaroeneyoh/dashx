@@ -65,7 +65,7 @@ const checkAdminRoles =  (requiredRoles) => {
       const admin = req.body.adminid;
       const checkrole = await adminModel.findById(admin)
       const adminrole = checkrole.roles
-
+      console.log('rolew' , adminrole)
     // Check if the admin has any of the required roles
     const hasRequiredRole = requiredRoles.some((role) =>
     adminrole.some((adminRole) => adminRole.role === role)
