@@ -19,7 +19,10 @@ const usercreateorderModel = async (data, res) => {
         receiverphone,
         receiveraddress,
         receivercity,
-        receiverlandmark, delivery_fee , userid , total_fee
+        receiverlandmark, delivery_fee , userid , total_fee ,      senderlat,
+        senderllong, 
+        receiverlat,
+        receiverllong,
        
       } = data;
       const form = await new userorderModel ({
@@ -34,7 +37,21 @@ const usercreateorderModel = async (data, res) => {
         receiverphone,
         receiveraddress,
         receivercity,
-        receiverlandmark, delivery_fee , userid , total_fee
+        receiverlandmark, delivery_fee , userid , total_fee ,   receivercordinate: {
+            receiverlat: {
+                type:String
+        },
+            receiverlong: {
+                type:String
+        },     sendercordinate: {
+            senderlat: {
+                type:String
+        },
+            senderlong: {
+                type:String
+        },
+    },
+    },
       });
         const userDetails = await form.save()
         

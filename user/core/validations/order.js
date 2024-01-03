@@ -7,6 +7,8 @@ const usercreateorderValidation = (req, res, next) => {
     // adminId: joi.string().required(),
     vehicle_type: joi.string().required(),
     sendername: joi.string().required(),
+    senderlat: joi.string().required(),
+    senderlong: joi.string().required(),
     productname: joi.string().required(),
     senderphone: joi.string().required(),
     senderaddress: joi.string().required(),
@@ -19,6 +21,8 @@ const usercreateorderValidation = (req, res, next) => {
     receiverphone: joi.string().required(),
     receiveraddress: joi.string().required(),
     receivercity: joi.string().required(),
+    receiverlat: joi.string().required(),
+    receiverlong: joi.string().required(),
     receiverlandmark: joi.string().optional().allow(''),
   });
   const { error } = schema.validate(req.body);

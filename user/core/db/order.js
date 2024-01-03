@@ -23,7 +23,12 @@ const Wallet_schema = new schema({
             type:String
     },
         sendercordinate: {
-            type:String
+            senderlat: {
+                type:String
+        },
+            senderlong: {
+                type:String
+        },
     },
   
         senderlandmark: {
@@ -43,7 +48,15 @@ const Wallet_schema = new schema({
         },
         receiverlandmark: {
             type:String , default :''
-        },
+    },
+    receivercordinate: {
+        receiverlat: {
+            type:String
+    },
+        receiverlong: {
+            type:String
+    },
+},
         delivery_fee: {
             type:Number, 
     },
