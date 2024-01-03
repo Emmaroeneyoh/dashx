@@ -218,11 +218,12 @@ const dispatchlistcityController = async (req, res, next) => {
     let city = await userorderModel.find({ order_taken: false }).select('sendercity')
     const cities = city.map(x => x.sendercity)
     const uniqueCitiesSet = new Set(cities);
+    const dcity = Array.from(uniqueCitiesSet);
     return res.status(200).json({
       status_code: 200,
       status: true,
       message: "signup process successful",
-      data: trainee,
+      data: dcity
     });
   } catch (error) {
     console.log(error);
@@ -259,5 +260,5 @@ module.exports = {
   dispatchpickuporderController,
   dispatchdeliveredorderController,
   dispatchstartdispatchController,
-  dispatchacceptedorderController,
+  dispatchacceptedorderController,  dispatchlistcityController
 };
