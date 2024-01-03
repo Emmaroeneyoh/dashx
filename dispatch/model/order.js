@@ -67,7 +67,7 @@ const dispatchaddordereventModel = async (data, res) => {
 const dispatchacceptorderModel = async (data, res) => {
   try {
     const { orderid, dispatchid } = data;
-    await dispatchordermodel.findByIdAndUpdate(orderid, {
+    await userorderModel.findByIdAndUpdate(orderid, {
       $set: {
         order_taken: true,
         dispatchid,
