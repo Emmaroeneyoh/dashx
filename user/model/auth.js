@@ -54,9 +54,11 @@ const userLoginModel = async (data,res) => {
     const token = create_user_token(userDetails._id)
     const userid = userDetails._id
     const userwallet = await userWalletModel.findOne({userid})
-     
+     const userData = {
+      token , userDetails
+      }
    
-     return userDetails
+     return userData
   } catch (error) {
       return error.message
   }
