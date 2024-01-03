@@ -109,7 +109,7 @@ const userconfirmemailcontroller = async (req, res) => {
     const {  code } = req.body;
     try {
         const checkcode = await userModel.findOne({ 'auth.auth_code': code });
-        const email = checkcode.email
+        
       if (!checkcode ) {
         return res.status(400).json({
           status_code: 400,
@@ -117,6 +117,7 @@ const userconfirmemailcontroller = async (req, res) => {
           message: "wrong code ",
         });
         }
+        const email = checkcode.email
         if (checkcode.auth.auth_verified) {
             return res.status(400).json({
                 status_code: 400,
