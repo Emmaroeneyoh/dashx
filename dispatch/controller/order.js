@@ -213,6 +213,22 @@ const dispatchlistorderController = async (req, res, next) => {
     return handleError(error.message)(res);
   }
 };
+const dispatchlistcityController = async (req, res, next) => {
+  try {
+    let trainee = await userorderModel.find();
+    return res.status(200).json({
+      status_code: 200,
+      status: true,
+      message: "signup process successful",
+      data: trainee,
+    });
+  } catch (error) {
+    console.log(error);
+    return handleError(error.message)(res);
+  }
+};
+
+
 const dispatchacceptedorderController = async (req, res, next) => {
   try {
     const { city, dispatchid } = req.body;
