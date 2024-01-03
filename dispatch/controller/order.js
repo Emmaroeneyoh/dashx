@@ -60,7 +60,7 @@ const dashxcreateorderController = async (req, res, next) => {
 const dispatchacceptorderController = async (req, res, next) => {
   const { orderid, dispatchid } = req.body;
   try {
-    const order = await dispatchordermodel.findById(orderid);
+    const order = await userorderModel.findById(orderid);
     if (order.order_taken == true) {
       return res.status(400).json({
         status_code: 400,
@@ -88,7 +88,7 @@ const dispatchacceptorderController = async (req, res, next) => {
 const dispatchaddordereventController = async (req, res, next) => {
   const { orderid, event } = req.body;
   try {
-    const order = await dispatchordermodel.findById(orderid);
+    const order = await userorderModel.findById(orderid);
     if (order.order_taken != true) {
       return res.status(400).json({
         status_code: 400,
@@ -163,7 +163,7 @@ const dispatchstartdispatchController = async (req, res, next) => {
 const dispatchdeliveredorderController = async (req, res, next) => {
   const { orderid, ordercode, dispatchid } = req.body;
   try {
-    const order = await ordercodemodel.findOne({ order_code : ordercode});
+    const order = await ordercodemodel.findOne({ order_code: ordercode });
     if (!order) {
       return res.status(400).json({
         status_code: 400,
@@ -199,9 +199,28 @@ const dispatchdeliveredorderController = async (req, res, next) => {
 
 const dispatchlistorderController = async (req, res, next) => {
   try {
-    const { city, dispatchid } = req.body
+    const { city, dispatchid } = req.body;
     const sendercity = city.toLowerCase();
-    let trainee = await userorderModel.find({ order_taken: false , sendercity });
+    let trainee = await userorderModel.find({ order_taken: false, sendercity });
+    return res.status(200).json({
+      status_code: 200,
+      status: true,
+      message: "signup process successful",
+      data: trainee,
+    });
+  } catch (error) {
+    console.log(error);
+    return handleError(error.message)(res);
+  }
+};
+const dispatchacceptedorderController = async (req, res, next) => {
+  try {
+    const { city, dispatchid } = req.body;
+    let trainee = await userorderModel.find({
+      order_taken: true,
+      dispatchid,
+      order_completed: false,
+    });
     return res.status(200).json({
       status_code: 200,
       status: true,
@@ -220,5 +239,7 @@ module.exports = {
   dispatchlistorderController,
   dispatchaddordereventController,
   dispatchpickuporderController,
-  dispatchdeliveredorderController,  dispatchstartdispatchController 
+  dispatchdeliveredorderController,
+  dispatchstartdispatchController,
+  dispatchacceptedorderController,
 };
