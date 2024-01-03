@@ -9,7 +9,6 @@ const userwithdrawwalletValidation = (req, res, next) => {
     amount: joi.number().required(),
     destinationBankCode: joi.string().required(),
     destinationAccountNumber: joi.string().required(),
-    sourceAccountNumber: joi.string().required(),
   });
   const { error } = schema.validate(req.body);
   if (error) {

@@ -117,13 +117,13 @@ const dispatchpickuporderController = async (req, res, next) => {
   const { orderid, upload } = req.body;
   try {
     const order = await userorderModel.findById(orderid);
-    if (order.order_taken == true) {
-      return res.status(400).json({
-        status_code: 400,
-        status: true,
-        message: "order already taken",
-      });
-    }
+    // if (order.order_taken == true) {
+    //   return res.status(400).json({
+    //     status_code: 400,
+    //     status: true,
+    //     message: "order already taken",
+    //   });
+    // }
     const data = {
       orderid,
       upload,

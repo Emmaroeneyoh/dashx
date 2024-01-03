@@ -15,7 +15,6 @@ const userwithdrawwalletModel = async (data, res) => {
       narration,
       destinationBankCode,
       destinationAccountNumber,
-      sourceAccountNumber,
     } = data;
 
     // //add to wallet history
@@ -34,12 +33,15 @@ const userwithdrawwalletModel = async (data, res) => {
     //     { $inc: { balance: -amount } }
     //   );
     // }
+      const wallet = await userWalletModel.findOne({ userid })
+      const account_number = wallet.account_number
+      const sourceAccountNumber = account_number
     const banktransfer = await transfer(
       amount,
       narration,
       destinationBankCode,
       destinationAccountNumber,
-      sourceAccountNumber
+      sourceAccountNumber 
     );
 
     return banktransfer;

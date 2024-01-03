@@ -15,7 +15,6 @@ const userwithdrawwalletController = async (req, res, next) => {
     narration,
     destinationBankCode,
     destinationAccountNumber,
-    sourceAccountNumber,
   } = req.body;
   try {
     //check if the user balance is enough
@@ -34,8 +33,8 @@ const userwithdrawwalletController = async (req, res, next) => {
       narration,
       destinationBankCode,
       destinationAccountNumber,
-      sourceAccountNumber,
-    };
+      };
+      console.log('okay')
     let comment = await userwithdrawwalletModel(data, res);
     return res.status(200).json({
       status_code: 200,
