@@ -1,3 +1,4 @@
+const { retrievepricingController } = require("../../admin/controller/pricing");
 const {
   usercreateorderController,
   userretrievesingleorderController,
@@ -29,6 +30,11 @@ router.post(
   userValidation,
   user_check_token,
   userretrieveallorderController
+);
+
+router.post(
+    "/retrieve/price",
+    retrievepricingController
 );
 
 module.exports = router;

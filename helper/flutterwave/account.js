@@ -80,6 +80,7 @@ const createvirtualaccount = async (user) => {
         },
       });
         console.log('Response:', virtualAccountResponse.responseBody.accountNumber);
+        return true
     } catch (error) {
         // Handle errors here
         console.error('Error creating virtual account:', error.response.data);
