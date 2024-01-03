@@ -26,16 +26,20 @@ const getBankDetails = async () => {
     return null;
   }
 };
-const retrievebalance = async (account) => {
+const retrievebalance = async (reference , account) => {
   try {
-    const token = await generateaccesstoken();
-    const endpoint = `${monnifyBaseUrl}/api/v1/disbursements/wallet/balance?accountNumber=${account}`;
+      const token = await generateaccesstoken();
+      const requestData = {
+        walletReference : 'g8h2PgNtKm' ,
+        // accountNumber : account 
+      }
+    const endpoint = `${monnifyBaseUrl}/api/v1/disbursements/wallet/balance?accountNumber=3000089622`;
     const headers = {
       Authorization: `Bearer ${token}`,
       "Content-Type": "application/json",
     };
 
-    const response = await axios.get(endpoint, { headers });
+    const response = await axios.get(endpoint, requestData , { headers });
 
     if (response.data && response.data.responseMessage === "success") {
       const banks = response.data.responseObject;

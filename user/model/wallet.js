@@ -100,8 +100,9 @@ const userretrieveaccountbalanceModel = async (data, res) => {
       userid,
     });
       const accountnumber = wallethistory.account_number;
+      const reference = wallethistory.reference_number;
       console.log('aos' , accountnumber)
-    const details = await retrievebalance(accountnumber);
+    const details = await retrievebalance( reference , accountnumber);
 
     return details;
   } catch (error) {

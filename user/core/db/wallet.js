@@ -10,6 +10,9 @@ const Wallet_schema = new schema({
         account_number: {
             type:String, default : ''
         },
+        reference_number: {
+            type:String, default : ''
+        },
         userid: {
             type:  mongoose.Schema.Types.ObjectId,
             ref:'user'

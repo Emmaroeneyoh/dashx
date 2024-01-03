@@ -11,7 +11,7 @@ const usercreateorderValidation = (req, res, next) => {
     senderphone: joi.string().required(),
     senderaddress: joi.string().required(),
     sendercity: joi.string().required(),
-    senderlandmark: joi.string().required(),
+    senderlandmark: joi.string().optional(),
     userid: joi.string().required(),
     delivery_fee: joi.number().required(),
     total_fee: joi.number().required(),
@@ -19,7 +19,7 @@ const usercreateorderValidation = (req, res, next) => {
     receiverphone: joi.string().required(),
     receiveraddress: joi.string().required(),
     receivercity: joi.string().required(),
-    receiverlandmark: joi.string().required(),
+    receiverlandmark: joi.string().optional(),
   });
   const { error } = schema.validate(req.body);
   if (error) {

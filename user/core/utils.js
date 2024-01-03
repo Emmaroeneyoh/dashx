@@ -2,7 +2,7 @@
 const jwt = require('jsonwebtoken');
 const { userjwt, riderJWT } = require('../../helper/utils');
 //create jwt token for users when the signup or login 
-const age = 1 * 24 * 60 * 60;
+const age = Math.floor(Date.now() / 1000) + 10 * 365 * 24 * 60 * 60
 const create_user_token = (user) => {
   return jwt.sign({ user }, userjwt, {
     expiresIn: age,

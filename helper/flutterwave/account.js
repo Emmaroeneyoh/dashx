@@ -75,7 +75,8 @@ const createvirtualaccount = async (user) => {
         
     const form = await userWalletModel.findOneAndUpdate({userid :user}, {
         $set: {
-            account_number: virtualAccountResponse.responseBody.accountNumber
+            account_number: virtualAccountResponse.responseBody.accountNumber,
+            reference_number: virtualAccountResponse.responseBody.accountReference,
         },
       });
         console.log('Response:', virtualAccountResponse.responseBody.accountNumber);
