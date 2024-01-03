@@ -22,6 +22,9 @@ const Wallet_schema = new schema({
         sendercity: {
             type:String
     },
+        sendercordinate: {
+            type:String
+    },
   
         senderlandmark: {
             type:String , default :''
