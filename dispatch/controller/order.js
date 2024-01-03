@@ -215,7 +215,9 @@ const dispatchlistorderController = async (req, res, next) => {
 };
 const dispatchlistcityController = async (req, res, next) => {
   try {
-    let trainee = await userorderModel.find();
+    let city = await userorderModel.find({ order_taken: false }).select('sendercity')
+    const cities = city.map(x => x.sendercity)
+    const uniqueCitiesSet = new Set(cities);
     return res.status(200).json({
       status_code: 200,
       status: true,

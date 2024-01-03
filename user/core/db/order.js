@@ -75,7 +75,11 @@ const Wallet_schema = new schema({
         userid: {
             type:  mongoose.Schema.Types.ObjectId,
             ref:'user'
-        },
+    },
+    dispatchid: {
+        type:  mongoose.Schema.Types.ObjectId,
+        ref:'dispatch'
+    },
    
     createdAt : {
         type: Date,
