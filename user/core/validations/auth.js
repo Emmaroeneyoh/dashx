@@ -8,6 +8,7 @@ const usersignupValidation = (req, res, next) => {
     email: joi.string().required(),
     password: joi.string().required(),
     phone: joi.string().required(),
+    address: joi.string().required(),
   });
   const { error } = schema.validate(req.body);
   if (error) {

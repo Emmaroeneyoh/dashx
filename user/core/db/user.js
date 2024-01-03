@@ -3,10 +3,13 @@ const schema = mongoose.Schema
 
 const Riderschema = new schema({
  
-        name: {
-            type:String,
+    name: {
+        type: String,
     },
-        email: {
+    email: {
+        type: String,
+    },
+       address: {
             type:String,
         },
         password:{

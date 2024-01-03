@@ -3,31 +3,46 @@ const {
   getBankDetails,
   retrievebalance,
 } = require("../../helper/flutterwave/retrieve");
+const { transfer } = require("../../helper/flutterwave/transfers");
 const { userWalletModel } = require("../core/db/wallet");
 const { userwallethistoryModel } = require("../core/db/wallethistory");
 
 const userwithdrawwalletModel = async (data, res) => {
   try {
-    const { userid, walletid, amount, status, trx_type } = data;
-
-    //add to wallet history
-    const form = await new userwallethistoryModel({
+    const {
       userid,
-      walletid,
-      status,
       amount,
-      trx_type,
-    });
-    await form.save();
+      narration,
+      destinationBankCode,
+      destinationAccountNumber,
+      sourceAccountNumber,
+    } = data;
 
-    if (status) {
-      await userWalletModel.findOneAndUpdate(
-        { userid, _id: walletid },
-        { $inc: { balance: -amount } }
-      );
-    }
+    // //add to wallet history
+    // const form = await new userwallethistoryModel({
+    //   userid,
+    //   walletid,
+    //   status,
+    //   amount,
+    //   trx_type,
+    // });
+    // await form.save();
 
-    return "order";
+    // if (status) {
+    //   await userWalletModel.findOneAndUpdate(
+    //     { userid, _id: walletid },
+    //     { $inc: { balance: -amount } }
+    //   );
+    // }
+    const banktransfer = await transfer(
+      amount,
+      narration,
+      destinationBankCode,
+      destinationAccountNumber,
+      sourceAccountNumber
+    );
+
+    return banktransfer;
   } catch (error) {
     console.log("error", error);
     return error.message;
@@ -99,10 +114,10 @@ const userretrieveaccountbalanceModel = async (data, res) => {
     const wallethistory = await userWalletModel.findOne({
       userid,
     });
-      const accountnumber = wallethistory.account_number;
-      const reference = wallethistory.reference_number;
-      console.log('aos' , accountnumber)
-    const details = await retrievebalance( reference , accountnumber);
+    const accountnumber = wallethistory.account_number;
+    const reference = wallethistory.reference_number;
+    console.log("aos", accountnumber);
+    const details = await retrievebalance(reference, accountnumber);
 
     return details;
   } catch (error) {
@@ -115,5 +130,6 @@ module.exports = {
   userwithdrawwalletModel,
   userwalletfundhistoryModel,
   userfundwalletModel,
-  userretrievebankaccountModel,  userretrieveaccountbalanceModel
+  userretrievebankaccountModel,
+  userretrieveaccountbalanceModel,
 };

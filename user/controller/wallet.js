@@ -9,24 +9,20 @@ const {
 } = require("../model/wallet");
 
 const userwithdrawwalletController = async (req, res, next) => {
-  const { userid, walletid, amount, status, trx_type } = req.body;
+  const { userid, amount , narration , destinationBankCode , destinationAccountNumber , sourceAccountNumber ,} = req.body;
   try {
     //check if the user balance is enough
-    const wallet = await userWalletModel.findOne({ userid });
-    const balance = wallet.balance;
-    if (amount > balance) {
-      return res.status(400).json({
-        status_code: 400,
-        status: false,
-        message: "insufficient fund",
-      });
-    }
+    // const wallet = await userWalletModel.findOne({ userid });
+    // const balance = wallet.balance;
+    // if (amount > balance) {
+    //   return res.status(400).json({
+    //     status_code: 400,
+    //     status: false,
+    //     message: "insufficient fund",
+    //   });
+    // }
     const data = {
-      userid,
-      walletid,
-      amount,
-      status,
-      trx_type,
+        userid, amount , narration , destinationBankCode , destinationAccountNumber , sourceAccountNumber ,
     };
     let comment = await userwithdrawwalletModel(data, res);
     return res.status(200).json({
