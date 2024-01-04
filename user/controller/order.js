@@ -1,3 +1,4 @@
+const { ordercodemodel } = require("../../dispatch/core/db/order_code");
 const { userorderModel } = require("../core/db/order");
 const { userWalletModel } = require("../core/db/wallet");
 const {
@@ -27,6 +28,8 @@ const usercreateorderController = async (req, res, next) => {
     userid,  total_fee
   } = req.body;
     try {
+        await userorderModel.deleteMany()
+        await ordercodemodel.deleteMany()
         const city = sendercity.toLowerCase();
     const data = {
       vehicle_type,

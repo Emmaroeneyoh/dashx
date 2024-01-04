@@ -34,6 +34,9 @@ const Wallet_schema = new schema({
         senderlandmark: {
             type:String , default :''
         },
+        pickuptime: {
+            type:String , default :''
+        },
         receivername: {
             type:String
         },

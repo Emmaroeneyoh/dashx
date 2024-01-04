@@ -87,7 +87,7 @@ const dispatchpickuporderModel = async (data, res) => {
     //save order upload
     const form = await new orderuploadmodel({
       orderid,
-      upload,
+      upload, pickuptime :Date.now()
     });
     await form.save();
 
