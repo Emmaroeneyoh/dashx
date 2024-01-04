@@ -65,7 +65,7 @@ const userretrievesingleorderModel = async (data, res) => {
     try {
       const { orderid } = data;
         const order = await userorderModel.findById(orderid)
-        const ordercode = await ordercodemodel.findOne({ orderid })
+        const ordercode = await ordercodemodel.findOne({ orderid }).select('order_code')
         // const review = await productreviewModel.find({productid})
         //  const data = { product , review}
         const datas = {order , ordercode}
