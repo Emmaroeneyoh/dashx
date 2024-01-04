@@ -1,16 +1,14 @@
 
-
-
 const monnifyKey = 'MK_TEST_164RU1XR63';
 const secretKey = 'GX0YMMY4M1WD9XHJHSAGUG49Y8GRA1JV';
 const monnifyBaseUrl = 'https://sandbox.monnify.com';
-const axios = require('axios')
+const axios = require('axios');
+const { userModel } = require('../../user/core/db/user');
+const { userWalletModel } = require('../../user/core/db/wallet');
+const { generateRandomString } = require('../../user/core/utils');
 
 
-
-
-async function createMonnifyVirtualAccount(username) {
-    // Step 1: Generate Access Token by Logging In
+const generateaccesstoken = async () => {
     const apiKey = Buffer.from(`${monnifyKey}:${secretKey}`).toString('base64');
     const loginEndpoint = `${monnifyBaseUrl}/api/v1/auth/login`;
     const loginPayload = {
@@ -24,21 +22,32 @@ async function createMonnifyVirtualAccount(username) {
 
     const loginResponse = await axios.post(loginEndpoint, loginPayload, { headers: loginHeaders });
     const accessToken = loginResponse.data.responseBody.accessToken;
+    return accessToken
+}
 
+async function createMonnifyVirtualAccount(userid) {
+    const accessToken = await generateaccesstoken()
+    //find the user
+    const user = await userModel.findById(userid)
+    const name = user.name
+    const email = user.email
+    // Step 1: Generate Access Token by Logging In
+
+    const code = generateRandomString(10);
     // Step 2: Create Virtual Account using the Access Token
     const createAccountEndpoint = `${monnifyBaseUrl}/api/v1/bank-transfer/reserved-accounts`;
     const createAccountPayload = {
-        accountReference: 'piru',
-        accountName: `dashx_${username}`,
+        accountReference: code,
+        accountName: name,
         currencyCode: 'NGN',
         contractCode: '4996347007', // Add your specific contract code
-    customerEmail: 'emmaroeneyoh@gmail.com', // Add customer's email
-    customerName: 'Customer Name', // Add customer's name
-    phoneNumber: '09022201524', // Add customer's phone number
+    customerEmail: email, // Add customer's email
+    customerName: name, // Add customer's name
+    phoneNumber: user.phone, // Add customer's phone number
     incomeBracket: '0 - 100,000', // Add income bracket
     nextOfKin: {
-        name: 'Next of Kin Name',
-        phoneNumber: 'Next of Kin Phone Number',
+        name: 'umana okon',
+        phoneNumber: user.phone,
     },
     metaData: {
         customField1: 'Custom Value 1',
@@ -58,58 +67,30 @@ async function createMonnifyVirtualAccount(username) {
     return account;
 }
 
-const run = async () => {
+
+const createvirtualaccount = async (user) => {
     try {
-        const virtualAccountResponse = await createMonnifyVirtualAccount('emma');
-        console.log('Response:', virtualAccountResponse);
+        const virtualAccountResponse = await createMonnifyVirtualAccount(user);
+        //update wallet
+        
+    const form = await userWalletModel.findOneAndUpdate({userid :user}, {
+        $set: {
+            account_number: virtualAccountResponse.responseBody.accountNumber,
+            reference_number: virtualAccountResponse.responseBody.accountReference,
+        },
+      });
+        console.log('Response:', virtualAccountResponse.responseBody.accountNumber);
+        return true
     } catch (error) {
         // Handle errors here
         console.error('Error creating virtual account:', error.response.data);
+        return false
+        
     }
 };
 
-run();
-// async function createtoken() {
-//     const apiKey = Buffer.from(`${monnifyKey}:${secretKey}`).toString('base64');
-//     const endpoint = `${monnifyBaseUrl}/api/v1/auth/login`;
-//     const payload = {
-//         username: 'emmaroeneyoh@gmail.com',
-//         password: 'Hybrid68van///',
-//     };
-//     const headers = {
-//         'Authorization': `Basic ${apiKey}`,
-//         'Content-Type': 'application/json',
-//     };
-//     const response = await axios.post(endpoint, payload, { headers });
-//     const accesstoken =  response.data.responseBody.accessToken
-   
-//     try {
-//         // const response = await axios.post(endpoint, payload, { headers });
-//         // return response.data.responseBody.accessToken;
-//     } catch (error) {
-//         console.error('Error creating virtual account:', error.response.data);
-//         throw error;
-//     }
-// }
-
-// const run = async () => {
-//     try {
-//         const virtualAccountResponse = await createtoken();
-//         console.log('Response:', virtualAccountResponse);
-//     } catch (error) {
-//         // Handle errors here
-//     }
-// };
-
-// run();
 
 
-
-
-
-//   // const endpoint = `${monnifyBaseUrl}/bank-transfer/reserved-accounts`;
-//     // const payload = {
-//     //     accountReference: username,
-//     //     accountName: `dashx-${username}`,
-//     //     currencyCode: 'NGN',
-//     // };
+module.exports = {
+    createvirtualaccount , generateaccesstoken
+}

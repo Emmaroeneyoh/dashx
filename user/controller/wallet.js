@@ -9,13 +9,14 @@ const {
 } = require("../model/wallet");
 
 const userwithdrawwalletController = async (req, res, next) => {
-  const {
+    const {
+      
     userid,
     amount,
     narration,
     destinationBankCode,
     destinationAccountNumber,
-  } = req.body;
+    } = req.body;
   try {
     //check if the user balance is enough
     // const wallet = await userWalletModel.findOne({ userid });
@@ -34,7 +35,6 @@ const userwithdrawwalletController = async (req, res, next) => {
       destinationBankCode,
       destinationAccountNumber,
       };
-      console.log('okay')
     let comment = await userwithdrawwalletModel(data, res);
     return res.status(200).json({
       status_code: 200,

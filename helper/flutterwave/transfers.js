@@ -10,13 +10,13 @@ const transfer = async (amount , narration , destinationBankCode ,destinationAcc
         const code = generateRandomString(10);
         const token = await generateaccesstoken();
         const requestData = {
-            amount,
-            reference : code,
-            narration,
-            destinationBankCode,
-            destinationAccountNumber,
+            amount : 200,
+            reference : "referen00ce---1290034",
+            narration : "911 Transaction",
+            destinationBankCode : "057",
+            destinationAccountNumber  : "2085886393",
             currency: "NGN",
-            sourceAccountNumber
+            sourceAccountNumber :'9964840075'
         }
       const endpoint = `${monnifyBaseUrl}/api/v2/disbursements/single`;
       const headers = {

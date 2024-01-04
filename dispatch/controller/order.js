@@ -213,6 +213,22 @@ const dispatchlistorderController = async (req, res, next) => {
     return handleError(error.message)(res);
   }
 };
+const dispatchorderhistoryController = async (req, res, next) => {
+  try {
+    const { dispatchid } = req.body;
+
+    let trainee = await userorderModel.find({ dispatchid});
+    return res.status(200).json({
+      status_code: 200,
+      status: true,
+      message: "signup process successful",
+      data: trainee,
+    });
+  } catch (error) {
+    console.log(error);
+    return handleError(error.message)(res);
+  }
+};
 const dispatchlistcityController = async (req, res, next) => {
   try {
     let city = await userorderModel.find({ order_taken: false }).select('sendercity')
@@ -234,11 +250,11 @@ const dispatchlistcityController = async (req, res, next) => {
 
 const dispatchacceptedorderController = async (req, res, next) => {
   try {
-    const { city, dispatchid } = req.body;
+    const {  dispatchid } = req.body;
     let trainee = await userorderModel.find({
       order_taken: true,
       dispatchid,
-      order_completed: false,
+      order_status: { $ne: 'delivered' }
     });
     return res.status(200).json({
       status_code: 200,
@@ -260,5 +276,5 @@ module.exports = {
   dispatchpickuporderController,
   dispatchdeliveredorderController,
   dispatchstartdispatchController,
-  dispatchacceptedorderController,  dispatchlistcityController
+  dispatchacceptedorderController,  dispatchlistcityController , dispatchorderhistoryController
 };

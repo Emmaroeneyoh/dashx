@@ -35,7 +35,7 @@ const userwithdrawwalletModel = async (data, res) => {
     // }
       const wallet = await userWalletModel.findOne({ userid })
       const account_number = wallet.account_number
-      const sourceAccountNumber = account_number
+      const sourceAccountNumber = '9964840075'
     const banktransfer = await transfer(
       amount,
       narration,

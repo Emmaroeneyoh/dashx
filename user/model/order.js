@@ -1,3 +1,4 @@
+const { ordercodemodel } = require("../../dispatch/core/db/order_code");
 const { userorderModel } = require("../core/db/order");
 const { userModel } = require("../core/db/user");
 const { userWalletModel } = require("../core/db/wallet");
@@ -20,9 +21,9 @@ const usercreateorderModel = async (data, res) => {
         receiveraddress,
         receivercity,
         receiverlandmark, delivery_fee , userid , total_fee ,      senderlat,
-        senderllong, 
+        senderlong, 
         receiverlat,
-        receiverllong,
+        receiverlong,
        
       } = data;
       const form = await new userorderModel ({
@@ -39,8 +40,8 @@ const usercreateorderModel = async (data, res) => {
         receivercity,
           receiverlandmark, delivery_fee, userid, total_fee,
           sendercordinate : {  senderlat,
-            senderllong, } ,  receivercordinate: {    receiverlat,
-                receiverllong, }
+            senderlong, } ,  receivercordinate: {    receiverlat,
+                receiverlong, }
       });
         const userDetails = await form.save()
         
@@ -63,10 +64,12 @@ const usercreateorderModel = async (data, res) => {
 const userretrievesingleorderModel = async (data, res) => {
     try {
       const { orderid } = data;
-        const profile = await userorderModel.findById(orderid)
+        const order = await userorderModel.findById(orderid)
+        const ordercode = await ordercodemodel.findOne({ orderid })
         // const review = await productreviewModel.find({productid})
         //  const data = { product , review}
-      return profile;
+        const datas = {order , ordercode}
+      return datas;
     } catch (error) {
       console.log(error);
       return error.message;

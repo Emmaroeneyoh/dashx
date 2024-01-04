@@ -1,96 +1,109 @@
-
-const monnifyKey = 'MK_TEST_164RU1XR63';
-const secretKey = 'GX0YMMY4M1WD9XHJHSAGUG49Y8GRA1JV';
-const monnifyBaseUrl = 'https://sandbox.monnify.com';
-const axios = require('axios');
+const flutterwave = require('flutterwave-node');
 const { userModel } = require('../../user/core/db/user');
 const { userWalletModel } = require('../../user/core/db/wallet');
-const { generateRandomString } = require('../../user/core/utils');
+const axios = require('axios')
+// const flutterwaveKey = 'FLWSECK_TEST-bef41323b3182d29cc0f95ec3a5b3aa6-X'
+// const flw = new flutterwave(flutterwaveKey);
 
+// const userfulteraccount = async (userid) => {
+//     try {
+//         const user = await userModel.findById(userid)
+//         const name = user.name
+//         const email = user.email
+//           // Create a Flutterwave customer
+//           const customerResponse = await flw.Customer.create({
+//             email,
+//             name
+//         });
 
-const generateaccesstoken = async () => {
-    const apiKey = Buffer.from(`${monnifyKey}:${secretKey}`).toString('base64');
-    const loginEndpoint = `${monnifyBaseUrl}/api/v1/auth/login`;
-    const loginPayload = {
-        username: 'emmaroeneyoh@gmail.com',
-        password: 'Hybrid68van///',
-    };
-    const loginHeaders = {
-        'Authorization': `Basic ${apiKey}`,
-        'Content-Type': 'application/json',
-    };
+//         const flutterwaveCustomerId = customerResponse.data.id;
+//         await userModel.findByIdAndUpdate(userid, {
+//             $set: {
+//                 flutterwaveid: flutterwaveCustomerId,
+//             },
+//         });
+//         const wallet = userWalletModel.findOne({ userid })
+//         const walletid = wallet._id
+//      // Generate a virtual account with Flutterwave
+//      const virtualAccountResponse = await flw.VirtualAccount.create({
+//         email,
+//         tx_ref: name,
+//         tx_email: email,
+//         amount: 0, // Set the initial amount
+//         currency: 'NGN',
+//         redirect_url: 'your_redirect_url',
+//         order_id: walletid,
+//         customer: flutterwaveCustomerId,
+//         // Add other required parameters
+//     });
+   
+//         const virtualAccountNumber = virtualAccountResponse.data.account_number;
+//         //update the wellet
+//         await userWalletModel.findByIdAndUpdate(walletid, {
+//             $set: {
+//                 account_number  : virtualAccountNumber,
+//             },
+//         });
 
-    const loginResponse = await axios.post(loginEndpoint, loginPayload, { headers: loginHeaders });
-    const accessToken = loginResponse.data.responseBody.accessToken;
-    return accessToken
-}
-
-async function createMonnifyVirtualAccount(userid) {
-    const accessToken = await generateaccesstoken()
-    //find the user
-    const user = await userModel.findById(userid)
-    const name = user.name
-    const email = user.email
-    // Step 1: Generate Access Token by Logging In
-
-    const code = generateRandomString(10);
-    // Step 2: Create Virtual Account using the Access Token
-    const createAccountEndpoint = `${monnifyBaseUrl}/api/v1/bank-transfer/reserved-accounts`;
-    const createAccountPayload = {
-        accountReference: code,
-        accountName: name,
-        currencyCode: 'NGN',
-        contractCode: '4996347007', // Add your specific contract code
-    customerEmail: email, // Add customer's email
-    customerName: name, // Add customer's name
-    phoneNumber: user.phone, // Add customer's phone number
-    incomeBracket: '0 - 100,000', // Add income bracket
-    nextOfKin: {
-        name: 'umana okon',
-        phoneNumber: user.phone,
-    },
-    metaData: {
-        customField1: 'Custom Value 1',
-        customField2: 'Custom Value 2',
-        // Add any other custom fields as needed
-    },
-    };
-    const createAccountHeaders = {
-        'Authorization': `Bearer ${accessToken}`,  // Use 'Bearer' for access token
-        'Content-Type': 'application/json',
-    };
-
-    const createAccountResponse = await axios.post(createAccountEndpoint, createAccountPayload, { headers: createAccountHeaders });
-    const account = createAccountResponse.data;
-
-    console.log('Account:', account);
-    return account;
-}
-
-
-const createvirtualaccount = async (user) => {
-    try {
-        const virtualAccountResponse = await createMonnifyVirtualAccount(user);
-        //update wallet
-        
-    const form = await userWalletModel.findOneAndUpdate({userid :user}, {
-        $set: {
-            account_number: virtualAccountResponse.responseBody.accountNumber,
-            reference_number: virtualAccountResponse.responseBody.accountReference,
-        },
-      });
-        console.log('Response:', virtualAccountResponse.responseBody.accountNumber);
-        return true
-    } catch (error) {
-        // Handle errors here
-        console.error('Error creating virtual account:', error.response.data);
-        return false
-        
-    }
+//         return 'success'
+//     } catch (error) {
+//         console.log('error' , error)
+//     }
+// }
+// Configure Monnify with your API key
+const monnifyKey = 'MK_TEST_164RU1XR63';
+const monnifyBaseUrl = 'https://sandbox.monnify.com';
+const monnifyHeaders = {
+    Authorization: `Bearer ${monnifyKey}`,
+    'Content-Type': 'application/json',
 };
+const userfulteraccount = async (userid) => {
+    try {
+        const user = await userModel.findById(userid)
+        const name = user.name
+        const email = user.email
+        const endpoint = `${monnifyBaseUrl}/bank-transfer/reserved-accounts`;
+        const payload = {
+            accountReference: name,
+            accountName: `dashx_${name}`,
+            currencyCode: 'NGN',
+        };
+    
+        const virtualaccount =  axios.post(endpoint, payload, { headers: monnifyHeaders });
+        // await userModel.findByIdAndUpdate(userid, {
+        //     $set: {
+        //         flutterwaveid: flutterwaveCustomerId,
+        //     },
+        // });
+        const wallet = userWalletModel.findOne({ userid })
+        const walletid = wallet._id
+     // Generate a virtual account with Flutterwave
+     const virtualAccountResponse = await flw.VirtualAccount.create({
+        email,
+        tx_ref: name,
+        tx_email: email,
+        amount: 0, // Set the initial amount
+        currency: 'NGN',
+        redirect_url: 'your_redirect_url',
+        order_id: walletid,
+        customer: flutterwaveCustomerId,
+        // Add other required parameters
+    });
+   
+        const virtualAccountNumber = virtualAccountResponse.data.account_number;
+        //update the wellet
+        await userWalletModel.findByIdAndUpdate(walletid, {
+            $set: {
+                account_number  : virtualAccountNumber,
+            },
+        });
 
-
+        return 'success'
+    } catch (error) {
+        console.log('error' , error)
+    }
+}
 
 module.exports = {
-    createvirtualaccount , generateaccesstoken
+    userfulteraccount
 }
