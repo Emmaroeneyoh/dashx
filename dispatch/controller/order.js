@@ -202,13 +202,14 @@ const dispatchlistorderController = async (req, res, next) => {
   try {
     const { city, dispatchid } = req.body;
     const dispatch = await dispatchModel.findById(dispatchid)
-    if (!dispatch.online_status) {
-      return res.status(400).json({
-        status_code: 400,
-        status: true,
-        message: "you are currently offline",
-      });
-    }
+    // console.log(dispatch.online_status)
+    // if (!dispatch.online_status) {
+    //   return res.status(400).json({
+    //     status_code: 400,
+    //     status: true,
+    //     message: "you are currently offline",
+    //   });
+    // }
     const sendercity = city.toLowerCase();
     let trainee = await userorderModel.find({ order_taken: false, sendercity });
     return res.status(200).json({
