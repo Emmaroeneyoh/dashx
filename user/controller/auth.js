@@ -138,7 +138,7 @@ const userconfirmemailcontroller = async (req, res) => {
     });
         const userwallet = await wallet.save()
         // const createaccount = await createvirtualaccount('65949dd2c29bba14821d812c')
-        const createaccount = await createvirtualaccount(checkcode._id)
+        // const createaccount = await createvirtualaccount(checkcode._id)
         if (!createaccount) {
             return res.status(400).json({ 
                 status_code: 400,
