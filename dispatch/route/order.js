@@ -53,12 +53,12 @@ router.post(
 );
 
 
-router.post(
-  "/myorder",
-  dispatchValidation,
-  dispatch_check_token,
-  dispatchacceptedorderController
-);
+// router.post(
+//   "/myorder",
+//   dispatchValidation,
+//   dispatch_check_token,
+//   dispatchacceptedorderController
+// );
 router.post(
   "/order/history",
   dispatchValidation,
