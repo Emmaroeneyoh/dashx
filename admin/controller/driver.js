@@ -1,4 +1,6 @@
 const { dispatchModel } = require("../../dispatch/core/db/dispatch");
+const { userorderModel } = require("../../user/core/db/order");
+const { userModel } = require("../../user/core/db/user");
 const { handleError } = require("../core/utils");
 const { adminretrievesingledispatchModel } = require("../model/customer");
 
@@ -19,7 +21,38 @@ const adminretrievealldriverController = async (req, res, next) => {
 
 const adminretrieveunpproveddriverController = async (req, res, next) => {
   try {
+    y;
     let trainee = await dispatchModel.find({ dispatch_approved: false });
+    return res.status(200).json({
+      status_code: 200,
+      status: true,
+      message: "signup process successful",
+      data: trainee,
+    });
+  } catch (error) {
+    console.log(error);
+    return handleError(error.message)(res);
+  }
+};
+const adminretrieveblockdriverController = async (req, res, next) => {
+  try {
+    y;
+    let trainee = await dispatchModel.find({ dispatch_blocked: true });
+    return res.status(200).json({
+      status_code: 200,
+      status: true,
+      message: "signup process successful",
+      data: trainee,
+    });
+  } catch (error) {
+    console.log(error);
+    return handleError(error.message)(res);
+  }
+};
+const adminretrieveblockuserController = async (req, res, next) => {
+  try {
+    y;
+    let trainee = await userModel.find({ user_blocked: true });
     return res.status(200).json({
       status_code: 200,
       status: true,
@@ -36,6 +69,34 @@ const adminretrievesingledriverController = async (req, res, next) => {
     const { dispatchid } = req.body;
     const data = { driverid };
     let trainee = await adminretrievesingledispatchModel(data, res);
+    return res.status(200).json({
+      status_code: 200,
+      status: true,
+      message: "signup process successful",
+      data: trainee,
+    });
+  } catch (error) {
+    console.log(error);
+    return handleError(error.message)(res);
+  }
+};
+const adminretrieveactivetripController = async (req, res, next) => {
+  try {
+    let trainee = await userorderModel.find({ order_status: "shipping" });
+    return res.status(200).json({
+      status_code: 200,
+      status: true,
+      message: "signup process successful",
+      data: trainee,
+    });
+  } catch (error) {
+    console.log(error);
+    return handleError(error.message)(res);
+  }
+};
+const adminretrievetripController = async (req, res, next) => {
+  try {
+    let trainee = await userorderModel.find();
     return res.status(200).json({
       status_code: 200,
       status: true,
@@ -87,6 +148,21 @@ const adminunblockdriverController = async (req, res, next) => {
     return handleError(error.message)(res);
   }
 };
+const adminrejectdispatchrequestController = async (req, res, next) => {
+  try {
+    const { msg, dispatchid } = req.bod;
+    const dispatch = await dispatchModel.findById(dispatchid);
+    const email = dispatch.email;
+    return res.status(200).json({
+      status_code: 200,
+      status: true,
+      message: "rejection message sent",
+    });
+  } catch (error) {
+    console.log(error);
+    return handleError(error.message)(res);
+  }
+};
 const adminapprovedriverController = async (req, res, next) => {
   try {
     const { dispatchid } = req.body;
@@ -115,4 +191,8 @@ module.exports = {
   adminretrievealldriverController,
   adminretrieveunpproveddriverController,
   adminapprovedriverController,
+  adminrejectdispatchrequestController,
+  adminretrieveactivetripController,
+  adminretrievetripController,
+  adminretrieveblockuserController, adminretrieveblockdriverController
 };

@@ -73,6 +73,14 @@ const Riderschema = new schema({
         driver_status:{
             type:String , default : ''
         },
+        bussiess:{
+            bussiness_type:{
+                type:Boolean, default : false
+            },
+            bussinessid:{
+                type:String , default : ''
+            },
+        },
    
     createdAt : {
         type: Date,

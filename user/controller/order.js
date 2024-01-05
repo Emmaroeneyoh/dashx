@@ -28,8 +28,7 @@ const usercreateorderController = async (req, res, next) => {
     userid,  total_fee
   } = req.body;
     try {
-        await userorderModel.deleteMany()
-        await ordercodemodel.deleteMany()
+    
         const city = sendercity.toLowerCase();
     const data = {
       vehicle_type,
