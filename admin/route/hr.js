@@ -75,13 +75,13 @@ router.post(
 // router.post("/create/subadmin", admincreateadminValidation, admincreateadminController);
 
 //set price
-router.post(
-    "/set/price",
-    adminpriceValidation ,
-      checkAdminRoles(['superadmin']),
-    admin_check_token,
-    adminsetpricingController
-  );
+// router.post(
+//     "/set/price",
+//     adminpriceValidation ,
+//       checkAdminRoles(['superadmin']),
+//     admin_check_token,
+//     adminsetpricingController
+//   );
 router.post(
     "/update/price",
     adminpriceValidation ,
