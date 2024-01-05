@@ -51,9 +51,24 @@ const adminupdatepasswordValidation = (req, res, next) => {
   }
   return next();
 };
+const adminrejectdispatchrequestValidation = (req, res, next) => {
+  const schema = joi.object({
+    msg: joi.string().required(),
+    adminid: joi.string().required(),
+    dispatchid: joi.string().required(),
+  });
+  const { error } = schema.validate(req.body);
+  if (error) {
+    let err = error.details[0].message;
+    // let errlen = err.split(' ')
+    // console.log('this is length ' , errlen.length)
+    return handleError(err)(res);
+  }
+  return next();
+};
 
 module.exports = {
   adminupdatesubadminprofilValidation,
   adminupdateprofilValidation,
-  adminupdatepasswordValidation,
+  adminupdatepasswordValidation,  adminrejectdispatchrequestValidation
 };

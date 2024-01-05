@@ -1,5 +1,6 @@
-const { adminretrievealldriverController, adminretrievesingledriverController, adminblockdriverController, adminunblockdriverController, adminretrieveunpproveddriverController, adminapprovedriverController, adminretrieveblockdriverController, adminretrieveblockuserController } = require("../controller/driver");
+const { adminretrievealldriverController, adminretrievesingledriverController, adminblockdriverController, adminunblockdriverController, adminretrieveunpproveddriverController, adminapprovedriverController, adminretrieveblockdriverController, adminretrieveblockuserController, adminrejectdispatchrequestController } = require("../controller/driver");
 const { checkAdminRoles } = require("../core/authorization");
+const { adminrejectdispatchrequestValidation } = require("../core/validation/admin");
 const { adminValidation } = require("../core/validation/auth");
 const { adminmgndispatchValidation } = require("../core/validation/user");
 
@@ -38,13 +39,19 @@ router.post(
   adminunblockdriverController
 );
 router.post(
-    "/approve/dispatch",
+    "/approve/dispatch/request",
     checkAdminRoles(['superadmin']) ,
     adminmgndispatchValidation,
     adminapprovedriverController
 );
 router.post(
-    "/retrieve/block/drivers",
+    "/reject/dispatch/request",
+    checkAdminRoles(['superadmin']) ,
+    adminrejectdispatchrequestValidation ,
+    adminrejectdispatchrequestController
+);
+router.post(
+    "/retrieve/block/dispatch",
     checkAdminRoles(['superadmin']) ,
     adminValidation,
     adminretrieveblockdriverController

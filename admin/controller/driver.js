@@ -21,7 +21,7 @@ const adminretrievealldriverController = async (req, res, next) => {
 
 const adminretrieveunpproveddriverController = async (req, res, next) => {
   try {
-    y;
+
     let trainee = await dispatchModel.find({ dispatch_approved: false });
     return res.status(200).json({
       status_code: 200,
@@ -36,7 +36,7 @@ const adminretrieveunpproveddriverController = async (req, res, next) => {
 };
 const adminretrieveblockdriverController = async (req, res, next) => {
   try {
-    y;
+
     let trainee = await dispatchModel.find({ dispatch_blocked: true });
     return res.status(200).json({
       status_code: 200,
@@ -67,7 +67,7 @@ const adminretrieveblockuserController = async (req, res, next) => {
 const adminretrievesingledriverController = async (req, res, next) => {
   try {
     const { dispatchid } = req.body;
-    const data = { driverid };
+    const data = { dispatchid };
     let trainee = await adminretrievesingledispatchModel(data, res);
     return res.status(200).json({
       status_code: 200,
@@ -120,8 +120,7 @@ const adminblockdriverController = async (req, res, next) => {
     return res.status(200).json({
       status_code: 200,
       status: true,
-      message: "signup process successful",
-      data: trainee,
+      message: "dispatch is blocked",
     });
   } catch (error) {
     console.log(error);
@@ -140,8 +139,7 @@ const adminunblockdriverController = async (req, res, next) => {
     return res.status(200).json({
       status_code: 200,
       status: true,
-      message: "signup process successful",
-      data: trainee,
+      message: "dispatch is unblocked",
     });
   } catch (error) {
     console.log(error);
@@ -150,7 +148,7 @@ const adminunblockdriverController = async (req, res, next) => {
 };
 const adminrejectdispatchrequestController = async (req, res, next) => {
   try {
-    const { msg, dispatchid } = req.bod;
+    const { msg, dispatchid } = req.body;
     const dispatch = await dispatchModel.findById(dispatchid);
     const email = dispatch.email;
     return res.status(200).json({
@@ -175,8 +173,8 @@ const adminapprovedriverController = async (req, res, next) => {
     return res.status(200).json({
       status_code: 200,
       status: true,
-      message: "signup process successful",
-      data: trainee,
+      message: "dispatch request is approved",
+   
     });
   } catch (error) {
     console.log(error);
