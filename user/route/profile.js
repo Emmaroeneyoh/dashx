@@ -30,5 +30,11 @@ router.post(
   user_check_token,
   userretrieveprofileController
 );
+router.post(
+  "/paystack",
+  (req,res) => {
+   console.log('body' , req.body)
+ }
+);
 
 module.exports = router;

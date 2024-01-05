@@ -19,12 +19,12 @@ router.post(
   dispatch_check_token,
   dispatchacceptorderController
 );
-router.post(
-  "/list/order",
-  dispatchlistorderValidation,
-  dispatch_check_token,
-  dispatchlistorderController
-);
+// router.post(
+//   "/list/order",
+//   dispatchlistorderValidation,
+//   dispatch_check_token,
+//   dispatchlistorderController
+// );
 router.post(
   "/add/order/event",
   dispatchaddordereventValidation,
