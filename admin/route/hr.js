@@ -4,6 +4,8 @@ const {
   adminaddroleController,
   adminremoveroleController,
   adminretrieveadminsController,
+  adminblocksubadminController,
+  adminunblocksubadminController,
 } = require("../controller/hr");
 const { adminsetpricingController, adminupdatepricingController, retrievepricingController } = require("../controller/pricing");
 const { admincreateroleController, adminupdateroleController, adminretrieveroleController } = require("../controller/role");
@@ -14,6 +16,7 @@ const {
   adminrolemgnValidation,
   admincreateroleValidation,
   adminupdateroleValidation,
+  adminblockValidation,
 } = require("../core/validation/hr");
 const { adminpriceValidation } = require("../core/validation/pricing");
 
@@ -89,6 +92,19 @@ router.post(
 router.post(
     "/retrieve/price",
     retrievepricingController
+);
+  
+router.post(
+    "/block/subadmin",
+    adminblockValidation,
+    admin_check_token,
+    adminblocksubadminController
+  );
+router.post(
+    "/unblock/subadmin",
+    adminblockValidation,
+    admin_check_token,
+    adminunblocksubadminController
   );
 // rou
 module.exports = router;

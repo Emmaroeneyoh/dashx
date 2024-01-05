@@ -118,8 +118,50 @@ const adminretrieveadminsController = async (req, res, next) => {
   }
 };
 
+
+const adminblocksubadminController = async (req, res, next) => {
+    try {
+      const { subadminid } = req.body;
+      const data = { subadminid };
+      await adminModel.findByIdAndUpdate(subadminid, {
+        $set: {
+         admin_blocked: true,
+        },
+      });
+      return res.status(200).json({
+        status_code: 200,
+        status: true,
+        message: "dispatch is blocked",
+      });
+    } catch (error) {
+      console.log(error);
+      return handleError(error.message)(res);
+    }
+};
+  
+const adminunblocksubadminController = async (req, res, next) => {
+    try {
+      const { subadminid } = req.body;
+      const data = { subadminid };
+      await adminModel.findByIdAndUpdate(subadminid, {
+        $set: {
+         admin_blocked: false
+        },
+      });
+      return res.status(200).json({
+        status_code: 200,
+        status: true,
+        message: "dispatch is blocked",
+      });
+    } catch (error) {
+      console.log(error);
+      return handleError(error.message)(res);
+    }
+};
+  
 module.exports = {
   admincreateadminController,
   adminremoveroleController,
-  adminaddroleController,  adminretrieveadminsController
+    adminaddroleController, adminretrieveadminsController,
+    adminunblocksubadminController , adminblocksubadminController
 };

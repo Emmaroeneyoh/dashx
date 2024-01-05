@@ -81,8 +81,17 @@ const adminretrievesingledriverController = async (req, res, next) => {
   }
 };
 const adminretrieveactivetripController = async (req, res, next) => {
-  try {
-    let trainee = await userorderModel.find({ order_status: "shipping" });
+    try {
+        const { status, orderid } = req.body
+        var query = { $and: [] };
+        if (status != "") {
+            query.$and.push({ order_status: status });
+          }
+      
+          if (orderid != "") {
+            query.$and.push({ _id: orderid });
+          }
+    let trainee = await userorderModel.find(query);
     return res.status(200).json({
       status_code: 200,
       status: true,
@@ -95,8 +104,24 @@ const adminretrieveactivetripController = async (req, res, next) => {
   }
 };
 const adminretrievetripController = async (req, res, next) => {
-  try {
-    let trainee = await userorderModel.find();
+    try {
+        const { startDate, endDate, status, name } = req.body
+        var query = { $and: [] };
+        if (status != "") {
+            query.$and.push({ order_status: status });
+          }
+        if (name != "") {
+            query.$and.push({ sendername: name });
+          }
+        
+        if (startDate != "") {
+            query.$and.push({ createdAt: { $gte: startDate } });
+          }
+        if (endDate != "") {
+            query.$and.push({ createdAt: { $lte: endDate } }); 
+        }
+          
+    let trainee = await userorderModel.find(query);
     return res.status(200).json({
       status_code: 200,
       status: true,

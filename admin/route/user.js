@@ -1,9 +1,9 @@
 const { model } = require("mongoose");
 const { adminretrievesingleuserController, adminblockuserController, adminunblockuserController, adminretrievealluserController } = require("../controller/customer");
-const { adminretrieveblockuserController } = require("../controller/driver");
+const { adminretrieveblockuserController, adminretrieveactivetripController, adminretrievetripController } = require("../controller/driver");
 const { checkAdminRoles } = require("../core/authorization");
 const { adminValidation } = require("../core/validation/auth");
-const { adminmgnuserValidation } = require("../core/validation/user");
+const { adminmgnuserValidation, adminretrievetripValidation } = require("../core/validation/user");
 
 
 const router = require("express").Router();
@@ -37,6 +37,16 @@ router.post(
     checkAdminRoles(['superadmin']) ,
     adminValidation,
     adminretrieveblockuserController
+);
+router.post(
+    "/retrieve/trip",
+    checkAdminRoles(['superadmin']) ,
+    adminretrieveactivetripController
+);
+router.post(
+    "/retrieve/booking",
+    checkAdminRoles(['superadmin']) ,
+    adminretrievetripController
 );
 
 module.exports = router
