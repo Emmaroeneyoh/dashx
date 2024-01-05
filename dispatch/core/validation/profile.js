@@ -23,7 +23,26 @@ const dispatchupdatevehicleValidation = (req, res, next) => {
   }
   return next();
 };
-
+const dispatchupdatestatusValidation = (req, res, next) => {
+  const schema = joi.object({
+    dispatchid: joi.string().required(),
+    status: joi.boolean().required(),
+  });
+  const { error } = schema.validate(req.body);
+  if (error) {
+    let err = error.details[0].message;
+    // let errlen = err.split(' ')
+    // console.log('this is length ' , errlen.length)
+    return res.status(400).json({
+      status_code: 400,
+      status: false,
+      message: err,
+      data: [],
+      error: err,
+    });
+  }
+  return next();
+};
 
 const dispatchupdateprofileValidation = (req, res, next) => {
   const schema = joi.object({
@@ -116,5 +135,6 @@ module.exports = {
   dispatchValidation,
   dispatchupdatephotoValidation,
   dispatchupdateprofileValidation,
-  dispatchupdateprofileValidation , dispatchupdatepasswordValidation
+  dispatchupdateprofileValidation,
+  dispatchupdatepasswordValidation, dispatchupdatestatusValidation
 };

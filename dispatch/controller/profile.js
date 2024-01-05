@@ -6,6 +6,7 @@ const {
   dispatchUpdateprofileModel,
   dispatchretrieveprofileModel,
   dispatchUpdatepasswordModel,
+  dispatchUpdatestatusModel,
 } = require("../model/profile");
 const { handleError } = require("../core/utils");
 
@@ -19,6 +20,25 @@ const dispatchupdatevehicleController = async (req, res, next) => {
     };
 
     let trainee = await dispatchUpdatevehicleModel(data, res);
+    return res.status(200).json({
+      status_code: 200,
+      status: true,
+      message: "signup process successful",
+      data: trainee,
+    });
+  } catch (error) {
+    console.log(error);
+    return handleError(error.message)(res);
+  }
+};
+const dispatchupdatestatusController = async (req, res, next) => {
+  const {  dispatchid , status } = req.body;
+  try {
+    const data = {
+      dispatchid , status
+    };
+
+    let trainee = await dispatchUpdatestatusModel(data, res);
     return res.status(200).json({
       status_code: 200,
       status: true,
@@ -160,5 +180,5 @@ module.exports = {
   dispatchupdatephotoController,
   dispatchupdateprofileController,
   dispatchretrieveprofileController,
-  dispatchupdatepasswordController,
+  dispatchupdatepasswordController,  dispatchupdatestatusController
 };

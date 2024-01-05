@@ -1,4 +1,5 @@
 const { userorderModel } = require("../../user/core/db/order");
+const { dispatchModel } = require("../core/db/dispatch");
 const { dispatchordermodel } = require("../core/db/listorder");
 const { ordercodemodel } = require("../core/db/order_code");
 const { handleError } = require("../core/utils");
@@ -200,6 +201,14 @@ const dispatchdeliveredorderController = async (req, res, next) => {
 const dispatchlistorderController = async (req, res, next) => {
   try {
     const { city, dispatchid } = req.body;
+    const dispatch = await dispatchModel.findById(dispatchid)
+    if (!dispatch.online_status) {
+      return res.status(400).json({
+        status_code: 400,
+        status: true,
+        message: "you are currently offline",
+      });
+    }
     const sendercity = city.toLowerCase();
     let trainee = await userorderModel.find({ order_taken: false, sendercity });
     return res.status(200).json({

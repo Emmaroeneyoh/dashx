@@ -2,13 +2,14 @@ const { dispatchModel } = require("../core/db/dispatch");
 
 const dispatchUpdatevehicleModel = async (data, res) => {
   try {
-    const { vehicle_number, vehicle_type, dispatchid  , driving_license} = data;
+    const { vehicle_number, vehicle_type, dispatchid, driving_license } = data;
 
     const form = await dispatchModel.findByIdAndUpdate(dispatchid, {
       $set: {
         vehicle: {
           vehicle_number,
-          vehicle_type, driving_license
+          vehicle_type,
+          driving_license,
         },
       },
     });
@@ -20,10 +21,9 @@ const dispatchUpdatevehicleModel = async (data, res) => {
   }
 };
 
-
 const dispatchretrieveprofileModel = async (data, res) => {
   try {
-    const {  dispatchid } = data;
+    const { dispatchid } = data;
 
     const form = await dispatchModel.findById(dispatchid);
 
@@ -40,6 +40,22 @@ const dispatchUpdatephotoModel = async (data, res) => {
     const form = await dispatchModel.findByIdAndUpdate(dispatchid, {
       $set: {
         photo,
+      },
+    });
+
+    return form;
+  } catch (error) {
+    console.log("error", error);
+    return error.message;
+  }
+};
+const dispatchUpdatestatusModel = async (data, res) => {
+  try {
+    const { dispatchid, status } = data;
+
+    const form = await dispatchModel.findByIdAndUpdate(dispatchid, {
+      $set: {
+        online_status: status
       },
     });
 
@@ -98,27 +114,28 @@ const dispatchcheckprofileModel = async (data) => {
   }
 };
 
-
 const dispatchUpdatepasswordModel = async (data, res) => {
-    try {
-      const { dispatchid, Harshpassword } = data;
-  
-      const form = await dispatchModel.findByIdAndUpdate(dispatchid, {
-        $set: {
-          password: Harshpassword,
-        },
-      });
-  
-      return form;
-    } catch (error) {
-      console.log("error", error);
-      return error.message;
-    }
-  };
-  
+  try {
+    const { dispatchid, Harshpassword } = data;
+
+    const form = await dispatchModel.findByIdAndUpdate(dispatchid, {
+      $set: {
+        password: Harshpassword,
+      },
+    });
+
+    return form;
+  } catch (error) {
+    console.log("error", error);
+    return error.message;
+  }
+};
+
 module.exports = {
   dispatchUpdatevehicleModel,
   dispatchUpdatephotoModel,
   dispatchUpdateprofileModel,
-  dispatchcheckprofileModel,  dispatchretrieveprofileModel , dispatchUpdatepasswordModel
+  dispatchcheckprofileModel,
+  dispatchretrieveprofileModel,
+  dispatchUpdatepasswordModel,  dispatchUpdatestatusModel
 };

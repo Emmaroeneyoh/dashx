@@ -4,6 +4,7 @@ const {
   dispatchupdateprofileController,
   dispatchretrieveprofileController,
   dispatchupdatepasswordController,
+  dispatchupdatestatusController,
 } = require("../controller/profile");
 const { dispatch_check_token } = require("../core/authorization");
 const {
@@ -12,6 +13,7 @@ const {
   dispatchupdateprofileValidation,
   dispatchValidation,
   dispatchupdatepasswordValidation,
+  dispatchupdatestatusValidation,
 } = require("../core/validation/profile");
 
 const router = require("express").Router();
@@ -39,6 +41,12 @@ router.post(
   dispatchupdatepasswordValidation,
   dispatch_check_token,
   dispatchupdatepasswordController
+);
+router.post(
+  "/update/status",
+  dispatchupdatestatusValidation,
+  dispatch_check_token,
+  dispatchupdatestatusController
 );
 router.post(
   "/profile",
