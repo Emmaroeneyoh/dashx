@@ -33,7 +33,8 @@ router.post(
 router.post(
   "/paystack",
   (req,res) => {
-   console.log('body' , req.body)
+    console.log('body', req.body)
+    res.send('hello')
  }
 );
 
