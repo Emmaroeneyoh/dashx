@@ -19,12 +19,12 @@ router.post(
   dispatch_check_token,
   dispatchacceptorderController
 );
-// router.post(
-//   "/list/order",
-//   dispatchlistorderValidation,
-//   dispatch_check_token,
-//   dispatchlistorderController
-// );
+router.post(
+  "/list/order",
+  dispatchlistorderValidation,
+  dispatch_check_token,
+  dispatchlistorderController
+);
 router.post(
   "/add/order/event",
   dispatchaddordereventValidation,
@@ -53,24 +53,24 @@ router.post(
 );
 
 
-// router.post(
-//   "/myorder",
-//   dispatchValidation,
-//   dispatch_check_token,
-//   dispatchacceptedorderController
-// );
+router.post(
+  "/myorder",
+  dispatchValidation,
+  dispatch_check_token,
+  dispatchacceptedorderController
+);
 router.post(
   "/order/history",
   dispatchValidation,
   dispatch_check_token,
   dispatchorderhistoryController
 );
-// router.post(
-//   "/order/city",
-//   dispatchValidation,
-//   dispatch_check_token,
-//   dispatchlistcityController
-// );
+router.post(
+  "/order/city",
+  dispatchValidation,
+  dispatch_check_token,
+  dispatchlistcityController
+);
 
 
 
