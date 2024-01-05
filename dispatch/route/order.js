@@ -65,12 +65,12 @@ router.post(
   dispatch_check_token,
   dispatchorderhistoryController
 );
-router.post(
-  "/order/city",
-  dispatchValidation,
-  dispatch_check_token,
-  dispatchlistcityController
-);
+// router.post(
+//   "/order/city",
+//   dispatchValidation,
+//   dispatch_check_token,
+//   dispatchlistcityController
+// );
 
 
 
