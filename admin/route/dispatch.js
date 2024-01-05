@@ -1,4 +1,5 @@
 const { adminretrievealldriverController, adminretrievesingledriverController, adminblockdriverController, adminunblockdriverController, adminretrieveunpproveddriverController, adminapprovedriverController, adminretrieveblockdriverController, adminretrieveblockuserController } = require("../controller/driver");
+const { checkAdminRoles } = require("../core/authorization");
 const { adminValidation } = require("../core/validation/auth");
 const { adminmgndispatchValidation } = require("../core/validation/user");
 
@@ -48,11 +49,6 @@ router.post(
     adminValidation,
     adminretrieveblockdriverController
 );
-router.post(
-    "/retrieve/block/users",
-    checkAdminRoles(['superadmin']) ,
-    adminValidation,
-    adminretrieveblockuserController
-);
+
 
 module.exports = router

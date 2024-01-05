@@ -51,7 +51,7 @@ const adminretrieveblockdriverController = async (req, res, next) => {
 };
 const adminretrieveblockuserController = async (req, res, next) => {
   try {
-    y;
+
     let trainee = await userModel.find({ user_blocked: true });
     return res.status(200).json({
       status_code: 200,

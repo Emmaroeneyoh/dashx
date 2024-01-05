@@ -44,8 +44,7 @@ const adminblockuserController = async (req, res, next) => {
     return res.status(200).json({
       status_code: 200,
       status: true,
-      message: "signup process successful",
-      data: trainee,
+      message: "user is blocked",
     });
   } catch (error) {
     console.log(error);
@@ -64,8 +63,7 @@ const adminunblockuserController = async (req, res, next) => {
     return res.status(200).json({
       status_code: 200,
       status: true,
-      message: "signup process successful",
-      data: trainee,
+      message: "user is unblocked",
     });
   } catch (error) {
     console.log(error);

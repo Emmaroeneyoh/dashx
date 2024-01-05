@@ -31,6 +31,8 @@ const { coonectdb } = require("./helper/conectdb");
 const adminauth = require('./admin/route/auth');
 const adminadmin = require('./admin/route/admin');
 const adminhr = require('./admin/route/hr');
+const adminuser = require('./admin/route/user');
+const admindispatch = require('./admin/route/dispatch');
 
 //connecting the database
 coonectdb();
@@ -57,6 +59,8 @@ app.use(dispatch, dispatchorder)
 app.use(admin, adminauth)
 app.use(admin, adminadmin)
 app.use(admin, adminhr)
+app.use(admin, adminuser)
+app.use(admin, admindispatch)
 
 
 

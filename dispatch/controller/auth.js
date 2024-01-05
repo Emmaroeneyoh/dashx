@@ -67,8 +67,8 @@ const dispatchSignupController = async (req, res, next) => {
           'auth.auth_code': code,
         },
       });
-          return res.status(400).json({
-            status_code: 400,
+          return res.status(200).json({
+            status_code: 200,
             status: false,
             message: "check your email",
           });
