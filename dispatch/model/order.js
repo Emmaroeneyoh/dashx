@@ -87,10 +87,15 @@ const dispatchpickuporderModel = async (data, res) => {
     //save order upload
     const form = await new orderuploadmodel({
       orderid,
-      upload, pickuptime :Date.now()
+      upload,  pickuptime :Date.now()
     });
     await form.save();
-
+     //update pickup time
+   await userorderModel.findByIdAndUpdate(orderid, {
+      $set: {
+        pickuptime :Date.now()
+      },
+    });
     //generate code
     //function to create order code
     function generatecustomerodercode() {
