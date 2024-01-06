@@ -70,7 +70,7 @@ const dispatchacceptorderModel = async (data, res) => {
     await userorderModel.findByIdAndUpdate(orderid, {
       $set: {
         order_taken: true,
-        dispatchid,
+        dispatchid, order_status:"accepted"
       },
     });
 
@@ -95,7 +95,7 @@ const currentTime = new Date().toLocaleString('en-US', { hour: 'numeric', minute
      //update pickup time
    await userorderModel.findByIdAndUpdate(orderid, {
       $set: {
-        pickuptime :currentTime , order_status:"accepted"
+        pickuptime :currentTime , order_status:"pickup"
       },
     });
     //generate code

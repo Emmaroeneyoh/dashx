@@ -142,6 +142,27 @@ const dispatchpickuporderController = async (req, res, next) => {
     return handleError(error.message)(res);
   }
 };
+const dispatchcancelorderController = async (req, res, next) => {
+  const { orderid } = req.body;
+  try {
+    await userorderModel.findByIdAndUpdate(orderid, {
+      $set: {
+        order_taken: false,
+        dispatchid: "",
+        order_status: "pending",
+      },
+    });
+
+    return res.status(200).json({
+      status_code: 200,
+      status: true,
+      message: "order cancelled",
+    });
+  } catch (error) {
+    console.log(error);
+    return handleError(error.message)(res);
+  }
+};
 const dispatchstartdispatchController = async (req, res, next) => {
   const { orderid } = req.body;
   try {
@@ -201,7 +222,7 @@ const dispatchdeliveredorderController = async (req, res, next) => {
 const dispatchlistorderController = async (req, res, next) => {
   try {
     const { city, dispatchid } = req.body;
-    const dispatch = await dispatchModel.findById(dispatchid)
+    const dispatch = await dispatchModel.findById(dispatchid);
     // console.log(dispatch.online_status)
     // if (!dispatch.online_status) {
     //   return res.status(400).json({
@@ -227,7 +248,7 @@ const dispatchorderhistoryController = async (req, res, next) => {
   try {
     const { dispatchid } = req.body;
 
-    let trainee = await userorderModel.find({ dispatchid});
+    let trainee = await userorderModel.find({ dispatchid });
     return res.status(200).json({
       status_code: 200,
       status: true,
@@ -241,15 +262,17 @@ const dispatchorderhistoryController = async (req, res, next) => {
 };
 const dispatchlistcityController = async (req, res, next) => {
   try {
-    let city = await userorderModel.find({order_taken : false}).select('sendercity')
+    let city = await userorderModel
+      .find({ order_taken: false })
+      .select("sendercity");
     // const cities = city.map(x => x.sendercity)
     // const uniqueCitiesSet = new Set(cities);
     // const dcity = Array.from(uniqueCitiesSet);
 
     const citiesWithOrders = {};
-    city.forEach(order => {
+    city.forEach((order) => {
       const city = order.sendercity;
-    
+
       if (!citiesWithOrders[city]) {
         // If the city doesn't exist in the new array, create an entry
         citiesWithOrders[city] = {
@@ -258,23 +281,22 @@ const dispatchlistcityController = async (req, res, next) => {
           length: 0,
         };
       }
-    
+
       // Add the order to the city's array
       citiesWithOrders[city].orders.push(order.toObject()); // Using toObject() to convert Mongoose document to plain JavaScript object
-    
+
       // Increment the length for the city
       citiesWithOrders[city].length++;
     });
-    
+
     // Convert the object to an array
     const citiesArray = Object.values(citiesWithOrders);
-    
-    
+
     return res.status(200).json({
       status_code: 200,
       status: true,
       message: "signup process successful",
-      data:  citiesArray
+      data: citiesArray,
     });
   } catch (error) {
     console.log(error);
@@ -282,14 +304,13 @@ const dispatchlistcityController = async (req, res, next) => {
   }
 };
 
-
 const dispatchacceptedorderController = async (req, res, next) => {
   try {
-    const {  dispatchid } = req.body;
+    const { dispatchid } = req.body;
     let trainee = await userorderModel.find({
       order_taken: true,
       dispatchid,
-      order_status: { $ne: 'delivered' }
+      order_status: { $ne: "delivered" },
     });
     return res.status(200).json({
       status_code: 200,
@@ -311,5 +332,7 @@ module.exports = {
   dispatchpickuporderController,
   dispatchdeliveredorderController,
   dispatchstartdispatchController,
-  dispatchacceptedorderController,  dispatchlistcityController , dispatchorderhistoryController
+  dispatchacceptedorderController,
+  dispatchlistcityController,
+  dispatchorderhistoryController,   dispatchcancelorderController
 };
