@@ -1,3 +1,4 @@
+const { userModel } = require("../core/db/user");
 const { sellerWalletModel, userWalletModel } = require("../core/db/wallet");
 const { handleError } = require("../core/utils");
 const {
@@ -69,8 +70,13 @@ const userwithdrawwallethistoryController = async (req, res, next) => {
 };
 
 const userfundwalletController = async (req, res, next) => {
-  const { userid, walletid, amount, status, trx_type } = req.body;
+  const { data , customer } = req.body;
   try {
+    const email = customer.email
+    const userEmail = email.toLowerCase();
+    const user = await userModel.findOne({ email: userEmail })
+    const userid = user._id
+    const wallet = await userWalletModel.findOne({userid})
     const data = {
       userid,
       walletid,

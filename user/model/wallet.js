@@ -52,13 +52,12 @@ const userwithdrawwalletModel = async (data, res) => {
 };
 const userfundwalletModel = async (data, res) => {
   try {
-    const { userid, walletid, amount, status, trx_type } = data;
+    const { userid, amount } = data;
 
     //add to wallet history
     const form = await new userwallethistoryModel({
       userid,
       walletid,
-      status,
       amount,
       trx_type,
     });
