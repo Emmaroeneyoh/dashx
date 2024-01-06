@@ -26,11 +26,11 @@ const adminsetpricingModel = async (data, res) => {
 
 const adminupdatepriceModel = async (data, res) => {
     try {
-      const { price_per_km , bike , car , van , comision ,  truck} = data;
+      const {price_per_km , bike , car , van , big_truck , medium_truck , small_truck , comision} = data;
   
       const form = await pricingModel.findOneAndUpdate({systemid : 'dashx'}, {
         $set: {
-            price_per_km , bike , car , van , truck , comision
+          price_per_km , bike , car , van , big_truck , medium_truck , small_truck , comision
         },
       });
   

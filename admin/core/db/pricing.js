@@ -15,7 +15,13 @@ const Riderschema = new schema({
             type:Number,
          },
    
-        truck: {
+        small_truck: {
+            type:Number
+         },
+        big_truck: {
+            type:Number
+         },
+        medium_truck: {
             type:Number
          },
    

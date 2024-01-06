@@ -3,7 +3,9 @@ const joi = require('joi')
 const adminpriceValidation = (req, res, next) => {
     const schema = joi.object({
         adminid: joi.string().required(),
-        truck: joi.number().required(),
+        small_truck: joi.number().required(),
+        big_truck: joi.number().required(),
+        medium_truck: joi.number().required(),
         bike: joi.number().required(),
         car: joi.number().required(),
         van: joi.number().required(),

@@ -4,7 +4,7 @@ const { adminupdatepriceModel, adminsetpricingModel } = require("../model/pricin
 
 
 const adminsetpricingController = async (req, res, next) => {
-    const {price_per_km , bike , car , van , truck , comision} =
+    const {price_per_km , bike , car , van , big_truck , medium_truck , small_truck , comision} =
       req.body;
     
   
@@ -26,13 +26,13 @@ const adminsetpricingController = async (req, res, next) => {
     }
   };
 const adminupdatepricingController = async (req, res, next) => {
-    const {price_per_km , bike , car , van , truck , comision} =
+    const {price_per_km , bike , car , van , big_truck , medium_truck , small_truck , comision} =
       req.body;
     
   
     try {
       const data = {
-        price_per_km , bike , car , van , truck , comision
+        price_per_km , bike , car , van , big_truck , medium_truck , small_truck , comision
       };
   
       let trainee = await adminupdatepriceModel(data, res);
