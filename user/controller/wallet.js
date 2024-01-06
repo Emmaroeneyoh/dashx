@@ -85,13 +85,13 @@ const userfundwalletController = async (req, res, next) => {
       const status = data.status
       const transid = data.id
       const transref= data.reference
-      const data = {
+      const datas = {
         userid,
         walletid,
         amount,
         status, transid , transref
       };
-      let comment = await userfundwalletModel(data, res);
+      let comment = await userfundwalletModel(datas, res);
       return res.status(200).json({
         status_code: 200,
         status: true,
@@ -108,13 +108,13 @@ const userfundwalletController = async (req, res, next) => {
       const status = data.status
       const transid = data.id
       const transref= data.reference
-      const data = {
+      const datas = {
         userid,
         walletid,
         amount,
         status, transid , transref
       };
-      let comment = await userfundwalletModel(data, res);
+      let comment = await userfundwalletModel(datas, res);
       return res.status(200).json({
         status_code: 200,
         status: true,
