@@ -1,23 +1,27 @@
-const { userwithdrawwalletController, userfundwalletController, userwithdrawwallethistoryController, userretrievebankaccountController, userretrieveaccountbalanceController } = require("../controller/wallet");
+const { userwithdrawwalletController, userfundwalletController, userwithdrawwallethistoryController, userretrievebankaccountController, userretrieveaccountbalanceController, usermakepaymentController } = require("../controller/wallet");
 const { user_check_token } = require("../core/authorization");
 const { userValidation } = require("../core/validations/auth");
-const { userwithdrawwalletValidation, userwallethistoryValidation } = require("../core/validations/wallet");
+const { userwithdrawwalletValidation, userwallethistoryValidation, userfundwalletValidation } = require("../core/validations/wallet");
 
 
 
 const router = require("express").Router();
 
+// router.post(
+//   "/withdraw/wallet",
+//   userwithdrawwalletValidation,
+//   user_check_token,
+//   userwithdrawwalletController
+// );
 router.post(
-  "/withdraw/wallet",
-  userwithdrawwalletValidation,
-  user_check_token,
-  userwithdrawwalletController
+  "/dashx/fund",
+  userfundwalletController
 );
 router.post(
   "/fund/wallet",
-  userwithdrawwalletValidation,
+  userfundwalletValidation,
   user_check_token,
-  userfundwalletController
+  usermakepaymentController
 );
 
 router.post(

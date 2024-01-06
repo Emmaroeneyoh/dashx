@@ -10,7 +10,10 @@ const Wallet_schema = new schema({
         account_number: {
             type:String, default : ''
         },
-        reference_number: {
+        transref: {
+            type:String, default : ''
+        },
+        paystackid: {
             type:String, default : ''
         },
         userid: {

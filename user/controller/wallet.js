@@ -1,3 +1,4 @@
+const { generateCheckoutURL } = require("../../helper/flutterwave/paystack");
 const { userModel } = require("../core/db/user");
 const { sellerWalletModel, userWalletModel } = require("../core/db/wallet");
 const { handleError } = require("../core/utils");
@@ -72,19 +73,75 @@ const userwithdrawwallethistoryController = async (req, res, next) => {
 const userfundwalletController = async (req, res, next) => {
   const { data , customer } = req.body;
   try {
-    const email = customer.email
-    const userEmail = email.toLowerCase();
-    const user = await userModel.findOne({ email: userEmail })
-    const userid = user._id
-    const wallet = await userWalletModel.findOne({userid})
-    const data = {
-      userid,
-      walletid,
-      amount,
-      status,
-      trx_type,
-    };
-    let comment = await userfundwalletModel(data, res);
+    const usertype = data.metadata.usertype
+    if (usertype == 'user') {
+      const email = customer.email
+      const userEmail = email.toLowerCase();
+      const user = await userModel.findOne({ email: userEmail })
+      const userid = user._id
+      const wallet = await userWalletModel.findOne({ userid })
+      const walletid = wallet._id
+      const amount = data.amount
+      const status = data.status
+      const transid = data.id
+      const transref= data.reference
+      const data = {
+        userid,
+        walletid,
+        amount,
+        status, transid , transref
+      };
+      let comment = await userfundwalletModel(data, res);
+      return res.status(200).json({
+        status_code: 200,
+        status: true,
+        message: "customer successfully "
+      });
+    } else {
+      const email = customer.email
+      const userEmail = email.toLowerCase();
+      const user = await userModel.findOne({ email: userEmail })
+      const userid = user._id
+      const wallet = await userWalletModel.findOne({ userid })
+      const walletid = wallet._id
+      const amount = data.amount
+      const status = data.status
+      const transid = data.id
+      const transref= data.reference
+      const data = {
+        userid,
+        walletid,
+        amount,
+        status, transid , transref
+      };
+      let comment = await userfundwalletModel(data, res);
+      return res.status(200).json({
+        status_code: 200,
+        status: true,
+        message: "customer successfully "
+      });
+    }
+   
+  
+  } catch (error) {
+    console.log(error);
+    handleError(error.message)(res);
+  }
+};
+const usermakepaymentController = async (req, res, next) => {
+  const { email , amount , usertype , userid } = req.body;
+  try {
+    console.log('email' , email)
+    let comment = await generateCheckoutURL(email, amount, usertype)
+    console.log(';psole' , comment)
+    if (!comment) {
+      return res.status(400).json({
+        status_code: 400,
+        status: true,
+        message: "transaction failed",
+        data: comment,
+      });
+    }
     return res.status(200).json({
       status_code: 200,
       status: true,
@@ -137,5 +194,5 @@ module.exports = {
   userwithdrawwallethistoryController,
   userfundwalletController,
   userretrievebankaccountController,
-  userretrieveaccountbalanceController,
+  userretrieveaccountbalanceController,  usermakepaymentController
 };

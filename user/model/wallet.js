@@ -52,18 +52,21 @@ const userwithdrawwalletModel = async (data, res) => {
 };
 const userfundwalletModel = async (data, res) => {
   try {
-    const { userid, amount } = data;
+    const {  userid,
+      walletid,
+      amount,
+      status, transid , transref} = data;
 
     //add to wallet history
     const form = await new userwallethistoryModel({
       userid,
       walletid,
       amount,
-      trx_type,
+      paystackid : transid  , transref 
     });
     await form.save();
 
-    if (status) {
+    if (status == 'success') {
       await userWalletModel.findOneAndUpdate(
         { userid, _id: walletid },
         { $inc: { balance: amount } }
