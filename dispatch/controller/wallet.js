@@ -45,7 +45,7 @@ const dispatchwithdrawwallethistoryController = async (req, res, next) => {
       dispatchid,
       walletid,
     };
-    let comment = await dispatchwallethistoryModel({dispatchid , walletid})
+    let comment = await dispatchwallethistoryModel.find({dispatchid , walletid})
     return res.status(200).json({
       status_code: 200,
       status: true,
@@ -84,7 +84,24 @@ const dispatchmakepaymentController = async (req, res, next) => {
     handleError(error.message)(res);
   }
 };
+
+const userretrieveaccountbalanceController = async (req, res, next) => {
+  const { dispatchid } = req.body;
+  try {
+
+    let comment = await dispatchWalletModel.findOne({dispatchid})
+    return res.status(200).json({
+      status_code: 200,
+      status: true,
+      message: "customer successfully retrieved",
+      data: comment,
+    });
+  } catch (error) {
+    console.log(error);
+    handleError(error.message)(res);
+  }
+};
 module.exports = {
   dispatchwithdrawwalletController,
-  dispatchwithdrawwallethistoryController , dispatchmakepaymentController
+  dispatchwithdrawwallethistoryController , dispatchmakepaymentController , userretrieveaccountbalanceController
 };
