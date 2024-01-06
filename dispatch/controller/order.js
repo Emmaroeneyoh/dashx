@@ -253,6 +253,7 @@ const dispatchlistcityController = async (req, res, next) => {
       if (!citiesWithOrders[city]) {
         // If the city doesn't exist in the new array, create an entry
         citiesWithOrders[city] = {
+          cityName: city, // Include the city name
           orders: [],
           length: 0,
         };
@@ -264,7 +265,9 @@ const dispatchlistcityController = async (req, res, next) => {
       // Increment the length for the city
       citiesWithOrders[city].length++;
     });
-    const citiesArray = Object.values(citiesWithOrders)
+    
+    // Convert the object to an array
+    const citiesArray = Object.values(citiesWithOrders);
     
     
     return res.status(200).json({
