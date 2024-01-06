@@ -1,4 +1,5 @@
 const { dispatchModel } = require("../../dispatch/core/db/dispatch");
+const { userorderModel } = require("../../user/core/db/order");
 const { bussinessUpdateprofileModel } = require("../model/monitor");
 
 const bussinessupdatdispatchController = async (req, res, next) => {
@@ -61,22 +62,26 @@ const bussinessunblockdispatchController = async (req, res, next) => {
     return handleError(error.message)(res);
   }
 };
-// const bussinessretrieveactiveorderController = async (req, res, next) => {
-//   try {
-
-//  const activeorder =   await userorderMod.find({order_status :'shipping'});
-//     return res.status(200).json({
-//       status_code: 200,
-//       status: true,
-//       message: "dispatch is blocked",
-//     });
-//   } catch (error) {
-//     console.log(error);
-//     return handleError(error.message)(res);
-//   }
-// };
+const bussinessretrieveactiveorderController = async (req, res, next) => {
+  try {
+    const activeorder = await userorderModel
+      .find({ order_status: "shipping" })
+      .populate("dispatchid");
+    return res.status(200).json({
+      status_code: 200,
+      status: true,
+      message: "dispatch is blocked",
+      data: activeorder,
+    });
+  } catch (error) {
+    console.log(error);
+    return handleError(error.message)(res);
+  }
+};
 
 module.exports = {
   bussinessupdatdispatchController,
-  bussinessblockdispatchController, bussinessunblockdispatchController 
+  bussinessblockdispatchController,
+  bussinessunblockdispatchController,
+  bussinessretrieveactiveorderController,
 };
