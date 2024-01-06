@@ -74,53 +74,54 @@ const userfundwalletController = async (req, res, next) => {
   const { data , customer } = req.body;
   try {
     const usertype = data.metadata.usertype
-    if (usertype == 'user') {
-      const email = customer.email
-      const userEmail = email.toLowerCase();
-      const user = await userModel.findOne({ email: userEmail })
-      const userid = user._id
-      const wallet = await userWalletModel.findOne({ userid })
-      const walletid = wallet._id
-      const amount = data.amount
-      const status = data.status
-      const transid = data.id
-      const transref= data.reference
-      const data = {
-        userid,
-        walletid,
-        amount,
-        status, transid , transref
-      };
-      let comment = await userfundwalletModel(data, res);
-      return res.status(200).json({
-        status_code: 200,
-        status: true,
-        message: "customer successfully "
-      });
-    } else {
-      const email = customer.email
-      const userEmail = email.toLowerCase();
-      const user = await userModel.findOne({ email: userEmail })
-      const userid = user._id
-      const wallet = await userWalletModel.findOne({ userid })
-      const walletid = wallet._id
-      const amount = data.amount
-      const status = data.status
-      const transid = data.id
-      const transref= data.reference
-      const data = {
-        userid,
-        walletid,
-        amount,
-        status, transid , transref
-      };
-      let comment = await userfundwalletModel(data, res);
-      return res.status(200).json({
-        status_code: 200,
-        status: true,
-        message: "customer successfully "
-      });
-    }
+    console.log('data' , data)
+    // if (usertype == 'user') {
+    //   const email = customer.email
+    //   const userEmail = email.toLowerCase();
+    //   const user = await userModel.findOne({ email: userEmail })
+    //   const userid = user._id
+    //   const wallet = await userWalletModel.findOne({ userid })
+    //   const walletid = wallet._id
+    //   const amount = data.amount
+    //   const status = data.status
+    //   const transid = data.id
+    //   const transref= data.reference
+    //   const data = {
+    //     userid,
+    //     walletid,
+    //     amount,
+    //     status, transid , transref
+    //   };
+    //   let comment = await userfundwalletModel(data, res);
+    //   return res.status(200).json({
+    //     status_code: 200,
+    //     status: true,
+    //     message: "customer successfully "
+    //   });
+    // } else {
+    //   const email = customer.email
+    //   const userEmail = email.toLowerCase();
+    //   const user = await userModel.findOne({ email: userEmail })
+    //   const userid = user._id
+    //   const wallet = await userWalletModel.findOne({ userid })
+    //   const walletid = wallet._id
+    //   const amount = data.amount
+    //   const status = data.status
+    //   const transid = data.id
+    //   const transref= data.reference
+    //   const data = {
+    //     userid,
+    //     walletid,
+    //     amount,
+    //     status, transid , transref
+    //   };
+    //   let comment = await userfundwalletModel(data, res);
+    //   return res.status(200).json({
+    //     status_code: 200,
+    //     status: true,
+    //     message: "customer successfully "
+    //   });
+    // }
    
   
   } catch (error) {
