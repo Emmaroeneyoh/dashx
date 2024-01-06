@@ -114,7 +114,7 @@ const userfundwalletController = async (req, res, next) => {
       const transid = data.id
       const transref= data.reference
       const datas = {
-        userid,
+        dispatchid,
         walletid,
         amount,
         status, transid , transref
