@@ -62,8 +62,9 @@ const bussinessretrieveallorderController = async (req, res, next) => {
 const bussinessretrievefleetrController = async (req, res, next) => {
   const { dispatchid } = req.body;
   try {
-    const fleet = await dispatchModel
-      .find({ "bussiess.bussinessid": dispatchid })
+    const fleet = await dispatchModel.find({
+      "bussiess.bussinessid": dispatchid,
+    });
     return res.status(200).json({
       status_code: 200,
       status: true,
@@ -94,7 +95,29 @@ const bussinessretrievefleetdetailController = async (req, res, next) => {
 const bussinessretrievefleetordersController = async (req, res, next) => {
   const { dispatchid, fleetid } = req.body;
   try {
-    let trainee = await userorderModel.find({ dispatchid: fleetid }).populate('dispatchid')
+    let trainee = await userorderModel
+      .find({ dispatchid: fleetid })
+      .populate("dispatchid");
+    return res.status(200).json({
+      status_code: 200,
+      status: true,
+      message: "user successfully retrieved",
+      data: trainee,
+    });
+  } catch (error) {
+    console.log(error);
+    handleError(error.message)(res);
+  }
+};
+const bussinessretrieveactiveriderController = async (req, res, next) => {
+  const { dispatchid, fleetid } = req.body;
+  try {
+    let trainee = await dispatchModel
+      .find({
+        "bussiness.bussiness_type": dispatchid,
+        online_status: true,
+      })
+      .populate("dispatchid");
     return res.status(200).json({
       status_code: 200,
       status: true,
@@ -110,7 +133,7 @@ const bussinessadddispatchController = async (req, res, next) => {
   const { email, password, phone, name, dispatchid, vehicle_type } = req.body;
   try {
     const dispatchEmail = email.toLowerCase();
-    const user = await dispatchModel.findOne({ email: dispatchEmail })
+    const user = await dispatchModel.findOne({ email: dispatchEmail });
     if (user) {
       return res.status(400).json({
         status_code: 400,
@@ -149,5 +172,6 @@ module.exports = {
   bussinessretrieveallorderController,
   bussinessadddispatchController,
   bussinessretrievefleetrController,
-  bussinessretrievefleetdetailController,  bussinessretrievefleetordersController
+  bussinessretrievefleetdetailController,
+  bussinessretrievefleetordersController, bussinessretrieveactiveriderController 
 };

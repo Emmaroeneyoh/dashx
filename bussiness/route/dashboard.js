@@ -10,6 +10,7 @@ const {
   bussinessretrievefleetordersController,
   bussinessadddispatchController,
   bussinessretrievefleetrController,
+  bussinessretrieveactiveriderController,
 } = require("../controller/dashboard");
 const { bussinessupdatdispatchController, bussinessblockdispatchController, bussinessunblockdispatchController } = require("../controller/monitor");
 const {
@@ -93,6 +94,12 @@ router.post(
   bussinessupdatedispatchValidation,
   dispatch_check_token,
   bussinessupdatdispatchController
+);
+router.post(
+  "/active/rider",
+  dispatchValidation,
+  dispatch_check_token,
+  bussinessretrieveactiveriderController
 );
 
 
