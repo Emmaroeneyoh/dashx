@@ -1,4 +1,5 @@
 const { userstatusModel } = require("../../admin/core/db/user.status")
+const { usersupportModel } = require("../../admin/core/db/user.support")
 const { userModel } = require("../core/db/user")
 
 
@@ -23,7 +24,7 @@ const registeruser = (io) => {
                
                 const userDetails = await form.save()
             } else {
-                console.log('socket.id' , socket.id)
+                console.log('socket.id' , socket.id , userid)
                 await userstatusModel.findOneAndUpdate({userid}, {
                     $set: {
                    socketid:socket.id
@@ -33,30 +34,34 @@ const registeruser = (io) => {
            
         })
 
-
-        // //coonect after logged in or signup
-        // socket.on('unregister', async (data) => {
-        //     console.log('checked now' , data)
-        //     // uncacheusers(data)
-        //     await userModel.findByIdAndUpdate(data, {
-        //         $set: {
-        //           status: "offline",
-        //         },
-        //       });
-        // })
-
-        //after client ot server disconnects
-        socket.on('disconnect', async() => {
-            console.log('A client disconnected:', socket.id);
-            // const userid = await retrievecacheuserstatus(socket.id)
-            // console.log('this is offline client', userid)
-            //update the user profile from the database
-            // await userModel.findByIdAndUpdate(userid, {
-            //     $set: {
-            //       status: "offline",
-            //     },
-            //   });
+        socket.on('join_admin_user', () => {
+            socket.join('usersupport');
+            console.log('Admin joined the room');
           });
+
+      //for chat
+      socket.on('send_user_support', async (data) => {
+       
+        //send user chat
+        const type = data.type
+        const usertype = data.usertype
+        const text = data.text
+        const userid = data.userid
+
+        const talk = await new usersupportModel({
+          type , text, userid , usertype
+        });
+        const chat = await talk.save()
+          const usersocket = await userstatusModel.findOne({ userid })
+          const socketid = usersocket.socketid
+          if (usertype == 'user') {
+            io.to('usersupport').emit('receieve_user_support', chat)
+          } else {
+              console.log('ending to admin')
+            io.to(socketid).emit('receieve_user_support', chat)
+          }
+       
+    })
     })
 }
 

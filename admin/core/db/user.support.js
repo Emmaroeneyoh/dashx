@@ -3,11 +3,11 @@ const schema = mongoose.Schema
 
 const post_schema = new schema({
     
-   message: {
+   text: {
         type:String,
         
     },
-   messagetype: {
+  type: {
         type:String,
         
     },
@@ -15,6 +15,10 @@ const post_schema = new schema({
     userid: {
         type:  mongoose.Schema.Types.ObjectId,
          ref:'user'
+    },
+    usertype: {
+        type: String,
+         
     },
     createdAt : {
         type: Date,

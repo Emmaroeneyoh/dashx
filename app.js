@@ -35,6 +35,7 @@ const adminhr = require('./admin/route/hr');
 const adminuser = require('./admin/route/user');
 const admindispatch = require('./admin/route/dispatch');
 const { registeruser } = require("./user/controller/socket");
+const { updatedispatchcord } = require("./dispatch/controller/socket");
 
 //connecting the database
 coonectdb();
@@ -100,6 +101,7 @@ const port = PORT || 5000;
 
 http.listen(port, () => console.log("coonected"));
 registeruser(io)
+updatedispatchcord(io)
 
 // app.listen(port, () => {
 //   console.log("server connected", port);
