@@ -62,7 +62,7 @@ const businessretrievesinglefleetModel = async (data, res) => {
     const { dispatchid, fleetid } = data;
     const fleet = await dispatchModel.findById(fleetid);
  
-    const totalorder = await userorderModel.countDocuments({dispatchid});
+    const totalorder = await userorderModel.countDocuments({dispatchid}).populate('dispatchid')
     const totalamount = 500;
     const fleetdata = { fleet, totalorder, totalamount };
     return fleetdata;
