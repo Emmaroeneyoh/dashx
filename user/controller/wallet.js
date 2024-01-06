@@ -106,8 +106,8 @@ const userfundwalletController = async (req, res, next) => {
       const userEmail = email.toLowerCase();
       const user = await dispatchModel.findOne({ email: userEmail })
       console.log('user' , user)
-      const userid = user._id
-      const wallet = await dispatchWalletModel.findOne({ userid })
+      const dispatchid = user._id
+      const wallet = await dispatchWalletModel.findOne({ dispatchid  })
       const walletid = wallet._id
       const amount = data.amount
       const status = data.status
