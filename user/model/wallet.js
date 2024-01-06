@@ -104,7 +104,6 @@ const userretrievebankaccountModel = async (data, res) => {
       userid,
     });
     const accountnumber = wallethistory.account_number;
-    const details = await getBankDetails();
 
     return details;
   } catch (error) {

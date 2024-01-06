@@ -8,45 +8,45 @@ const { adminmgnuserValidation, adminretrievetripValidation } = require("../core
 
 const router = require("express").Router();
 
-// router.post(
-//     "/retrieve/all/user",
-//     checkAdminRoles(['superadmin']) ,
-//   adminValidation,
-//   adminretrievealluserController
-// );
-// router.post(
-//     "/retrieve/single/user",
-//     checkAdminRoles(['superadmin']) ,
-//   adminmgnuserValidation,
-//   adminretrievesingleuserController
-// );
-// router.post(
-//     "/block/user",
-//     checkAdminRoles(['superadmin']) ,
-//   adminmgnuserValidation,
-//   adminblockuserController
-// );
-// router.post(
-//     "/unblock/user",
-//     checkAdminRoles(['superadmin']) ,
-//   adminmgnuserValidation,
-//   adminunblockuserController
-// );
-// router.post(
-//     "/retrieve/block/users",
-//     checkAdminRoles(['superadmin']) ,
-//     adminValidation,
-//     adminretrieveblockuserController
-// );
-// router.post(
-//     "/retrieve/trip",
-//     checkAdminRoles(['superadmin']) ,
-//     adminretrieveactivetripController
-// );
-// router.post(
-//     "/retrieve/booking",
-//     checkAdminRoles(['superadmin']) ,
-//     adminretrievetripController
-// );
+router.post(
+    "/retrieve/all/user",
+    checkAdminRoles(['superadmin']) ,
+  adminValidation,
+  adminretrievealluserController
+);
+router.post(
+    "/retrieve/single/user",
+    checkAdminRoles(['superadmin']) ,
+  adminmgnuserValidation,
+  adminretrievesingleuserController
+);
+router.post(
+    "/block/user",
+    checkAdminRoles(['superadmin']) ,
+  adminmgnuserValidation,
+  adminblockuserController
+);
+router.post(
+    "/unblock/user",
+    checkAdminRoles(['superadmin']) ,
+  adminmgnuserValidation,
+  adminunblockuserController
+);
+router.post(
+    "/retrieve/block/users",
+    checkAdminRoles(['superadmin']) ,
+    adminValidation,
+    adminretrieveblockuserController
+);
+router.post(
+    "/retrieve/trip",
+    checkAdminRoles(['superadmin']) ,
+    adminretrieveactivetripController
+);
+router.post(
+    "/retrieve/booking",
+    checkAdminRoles(['superadmin']) ,
+    adminretrievetripController
+);
 
 module.exports = router

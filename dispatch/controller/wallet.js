@@ -1,5 +1,6 @@
 const { generateCheckoutURL } = require("../../helper/flutterwave/paystack");
 const { dispatchWalletModel } = require("../core/db/wallet");
+const { dispatchwallethistoryModel } = require("../core/db/wallethistory");
 const { handleError } = require("../core/utils");
 const { dispatchwithdrawwalletModel, dispatchwalletfundhistoryModel } = require("../model/wallet");
 
@@ -44,7 +45,7 @@ const dispatchwithdrawwallethistoryController = async (req, res, next) => {
       dispatchid,
       walletid,
     };
-    let comment = await dispatchwalletfundhistoryModel(data, res);
+    let comment = await dispatchwallethistoryModel({dispatchid , walletid})
     return res.status(200).json({
       status_code: 200,
       status: true,

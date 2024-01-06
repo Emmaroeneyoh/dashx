@@ -184,7 +184,7 @@ const userretrieveaccountbalanceController = async (req, res, next) => {
     const data = {
       userid,
     };
-    let comment = await userretrieveaccountbalanceModel(data, res);
+    let comment = await userWalletModel.findOne({userid})
     return res.status(200).json({
       status_code: 200,
       status: true,
