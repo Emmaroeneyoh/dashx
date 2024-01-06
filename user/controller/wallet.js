@@ -1,3 +1,6 @@
+const { dispatchModel } = require("../../dispatch/core/db/dispatch");
+const { dispatchWalletModel } = require("../../dispatch/core/db/wallet");
+const { dispatchfundwalletModel } = require("../../dispatch/model/wallet");
 const { generateCheckoutURL } = require("../../helper/flutterwave/paystack");
 const { userModel } = require("../core/db/user");
 const { sellerWalletModel, userWalletModel } = require("../core/db/wallet");
@@ -100,9 +103,9 @@ const userfundwalletController = async (req, res, next) => {
     } else {
       const email = data.customer.email
       const userEmail = email.toLowerCase();
-      const user = await userModel.findOne({ email: userEmail })
+      const user = await dispatchModel.findOne({ email: userEmail })
       const userid = user._id
-      const wallet = await userWalletModel.findOne({ userid })
+      const wallet = await dispatchWalletModel.findOne({ userid })
       const walletid = wallet._id
       const amount = data.amount
       const status = data.status
@@ -114,7 +117,7 @@ const userfundwalletController = async (req, res, next) => {
         amount,
         status, transid , transref
       };
-      let comment = await userfundwalletModel(datas, res);
+      let comment = await dispatchfundwalletModel(datas, res);
       return res.status(200).json({
         status_code: 200,
         status: true,
@@ -128,6 +131,8 @@ const userfundwalletController = async (req, res, next) => {
     handleError(error.message)(res);
   }
 };
+
+
 const usermakepaymentController = async (req, res, next) => {
   const { email , amount , usertype , userid } = req.body;
   try {
@@ -194,5 +199,5 @@ module.exports = {
   userwithdrawwallethistoryController,
   userfundwalletController,
   userretrievebankaccountController,
-  userretrieveaccountbalanceController,  usermakepaymentController
+  userretrieveaccountbalanceController,  usermakepaymentController 
 };

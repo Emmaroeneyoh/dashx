@@ -2,13 +2,12 @@ const joi = require("joi");
 const { handleError } = require("../utils");
 
 
-const dispatchwithdrawwalletValidation = (req, res, next) => {
+const dispatchfundwalletValidation = (req, res, next) => {
   const schema = joi.object({
     dispatchid: joi.string().required(),
-    walletid: joi.string().required(),
+    email: joi.string().required(),
     amount: joi.number().required(),
-    status: joi.boolean().required(),
-    trx_type: joi.string().required(),
+    usertype: joi.string().required(),
   });
   const { error } = schema.validate(req.body);
   if (error) {
@@ -19,6 +18,7 @@ const dispatchwithdrawwalletValidation = (req, res, next) => {
   }
   return next();
 };
+
 
 
 const dispatchwallethistoryValidation = (req, res, next) => {
@@ -38,5 +38,5 @@ const dispatchwallethistoryValidation = (req, res, next) => {
 
 
 module.exports = {
-    dispatchwithdrawwalletValidation , dispatchwallethistoryValidation
+  dispatchfundwalletValidation , dispatchwallethistoryValidation 
 }

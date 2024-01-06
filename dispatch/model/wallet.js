@@ -3,23 +3,26 @@ const { dispatchwallethistoryModel } = require("../core/db/wallethistory");
 
 
 
-const dispatchwithdrawwalletModel = async (data, res) => {
+const dispatchfundwalletModel = async (datas, res) => {
   try {
-    const { dispatchid, walletid, amount, status , trx_type } = data;
+    const {  dispatchid,
+      walletid,
+      amount,
+      status, transid , transref} = datas;
 
     //add to wallet history
     const form = await new dispatchwallethistoryModel({
       dispatchid,
       walletid,
-      status,
-      amount, trx_type
+      amount,
+      paystackid : transid  , transref 
     });
     await form.save();
 
-    if (status) {
+    if (status == 'success') {
       await dispatchWalletModel.findOneAndUpdate(
-        { dispatchid, _id: walletid },
-        { $inc: { balance: -amount } }
+        {dispatchid, _id: walletid },
+        { $inc: { balance: amount } }
       );
     }
 
@@ -29,6 +32,7 @@ const dispatchwithdrawwalletModel = async (data, res) => {
     return error.message;
   }
 };
+
 
 
 const dispatchwalletfundhistoryModel = async (data, res) => {
@@ -48,5 +52,5 @@ const dispatchwalletfundhistoryModel = async (data, res) => {
 };
 
 module.exports = {
-    dispatchwalletfundhistoryModel , dispatchwithdrawwalletModel
+    dispatchwalletfundhistoryModel , dispatchfundwalletModel
 };

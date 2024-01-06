@@ -19,6 +19,7 @@ const { PORT } = require("./helper/utils")
 const dispatchauth = require('./dispatch/route/auth'); 
 const dispatchprofile = require('./dispatch/route/profile'); 
 const dispatchorder = require('./dispatch/route/order'); 
+const dispatchwallet = require('./dispatch/route/wallet'); 
 const bussiness = require('./bussiness/route/dashboard'); 
 
 // for user +
@@ -55,9 +56,10 @@ const fleet = '/bussiness'
 // app.use(user , userorder)
 app.use(user , userwallet)
 // //for seller
-// app.use(dispatch , dispatchauth)
+app.use(dispatch , dispatchauth)
 // app.use(dispatch , dispatchprofile)
 // app.use(dispatch, dispatchorder)
+app.use(dispatch, dispatchwallet)
 // app.use(fleet, bussiness)
 
 //for admin

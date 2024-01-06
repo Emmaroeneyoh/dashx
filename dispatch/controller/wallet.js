@@ -1,3 +1,4 @@
+const { generateCheckoutURL } = require("../../helper/flutterwave/paystack");
 const { dispatchWalletModel } = require("../core/db/wallet");
 const { handleError } = require("../core/utils");
 const { dispatchwithdrawwalletModel, dispatchwalletfundhistoryModel } = require("../model/wallet");
@@ -56,7 +57,33 @@ const dispatchwithdrawwallethistoryController = async (req, res, next) => {
   }
 };
 
+
+const dispatchmakepaymentController = async (req, res, next) => {
+  const { email , amount , usertype , dispatchid } = req.body;
+  try {
+    console.log('email' , email)
+    let comment = await generateCheckoutURL(email, amount, usertype)
+    console.log(';psole' , comment)
+    if (!comment) {
+      return res.status(400).json({
+        status_code: 400,
+        status: true,
+        message: "transaction failed",
+        data: comment,
+      });
+    }
+    return res.status(200).json({
+      status_code: 200,
+      status: true,
+      message: "customer successfully retrieved",
+      data: comment,
+    });
+  } catch (error) {
+    console.log(error);
+    handleError(error.message)(res);
+  }
+};
 module.exports = {
   dispatchwithdrawwalletController,
-  dispatchwithdrawwallethistoryController
+  dispatchwithdrawwallethistoryController , dispatchmakepaymentController
 };

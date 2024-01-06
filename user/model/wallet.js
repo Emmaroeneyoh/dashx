@@ -50,6 +50,7 @@ const userwithdrawwalletModel = async (data, res) => {
     return error.message;
   }
 };
+
 const userfundwalletModel = async (datas, res) => {
   try {
     const {  userid,
