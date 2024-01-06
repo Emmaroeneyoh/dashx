@@ -75,9 +75,7 @@ const dispatchLoginModel = async (data,res) => {
     const dispatchid = userDetails._id
     const dispatchwallet = await dispatchWalletModel.findOne({dispatchid})
      const userData = {
-         id: userDetails._id,
-         name: userDetails.name,
-         email: userDetails.email,
+        userDetails,
          token, dispatchwallet
       }
    

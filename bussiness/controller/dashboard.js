@@ -111,6 +111,16 @@ const bussinessadddispatchController = async (req, res, next) => {
   const { email, password, phone, name, dispatchid, vehicle_type } = req.body;
   try {
     const dispatchEmail = email.toLowerCase();
+    const user = await dispatchModel.find({email :dispatchEmail })
+    if (user) {
+      return res.status(400).json({
+        status_code: 400,
+        status: false,
+        message: "email already exist",
+        data: [],
+        error: "email already exist",
+      });
+    }
     const salt = await bcrypt.genSalt();
     const Harshpassword = await bcrypt.hash(password, salt);
     const data = {

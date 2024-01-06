@@ -19,6 +19,7 @@ const { PORT } = require("./helper/utils")
 const dispatchauth = require('./dispatch/route/auth'); 
 const dispatchprofile = require('./dispatch/route/profile'); 
 const dispatchorder = require('./dispatch/route/order'); 
+const bussiness = require('./bussiness/route/dashboard'); 
 
 // for user +
 const userauth = require('./user/route/auth'); 
@@ -45,6 +46,7 @@ app.use(express.urlencoded({ extended: true }));
 const user = '/user'
 const admin = '/admin'
 const dispatch = '/dispatch'
+const fleet = '/bussiness'
 //for user
 app.use(user , userauth)
 app.use(user , userprofile)
@@ -54,6 +56,7 @@ app.use(user , userwallet)
 app.use(dispatch , dispatchauth)
 app.use(dispatch , dispatchprofile)
 app.use(dispatch, dispatchorder)
+app.use(fleet, bussiness)
 
 //for admin
 app.use(admin, adminauth)

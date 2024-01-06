@@ -34,6 +34,13 @@ router.post(
   "/paystack",
   (req,res) => {
     console.log('body', req.body)
+    const datas = req.body.data
+    const status = datas.status
+    const transid = datas.id
+    const amount = datas.amount
+    const reference = datas.reference
+    const user = req.body.customer
+    const email = user.email
     res.send('hello')
  }
 );

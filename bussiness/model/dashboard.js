@@ -5,14 +5,14 @@ const bussinessdashboardModel = async (data, res) => {
   try {
     const { dispatchid } = data;
     const fleet = await dispatchModel
+      .countDocuments({ "bussiess.bussinessid": dispatchid })
+    const totalfleet = await dispatchModel
       .find({ "bussiess.bussinessid": dispatchid })
-      .select("name");
     const activerider = await dispatchModel
-      .find({ "bussiess.bussinessid": dispatchid, driver_status: "online" })
-      .select("name");
-    const ids = fleet.map((x) => x._id);
-    const totalorders = await userorderModel.find({ dispatchid: { $in: ids } });
-    const activeorders = await userorderModel.find({
+      .countDocuments({ "bussiess.bussinessid": dispatchid, driver_status: "online" });
+    const ids = totalfleet.map((x) => x._id);
+    const totalorders = await userorderModel.countDocuments({ dispatchid: { $in: ids } });
+    const activeorders = await userorderModel.countDocuments({
       dispatchid: { $in: ids },
       order_status: "shipping",
     });
@@ -109,14 +109,9 @@ const bussinessadddispatchModel = async (data, res) => {
     });
 
     const userDetails = await form.save();
-    //update the user code so you can verify him
-    const updatecode = await dispatchModel.findByIdAndUpdate(userDetails._id, {
-      $set: {
-        "auth.auth_code": code,
-      },
-    });
+  
 
-    return "please check email for code";
+    return "success";
   } catch (error) {
     console.log("error", error);
     return error.message;
