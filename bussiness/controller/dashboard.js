@@ -64,7 +64,6 @@ const bussinessretrievefleetrController = async (req, res, next) => {
   try {
     const fleet = await dispatchModel
       .find({ "bussiess.bussinessid": dispatchid })
-      .select("name");
     return res.status(200).json({
       status_code: 200,
       status: true,
