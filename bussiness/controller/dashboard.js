@@ -111,7 +111,7 @@ const bussinessadddispatchController = async (req, res, next) => {
   const { email, password, phone, name, dispatchid, vehicle_type } = req.body;
   try {
     const dispatchEmail = email.toLowerCase();
-    const user = await dispatchModel.find({email :dispatchEmail })
+    const user = await dispatchModel.findOne({ email: dispatchEmail })
     if (user) {
       return res.status(400).json({
         status_code: 400,
