@@ -245,6 +245,10 @@ const dispatchlistcityController = async (req, res, next) => {
     const cities = city.map(x => x.sendercity)
     const uniqueCitiesSet = new Set(cities);
     const dcity = Array.from(uniqueCitiesSet);
+
+    
+    
+    console.log(cityOrderCount);
     return res.status(200).json({
       status_code: 200,
       status: true,

@@ -90,7 +90,17 @@ const adminretrieveactivetripController = async (req, res, next) => {
       
           if (orderid != "") {
             query.$and.push({ _id: orderid });
-          }
+      }
+      if (query.$and.length == 0) {
+      
+        const trip = await userorderModel.find().populate('dispatchid')
+         return res.status(200).json({
+           status_code: 200,
+           status: true,
+           message: "signup process successful",
+           data: trip,
+         });
+       }
     let trainee = await userorderModel.find(query);
     return res.status(200).json({
       status_code: 200,
@@ -120,7 +130,17 @@ const adminretrievetripController = async (req, res, next) => {
         if (endDate != "") {
             query.$and.push({ createdAt: { $lte: endDate } }); 
         }
-          
+    
+      if (query.$and.length == 0) {
+      
+       const trip = await userorderModel.find().populate('dispatchid')
+        return res.status(200).json({
+          status_code: 200,
+          status: true,
+          message: "signup process successful",
+          data: trip,
+        });
+      }
     let trainee = await userorderModel.find(query).populate('dispatchid')
     return res.status(200).json({
       status_code: 200,
