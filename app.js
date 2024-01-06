@@ -50,22 +50,22 @@ const admin = '/admin'
 const dispatch = '/dispatch'
 const fleet = '/bussiness'
 //for user
-app.use(user , userauth)
-app.use(user , userprofile)
-app.use(user , userorder)
+// app.use(user , userauth)
+// app.use(user , userprofile)
+// app.use(user , userorder)
 app.use(user , userwallet)
-//for seller
-app.use(dispatch , dispatchauth)
-app.use(dispatch , dispatchprofile)
-app.use(dispatch, dispatchorder)
-app.use(fleet, bussiness)
+// //for seller
+// app.use(dispatch , dispatchauth)
+// app.use(dispatch , dispatchprofile)
+// app.use(dispatch, dispatchorder)
+// app.use(fleet, bussiness)
 
 //for admin
-app.use(admin, adminauth)
-app.use(admin, adminadmin)
-app.use(admin, adminhr)
-app.use(admin, adminuser)
-app.use(admin, admindispatch)
+// app.use(admin, adminauth)
+// app.use(admin, adminadmin)
+// app.use(admin, adminhr)
+// app.use(admin, adminuser)
+// app.use(admin, admindispatch)
 
 
 
