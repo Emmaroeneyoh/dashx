@@ -3,11 +3,8 @@ const schema = mongoose.Schema
 
 const post_schema = new schema({
     
-   message: {
-        type:String,
-        
-    },
-   messagetype: {
+   
+   socketid: {
         type:String,
         
     },
@@ -21,7 +18,7 @@ const post_schema = new schema({
         default:Date.now
     }
 })
-const usersupportModel = mongoose.model('usersupport', post_schema)
+const userstatusModel = mongoose.model('userstatus', post_schema)
 module.exports = {
-    usersupportModel
+    userstatusModel
 }

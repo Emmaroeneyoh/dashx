@@ -147,6 +147,14 @@ const dispatchLoginController = async (req, res, next) => {
     const userDetails = await dispatchModel.findOne({
       email: dispatchEmail,
     });
+    if (!userDetails) {
+      return res.status(400).json({
+          status_code: 400,
+          status: false,
+          message: "dispatch does not exist",
+          error: "dispatch does not exist",
+        });
+}
         //check if the email is verified
         if (!userDetails.auth.auth_verified) {
             return res.status(400).json({
