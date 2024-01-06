@@ -48,7 +48,7 @@ const businessretrieveallorderModel = async (data, res) => {
     const totalorders = await userorderModel.find({ dispatchid: { $in: ids } });
     const orderhistory = await userorderModel.find({
       dispatchid: { $in: ids },
-    });
+    }).populate('dispatchid')
 
     return orderhistory;
   } catch (error) {
