@@ -83,17 +83,19 @@ const dispatchacceptorderModel = async (data, res) => {
 
 const dispatchpickuporderModel = async (data, res) => {
   try {
+const currentTime = new Date().toLocaleString('en-US', { hour: 'numeric', minute: 'numeric', hour12: true });
+
     const { orderid, upload } = data;
     //save order upload
     const form = await new orderuploadmodel({
       orderid,
-      upload,  pickuptime :Date.now()
+      upload, 
     });
     await form.save();
      //update pickup time
    await userorderModel.findByIdAndUpdate(orderid, {
       $set: {
-        pickuptime :Date.now()
+        pickuptime :currentTime , order_status:"accepted"
       },
     });
     //generate code
