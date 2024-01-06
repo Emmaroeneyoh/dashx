@@ -121,7 +121,7 @@ const adminretrievetripController = async (req, res, next) => {
             query.$and.push({ createdAt: { $lte: endDate } }); 
         }
           
-    let trainee = await userorderModel.find(query);
+    let trainee = await userorderModel.find(query).populate('dispatchid')
     return res.status(200).json({
       status_code: 200,
       status: true,
