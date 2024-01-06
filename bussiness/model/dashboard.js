@@ -60,11 +60,9 @@ const businessretrieveallorderModel = async (data, res) => {
 const businessretrievesinglefleetModel = async (data, res) => {
   try {
     const { dispatchid, fleetid } = data;
-    const fleet = await dispatchModel.findOne({
-      "bussiess.bussinessid": dispatchid,
-      _id: fleetid,
-    });
-    const totalorder = await userorderModel.countDocuments();
+    const fleet = await dispatchModel.findById(fleetid);
+ 
+    const totalorder = await userorderModel.countDocuments({dispatchid});
     const totalamount = 500;
     const fleetdata = { fleet, totalorder, totalamount };
     return fleetdata;

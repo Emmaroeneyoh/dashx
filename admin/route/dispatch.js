@@ -1,4 +1,4 @@
-const { adminretrievealldriverController, adminretrievesingledriverController, adminblockdriverController, adminunblockdriverController, adminretrieveunpproveddriverController, adminapprovedriverController, adminretrieveblockdriverController, adminretrieveblockuserController, adminrejectdispatchrequestController } = require("../controller/driver");
+const { adminretrievealldriverController, adminretrievesingledriverController, adminblockdriverController, adminunblockdriverController, adminretrieveunpproveddriverController, adminapprovedriverController, adminretrieveblockdriverController, adminretrieveblockuserController, adminrejectdispatchrequestController, adminretrieveallbussiessController, adminretrievesinglebussinessController, adminretrievebussinessdriverController, adminretrievebussinessorderController } = require("../controller/driver");
 const { checkAdminRoles } = require("../core/authorization");
 const { adminrejectdispatchrequestValidation } = require("../core/validation/admin");
 const { adminValidation } = require("../core/validation/auth");
@@ -55,6 +55,33 @@ router.post(
     checkAdminRoles(['superadmin']) ,
     adminValidation,
     adminretrieveblockdriverController
+);
+
+
+//bussiness
+router.post(
+  "/retrieve/all/bussiness",
+  checkAdminRoles(['superadmin']) ,
+adminValidation,
+adminretrieveallbussiessController
+);
+router.post(
+  "/retrieve/single/bussiness",
+  checkAdminRoles(['superadmin']) ,
+  adminmgndispatchValidation,
+adminretrievesinglebussinessController
+);
+router.post(
+  "/retrieve/bussiness/driver",
+  checkAdminRoles(['superadmin']) ,
+  adminmgndispatchValidation,
+  adminretrievebussinessdriverController
+);
+router.post(
+  "/retrieve/bussiness/order",
+  checkAdminRoles(['superadmin']) ,
+  adminmgndispatchValidation,
+  adminretrievebussinessorderController
 );
 
 

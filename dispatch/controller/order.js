@@ -264,14 +264,14 @@ const dispatchlistcityController = async (req, res, next) => {
       // Increment the length for the city
       citiesWithOrders[city].length++;
     });
+    const citiesArray = Object.values(citiesWithOrders)
     
-    console.log(citiesWithOrders);
     
     return res.status(200).json({
       status_code: 200,
       status: true,
       message: "signup process successful",
-      data: citiesWithOrders
+      data:  citiesArray
     });
   } catch (error) {
     console.log(error);
