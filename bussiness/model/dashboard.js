@@ -1,4 +1,5 @@
 const { dispatchModel } = require("../../dispatch/core/db/dispatch");
+const { dispatchWalletModel } = require("../../dispatch/core/db/wallet");
 const { userorderModel } = require("../../user/core/db/order");
 
 const bussinessdashboardModel = async (data, res) => {
@@ -107,7 +108,11 @@ const bussinessadddispatchModel = async (data, res) => {
     });
 
     const userDetails = await form.save();
-  
+    const wallet =   await new dispatchWalletModel ({
+      dispatchid : userDetails._id
+      
+    });
+   const userwallet =   await wallet.save()
 
     return "success";
   } catch (error) {

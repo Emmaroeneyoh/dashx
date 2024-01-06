@@ -2,8 +2,10 @@ const { generateCheckoutURL } = require("../../helper/flutterwave/paystack");
 const { dispatchWalletModel } = require("../core/db/wallet");
 const { dispatchwallethistoryModel } = require("../core/db/wallethistory");
 const { handleError } = require("../core/utils");
-const { dispatchwithdrawwalletModel, dispatchwalletfundhistoryModel } = require("../model/wallet");
-
+const {
+  dispatchwithdrawwalletModel,
+  dispatchwalletfundhistoryModel,
+} = require("../model/wallet");
 
 const dispatchwithdrawwalletController = async (req, res, next) => {
   const { dispatchid, walletid, amount, status, trx_type } = req.body;
@@ -34,7 +36,7 @@ const dispatchwithdrawwalletController = async (req, res, next) => {
     });
   } catch (error) {
     console.log(error);
-   return handleError(error.message)(res);
+    return handleError(error.message)(res);
   }
 };
 
@@ -45,7 +47,10 @@ const dispatchwithdrawwallethistoryController = async (req, res, next) => {
       dispatchid,
       walletid,
     };
-    let comment = await dispatchwallethistoryModel.find({dispatchid , walletid})
+    let comment = await dispatchwallethistoryModel.find({
+      dispatchid,
+      walletid,
+    });
     return res.status(200).json({
       status_code: 200,
       status: true,
@@ -58,13 +63,12 @@ const dispatchwithdrawwallethistoryController = async (req, res, next) => {
   }
 };
 
-
 const dispatchmakepaymentController = async (req, res, next) => {
-  const { email , amount , usertype , dispatchid } = req.body;
+  const { email, amount, usertype, dispatchid } = req.body;
   try {
-    console.log('email' , email)
-    let comment = await generateCheckoutURL(email, amount, usertype)
-    console.log(';psole' , comment)
+    console.log("email", email);
+    let comment = await generateCheckoutURL(email, amount, usertype);
+    console.log(";psole", comment);
     if (!comment) {
       return res.status(400).json({
         status_code: 400,
@@ -85,11 +89,11 @@ const dispatchmakepaymentController = async (req, res, next) => {
   }
 };
 
-const userretrieveaccountbalanceController = async (req, res, next) => {
+const dispatchretrieveaccountbalanceController = async (req, res, next) => {
   const { dispatchid } = req.body;
   try {
-
-    let comment = await dispatchWalletModel.findOne({dispatchid})
+    console.log("poksisue" , dispatchid );
+    let comment = await dispatchWalletModel.findOne({ dispatchid });
     return res.status(200).json({
       status_code: 200,
       status: true,
@@ -103,5 +107,7 @@ const userretrieveaccountbalanceController = async (req, res, next) => {
 };
 module.exports = {
   dispatchwithdrawwalletController,
-  dispatchwithdrawwallethistoryController , dispatchmakepaymentController , userretrieveaccountbalanceController
+  dispatchwithdrawwallethistoryController,
+  dispatchmakepaymentController,
+  dispatchretrieveaccountbalanceController
 };
