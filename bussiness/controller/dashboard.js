@@ -94,7 +94,7 @@ const bussinessretrievefleetdetailController = async (req, res, next) => {
 const bussinessretrievefleetordersController = async (req, res, next) => {
   const { dispatchid, fleetid } = req.body;
   try {
-    let trainee = await userorderModel.find({ dispatchid: fleetid });
+    let trainee = await userorderModel.find({ dispatchid: fleetid }).populate('dispatchid')
     return res.status(200).json({
       status_code: 200,
       status: true,
