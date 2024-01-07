@@ -53,7 +53,7 @@ const generateCheckoutURL = async (email , amount , usertype ,) => {
         email, // Replace with the customer's email
         amount : amount * 100 , // Replace with the amount to be paid in kobo (e.g., 5000 for ₦5000)
         metadata: {
-          usertype , amount 
+          usertype , amount :amount / 100
           // Add any additional metadata fields as needed
         },
       },
@@ -69,8 +69,9 @@ const generateCheckoutURL = async (email , amount , usertype ,) => {
       console.log('Checkout URL:', checkoutURL);
       return checkoutURL
   } catch (error) {
-      return false
     console.error('Error generating checkout URL:', error.response.data);
+      return false
+  
   }
 };
 
