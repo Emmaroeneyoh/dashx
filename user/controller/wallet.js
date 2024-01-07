@@ -4,6 +4,7 @@ const { dispatchfundwalletModel } = require("../../dispatch/model/wallet");
 const { generateCheckoutURL } = require("../../helper/flutterwave/paystack");
 const { userModel } = require("../core/db/user");
 const { sellerWalletModel, userWalletModel } = require("../core/db/wallet");
+const { userwallethistoryModel } = require("../core/db/wallethistory");
 const { handleError } = require("../core/utils");
 const {
   userwithdrawwalletModel,
@@ -85,7 +86,7 @@ const userfundwalletController = async (req, res, next) => {
       const userid = user._id
       const wallet = await userWalletModel.findOne({ userid })
       const walletid = wallet._id
-      const amount = data.customer.amount
+      const amount = data.metadata.money
       const status = data.status
       const transid = data.id
       const transref= data.reference
@@ -110,7 +111,7 @@ const userfundwalletController = async (req, res, next) => {
       const dispatchid = user._id
       const wallet = await dispatchWalletModel.findOne({ dispatchid  })
       const walletid = wallet._id
-      const amount = data.customer.amount
+      const amount = data.metadata.money
       const status = data.status
       const transid = data.id
       const transref= data.reference
@@ -139,7 +140,7 @@ const userfundwalletController = async (req, res, next) => {
 const usermakepaymentController = async (req, res, next) => {
   const { email , amount , usertype , userid } = req.body;
   try {
-    console.log('email' , email)
+    await userwallethistoryModel.deleteMany()
     let comment = await generateCheckoutURL(email, amount, usertype)
     console.log(';psole' , comment)
     if (!comment) {

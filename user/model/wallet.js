@@ -58,22 +58,21 @@ const userfundwalletModel = async (datas, res) => {
       amount,
       status, transid , transref} = datas;
   
-    const money = parseInt(amount, 10);
     //add to wallet history
     const form = await new userwallethistoryModel({
       userid,
       walletid,
       amount,
-      paystackid : transid  , transref 
+      paystackid : transid  , transref  , status
     });
     await form.save();
 
-    // if (status == 'success') {
-    //   await userWalletModel.findOneAndUpdate(
-    //     { userid, _id: walletid },
-    //     { $inc: { balance: amount } }
-    //   );
-    // }
+    if (status == 'success') {
+      await userWalletModel.findOneAndUpdate(
+        { userid, _id: walletid },
+        { $inc: { balance: amount } }
+      );
+    }
 
     return "order";
   } catch (error) {
