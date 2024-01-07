@@ -20,27 +20,22 @@ router.post(
 router.post(
   "/fund/wallet",
   userfundwalletValidation,
-  user_check_token,
+  // user_check_token,
   usermakepaymentController
 );
 
 router.post(
   "/retrieve/wallet/history",
   userwallethistoryValidation,
-  user_check_token,
+  // user_check_token,
   userwithdrawwallethistoryController
 );
 
-router.post(
-  "/retrieve/bank",
-  userValidation,
-  user_check_token,
-  userretrievebankaccountController
-);
+
 router.post(
   "/retrieve/balance",
   userValidation,
-  user_check_token,
+  // user_check_token,
   userretrieveaccountbalanceController
 );
 

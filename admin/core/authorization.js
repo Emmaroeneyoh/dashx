@@ -60,28 +60,29 @@ const admin_check_token = async (req, res, next) => {
 
 // Middleware to check if the admin has the required roles for a route
 const checkAdminRoles =  (requiredRoles) => {
-  return  async (req, res, next) => {
-    // Assuming you have an admin object attached to the request
-      const admin = req.body.adminid;
-      const checkrole = await adminModel.findById(admin)
-      const adminrole = checkrole.roles
-      console.log('rolew' , adminrole)
-    // Check if the admin has any of the required roles
-    const hasRequiredRole = requiredRoles.some((role) =>
-    adminrole.some((adminRole) => adminRole.role === role)
-    );
+  return async (req, res, next) => {
+    nxet()
+    // // Assuming you have an admin object attached to the request
+    //   const admin = req.body.adminid;
+    //   const checkrole = await adminModel.findById(admin)
+    //   const adminrole = checkrole.roles
+    //   console.log('rolew' , adminrole)
+    // // Check if the admin has any of the required roles
+    // const hasRequiredRole = requiredRoles.some((role) =>
+    // adminrole.some((adminRole) => adminRole.role === role)
+    // );
 
-    if (hasRequiredRole) {
-      // Admin has at least one of the required roles, allow access
-      next();
-    } else {
-      // Admin does not have any of the required roles, deny access
-      return res.status(403).json({
-        status_code: 403,
-        status: false,
-        message: "access denied",
-      });
-    }
+    // if (hasRequiredRole) {
+    //   // Admin has at least one of the required roles, allow access
+    //   next();
+    // } else {
+    //   // Admin does not have any of the required roles, deny access
+    //   return res.status(403).json({
+    //     status_code: 403,
+    //     status: false,
+    //     message: "access denied",
+    //   });
+    // }
   };
 };
 
