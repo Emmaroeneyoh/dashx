@@ -77,6 +77,7 @@ const userfundwalletController = async (req, res, next) => {
   const { data , customer } = req.body;
   try {
     const usertype = data.metadata.usertype
+    console.log(customer)
     if (usertype == 'user') {
       const email = data.customer.email
       const userEmail = email.toLowerCase();
@@ -84,7 +85,7 @@ const userfundwalletController = async (req, res, next) => {
       const userid = user._id
       const wallet = await userWalletModel.findOne({ userid })
       const walletid = wallet._id
-      const amount = data.amount
+      const amount = data.customer.amount
       const status = data.status
       const transid = data.id
       const transref= data.reference
@@ -109,7 +110,7 @@ const userfundwalletController = async (req, res, next) => {
       const dispatchid = user._id
       const wallet = await dispatchWalletModel.findOne({ dispatchid  })
       const walletid = wallet._id
-      const amount = data.amount
+      const amount = data.customer.amount
       const status = data.status
       const transid = data.id
       const transref= data.reference

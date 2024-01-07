@@ -51,9 +51,9 @@ const generateCheckoutURL = async (email , amount , usertype ,) => {
       'https://api.paystack.co/transaction/initialize',
       {
         email, // Replace with the customer's email
-        amount , // Replace with the amount to be paid in kobo (e.g., 5000 for ₦5000)
+        amount : amount * 100 , // Replace with the amount to be paid in kobo (e.g., 5000 for ₦5000)
         metadata: {
-          usertype
+          usertype , amount 
           // Add any additional metadata fields as needed
         },
       },

@@ -57,7 +57,8 @@ const userfundwalletModel = async (datas, res) => {
       walletid,
       amount,
       status, transid , transref} = datas;
-
+  
+    const money = parseInt(amount, 10);
     //add to wallet history
     const form = await new userwallethistoryModel({
       userid,
