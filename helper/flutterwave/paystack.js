@@ -43,7 +43,7 @@
 
 const axios = require('axios');
 
-const PAYSTACK_PUBLIC_KEY = 'sk_test_4477a7fefffd601f6123a865cf28097215cbd7bd';
+const PAYSTACK_PUBLIC_KEY = 'sk_test_36b75d480aef24923e9344aea6b9f07941fb9adc';
 
 const generateCheckoutURL = async (email , amount , usertype ,) => {
     try {
