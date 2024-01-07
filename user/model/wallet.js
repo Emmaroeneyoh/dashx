@@ -68,12 +68,12 @@ const userfundwalletModel = async (datas, res) => {
     });
     await form.save();
 
-    if (status == 'success') {
-      await userWalletModel.findOneAndUpdate(
-        { userid, _id: walletid },
-        { $inc: { balance: amount } }
-      );
-    }
+    // if (status == 'success') {
+    //   await userWalletModel.findOneAndUpdate(
+    //     { userid, _id: walletid },
+    //     { $inc: { balance: amount } }
+    //   );
+    // }
 
     return "order";
   } catch (error) {
