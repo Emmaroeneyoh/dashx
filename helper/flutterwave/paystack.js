@@ -53,7 +53,7 @@ const generateCheckoutURL = async (email , amount , usertype ,) => {
         email, // Replace with the customer's email
         amount : amount * 100 , // Replace with the amount to be paid in kobo (e.g., 5000 for ₦5000)
         metadata: {
-          usertype , amount :amount / 100
+          usertype , amount 
           // Add any additional metadata fields as needed
         },
       },
