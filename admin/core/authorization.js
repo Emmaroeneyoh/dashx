@@ -61,7 +61,7 @@ const admin_check_token = async (req, res, next) => {
 // Middleware to check if the admin has the required roles for a route
 const checkAdminRoles =  (requiredRoles) => {
   return async (req, res, next) => {
-    nxet()
+    next()
     // // Assuming you have an admin object attached to the request
     //   const admin = req.body.adminid;
     //   const checkrole = await adminModel.findById(admin)
