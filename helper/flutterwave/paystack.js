@@ -46,14 +46,16 @@ const axios = require('axios');
 const PAYSTACK_PUBLIC_KEY = 'sk_test_4477a7fefffd601f6123a865cf28097215cbd7bd';
 
 const generateCheckoutURL = async (email , amount , usertype ,) => {
-  try {
+    try {
+        const paystackamount = amount * 100
+        const dashxamount = amount
     const response = await axios.post(
       'https://api.paystack.co/transaction/initialize',
       {
         email, // Replace with the customer's email
-        amount , // Replace with the amount to be paid in kobo (e.g., 5000 for ₦5000)
+        amount : paystackamount , // Replace with the amount to be paid in kobo (e.g., 5000 for ₦5000)
         metadata: {
-          usertype
+          usertype , money : dashxamount 
           // Add any additional metadata fields as needed
         },
       },
