@@ -51,9 +51,9 @@ const generateCheckoutURL = async (email , amount , usertype ,) => {
       'https://api.paystack.co/transaction/initialize',
       {
         email, // Replace with the customer's email
-        amount : amount * 100 , // Replace with the amount to be paid in kobo (e.g., 5000 for ₦5000)
+        amount , // Replace with the amount to be paid in kobo (e.g., 5000 for ₦5000)
         metadata: {
-          usertype , amount 
+          usertype
           // Add any additional metadata fields as needed
         },
       },
@@ -69,7 +69,7 @@ const generateCheckoutURL = async (email , amount , usertype ,) => {
       console.log('Checkout URL:', checkoutURL);
       return checkoutURL
   } catch (error) {
-    console.error('Error generating checkout URL:', error.response.data);
+        console.error('Error generating checkout URL:', error.response.data);
       return false
   
   }

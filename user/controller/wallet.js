@@ -77,7 +77,7 @@ const userfundwalletController = async (req, res, next) => {
   const { data , customer } = req.body;
   try {
     const usertype = data.metadata.usertype
-    console.log('this is customer ' , customer)
+    console.log('this is customer ' ,data. customer)
     if (usertype == 'user') {
       const email = data.customer.email
       const userEmail = email.toLowerCase();
