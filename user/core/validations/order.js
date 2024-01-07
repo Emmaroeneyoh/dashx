@@ -9,7 +9,7 @@ const usercreateorderValidation = (req, res, next) => {
     sendername: joi.string().required(),
     senderlat: joi.string().required(),
     senderlong: joi.string().required(),
-    productname: joi.string().required(),
+    productname: joi.string().required().allow(''),
     senderphone: joi.string().required(),
     senderaddress: joi.string().required(),
     sendercity: joi.string().required(),
