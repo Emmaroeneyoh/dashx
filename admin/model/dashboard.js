@@ -12,7 +12,7 @@ const admindashboardModel = async (data, res) => {
   
       const activerider = await dispatchModel.countDocuments({dispatch_blocked : true})
       const totaluser = await userModel.countDocuments()
-      const activeuser = await userModel.countDocuments({user_blocked : true})
+      const activeuser = await userModel.countDocuments({user_blocked : false})
         const activetrips = await userorderModel.countDocuments({ pending: 'shipping' })
         
         const datas = {
