@@ -140,7 +140,6 @@ const userfundwalletController = async (req, res, next) => {
 const usermakepaymentController = async (req, res, next) => {
   const { email , amount , usertype , userid } = req.body;
   try {
-    await userwallethistoryModel.deleteMany()
     let comment = await generateCheckoutURL(email, amount, usertype)
     console.log(';psole' , comment)
     if (!comment) {
