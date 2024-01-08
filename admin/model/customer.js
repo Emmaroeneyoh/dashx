@@ -16,8 +16,13 @@ const adminretrievesingledispatchModel = async (data, res) => {
   try {
     const { dispatchid } = data;
     const userDetails = await dispatchModel.findById(dispatchid);
-
-    return userDetails;
+    const dispatchs = await userorderModel.find({ dispatchid })
+    const amount = await dispatchs.map(x => x.delivery_fee)
+    const sum = amount.reduce((accumulator, currentValue) => {
+      return accumulator + currentValue;
+    }, 0);
+    const dispatch = {userDetails , sum}
+    return dispatch;
   } catch (error) {
     return error.message;
   }

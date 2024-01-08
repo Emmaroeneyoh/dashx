@@ -12,12 +12,16 @@ const {
 
 const adminretrievealldriverController = async (req, res, next) => {
   try {
-    let trainee = await dispatchModel.find({ personel_account: true });
+    let driver = await dispatchModel.find({ personel_account: true });
+    const blockeddriver = await dispatchModel.countDocuments({
+      dispatch_blocked: true,
+    })
+    const driverdata =  {driver ,blockeddriver }
     return res.status(200).json({
       status_code: 200,
       status: true,
       message: "signup process successful",
-      data: trainee,
+      data: driverdata,
     });
   } catch (error) {
     console.log(error);
