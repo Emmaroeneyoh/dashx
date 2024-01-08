@@ -9,14 +9,19 @@ const {
   dispatchUpdatestatusModel,
 } = require("../model/profile");
 const { handleError } = require("../core/utils");
+const {
+  dispatchsupportModel,
+} = require("../../admin/core/db/dispatch.support");
 
 const dispatchupdatevehicleController = async (req, res, next) => {
-  const { vehicle_number, vehicle_type, dispatchid  , driving_license} = req.body;
+  const { vehicle_number, vehicle_type, dispatchid, driving_license } =
+    req.body;
   try {
     const data = {
       vehicle_number,
       vehicle_type,
-      dispatchid, driving_license
+      dispatchid,
+      driving_license,
     };
 
     let trainee = await dispatchUpdatevehicleModel(data, res);
@@ -32,10 +37,11 @@ const dispatchupdatevehicleController = async (req, res, next) => {
   }
 };
 const dispatchupdatestatusController = async (req, res, next) => {
-  const {  dispatchid , status } = req.body;
+  const { dispatchid, status } = req.body;
   try {
     const data = {
-      dispatchid , status
+      dispatchid,
+      status,
     };
 
     let trainee = await dispatchUpdatestatusModel(data, res);
@@ -127,6 +133,21 @@ const dispatchretrieveprofileController = async (req, res, next) => {
     handleError(error.message)(res);
   }
 };
+const dispatchchatController = async (req, res, next) => {
+  const { dispatchid } = req.body;
+  try {
+    let trainee = await dispatchsupportModel.find({ dispatchid });
+    return res.status(200).json({
+      status_code: 200,
+      status: true,
+      message: "dispatch successfully retrieved",
+      data: trainee,
+    });
+  } catch (error) {
+    console.log(error);
+    handleError(error.message)(res);
+  }
+};
 
 const dispatchupdatepasswordController = async (req, res, next) => {
   const { dispatchid, currentpassword, newpassword } = req.body;
@@ -180,5 +201,6 @@ module.exports = {
   dispatchupdatephotoController,
   dispatchupdateprofileController,
   dispatchretrieveprofileController,
-  dispatchupdatepasswordController,  dispatchupdatestatusController
+  dispatchupdatepasswordController,
+  dispatchupdatestatusController, dispatchchatController 
 };

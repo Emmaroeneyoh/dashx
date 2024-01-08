@@ -5,6 +5,7 @@ const {
   dispatchretrieveprofileController,
   dispatchupdatepasswordController,
   dispatchupdatestatusController,
+  dispatchchatController,
 } = require("../controller/profile");
 const { dispatch_check_token } = require("../core/authorization");
 const {
@@ -53,6 +54,12 @@ router.post(
   dispatchValidation,
   dispatch_check_token,
   dispatchretrieveprofileController
+);
+router.post(
+  "/chat/support",
+  dispatchValidation,
+  dispatch_check_token,
+  dispatchchatController
 );
 
 module.exports = router;

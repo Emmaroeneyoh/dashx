@@ -1,4 +1,5 @@
 const bcrypt = require("bcrypt");
+const { usersupportModel } = require("../../admin/core/db/user.support");
 const { userModel } = require("../core/db/user");
 
 const { handleError } = require("../core/utils");
@@ -49,6 +50,21 @@ const userretrieveprofileController = async (req, res, next) => {
   try {
     const data = { userid };
     let trainee = await userretrieveprofileModel(data, res);
+    return res.status(200).json({
+      status_code: 200,
+      status: true,
+      message: "user successfully retrieved",
+      data: trainee,
+    });
+  } catch (error) {
+    console.log(error);
+    handleError(error.message)(res);
+  }
+};
+const userretrievechatController = async (req, res, next) => {
+  const { userid } = req.body;
+  try {
+    let trainee = await usersupportModel.find({userid})
     return res.status(200).json({
       status_code: 200,
       status: true,
@@ -111,5 +127,5 @@ const userupdatepasswordController = async (req, res, next) => {
 module.exports = {
   userupdateprofileController,
   userretrieveprofileController,
-  userupdatepasswordController,
+  userupdatepasswordController,  userretrievechatController 
 };

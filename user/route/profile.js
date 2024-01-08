@@ -2,6 +2,7 @@ const {
   userupdateprofileController,
   userupdatepasswordController,
   userretrieveprofileController,
+  userretrievechatController,
 } = require("../controller/profile");
 const { user_check_token } = require("../core/authorization");
 const { userValidation } = require("../core/validations/auth");
@@ -29,6 +30,12 @@ router.post(
   userValidation,
   user_check_token,
   userretrieveprofileController
+);
+router.post(
+  "/chat/support",
+  userValidation,
+  user_check_token,
+  userretrievechatController
 );
 router.post(
   "/paystack",
