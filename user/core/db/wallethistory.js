@@ -8,7 +8,7 @@ const Wallet_schema = new schema({
             type:Number, default : 0
         },
         status: {
-            type:Boolean , 
+            type:String , 
         },
         trx_type: {
             type:String, 
