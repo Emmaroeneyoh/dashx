@@ -6,17 +6,18 @@ const { userModel } = require("../../user/core/db/user");
 
 const admindashboardModel = async (data, res) => {
     try {
-      const totalrider = await dispatchModel.countDocuments()
-      const onlinedriver = await dispatchModel.countDocuments({online_status : true})
-      const offlinedriver = await dispatchModel.countDocuments({online_status : false})
+      const totalrider = await userorderModel.countDocuments()
+      const onlinedriver = await dispatchModel.countDocuments({ personel_account:true , online_status : true})
+      const offlinedriver = await dispatchModel.countDocuments({ personel_account:true ,online_status : false})
+      const bussiness = await dispatchModel.countDocuments({ personel_account:false})
   
-      const activerider = await dispatchModel.countDocuments({dispatch_blocked : true})
+      const activerider = await dispatchModel.countDocuments({dispatch_blocked : false})
       const totaluser = await userModel.countDocuments()
       const activeuser = await userModel.countDocuments({user_blocked : false})
-        const activetrips = await userorderModel.countDocuments({ pending: 'shipping' })
+        const activetrips = await userorderModel.countDocuments({ order_status: { $ne: 'delivered' } })
         
         const datas = {
-            totalrider , onlinedriver  ,offlinedriver , activerider , totaluser , activeuser ,  activetrips
+            totalrider , onlinedriver  ,offlinedriver , activerider , totaluser , activeuser ,  activetrips , bussiness
         }
   
       return datas;
