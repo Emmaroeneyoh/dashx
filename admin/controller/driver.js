@@ -1,6 +1,7 @@
 const { dispatchModel } = require("../../dispatch/core/db/dispatch");
 const { userorderModel } = require("../../user/core/db/order");
 const { userModel } = require("../../user/core/db/user");
+const { dispatchsupportModel } = require("../core/db/dispatch.support");
 const { handleError } = require("../core/utils");
 const {
   adminretrievesingledispatchModel,
@@ -234,6 +235,22 @@ const adminblockdriverController = async (req, res, next) => {
     return handleError(error.message)(res);
   }
 };
+const adminchatdispatchrController = async (req, res, next) => {
+  try {
+    const { dispatchid } = req.body;
+    const data = { dispatchid };
+    const chat = await dispatchsupportModel.find(dispatchid);
+    return res.status(200).json({
+      status_code: 200,
+      status: true,
+      message: "dispatch is blocked",
+      chat,
+    });
+  } catch (error) {
+    console.log(error);
+    return handleError(error.message)(res);
+  }
+};
 const adminunblockdriverController = async (req, res, next) => {
   try {
     const { dispatchid } = req.body;
@@ -302,5 +319,6 @@ module.exports = {
   adminretrieveblockdriverController,
   adminretrieveallbussiessController,
   adminretrievesinglebussinessController,
-  adminretrievebussinessdriverController,  adminretrievebussinessorderController
+  adminretrievebussinessdriverController,
+  adminretrievebussinessorderController, adminchatdispatchrController
 };

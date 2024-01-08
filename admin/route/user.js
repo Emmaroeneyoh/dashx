@@ -1,5 +1,5 @@
 const { model } = require("mongoose");
-const { adminretrievesingleuserController, adminblockuserController, adminunblockuserController, adminretrievealluserController } = require("../controller/customer");
+const { adminretrievesingleuserController, adminblockuserController, adminunblockuserController, adminretrievealluserController, adminuserchatController } = require("../controller/customer");
 const { adminretrieveblockuserController, adminretrieveactivetripController, adminretrievetripController } = require("../controller/driver");
 const { checkAdminRoles } = require("../core/authorization");
 const { adminValidation } = require("../core/validation/auth");
@@ -25,6 +25,12 @@ router.post(
     checkAdminRoles(['superadmin']) ,
   adminmgnuserValidation,
   adminblockuserController
+);
+router.post(
+    "/user/chat",
+    checkAdminRoles(['superadmin']) ,
+  adminmgnuserValidation,
+  adminuserchatController
 );
 router.post(
     "/unblock/user",

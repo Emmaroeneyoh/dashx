@@ -1,4 +1,5 @@
 const { userModel } = require("../../user/core/db/user");
+const { usersupportModel } = require("../core/db/user.support");
 const { handleError } = require("../core/utils");
 const { adminretrievesingleuserModel } = require("../model/customer");
 
@@ -51,6 +52,21 @@ const adminblockuserController = async (req, res, next) => {
     return handleError(error.message)(res);
   }
 };
+const adminuserchatController = async (req, res, next) => {
+  try {
+    const { userid } = req.body;
+    const chat = await usersupportModel.find({ userid });
+    return res.status(200).json({
+      status_code: 200,
+      status: true,
+      message: "user is blocked",
+      chat,
+    });
+  } catch (error) {
+    console.log(error);
+    return handleError(error.message)(res);
+  }
+};
 const adminunblockuserController = async (req, res, next) => {
   try {
     const { userid } = req.body;
@@ -74,5 +90,7 @@ const adminunblockuserController = async (req, res, next) => {
 module.exports = {
   adminunblockuserController,
   adminblockuserController,
-  adminretrievesingleuserController, adminretrievealluserController
+  adminretrievesingleuserController,
+  adminretrievealluserController,
+  adminuserchatController,
 };
