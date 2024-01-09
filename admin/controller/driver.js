@@ -21,7 +21,7 @@ const adminretrievealldriverController = async (req, res, next) => {
       status_code: 200,
       status: true,
       message: "signup process successful",
-      data: driverdata,
+      data: driver,
     });
   } catch (error) {
     console.log(error);
