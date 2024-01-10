@@ -7,9 +7,13 @@ const app = express();
 //socket connection 
 const http = require("http").Server(app);
 const io = require("socket.io")(http,  {
-    pingInterval: 15000, // Ping every 15 seconds
-    pingTimeout: 30000,  // Wait 30 seconds for the client to respond to pings
-  });
+  cors: {
+    origin: '*',
+    methods: ['GET', 'POST'],
+  },
+  pingInterval: 15000, // Ping every 15 seconds
+  pingTimeout: 30000,  // Wait 30 seconds for the client to respond to pings
+});
 const { PORT } = require("./helper/utils")
 
 //for user
