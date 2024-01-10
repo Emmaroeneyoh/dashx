@@ -1,4 +1,4 @@
-const { dispatchwithdrawwallethistoryController, dispatchmakepaymentController, userretrieveaccountbalanceController, dispatchretrieveaccountbalanceController } = require("../controller/wallet");
+const { dispatchwithdrawwallethistoryController, dispatchmakepaymentController, userretrieveaccountbalanceController, dispatchretrieveaccountbalanceController, dispatchretrievebanksController } = require("../controller/wallet");
 const { dispatch_check_token } = require("../core/authorization");
 const { dispatchValidation } = require("../core/validation/profile");
 const { dispatchwithdrawwalletValidation, dispatchwallethistoryValidation, dispatchfundwalletValidation } = require("../core/validation/wallet");
@@ -30,6 +30,12 @@ router.post(
   // dispatchValidation,
   // dispatch_check_token,
   dispatchretrieveaccountbalanceController
+);
+router.post(
+  "/retrieve/bank",
+  dispatchValidation,
+  dispatch_check_token,
+  dispatchretrievebanksController
 );
 
 module.exports = router

@@ -98,7 +98,29 @@ const generatesystembalance = async () => {
   
   }
 };
+const generatebanks = async () => {
+    try {
+       
+    const response = await axios.get(
+      'https://api.paystack.co/bank',
+      {
+        headers: {
+          Authorization: `Bearer ${PAYSTACK_PUBLIC_KEY}`,
+          'Content-Type': 'application/json',
+        },
+      }
+    );
+
+    const checkoutURL = response.data;
+      console.log('Checkout URL:', checkoutURL);
+      return checkoutURL
+  } catch (error) {
+        console.error('Error generating checkout URL:', error.response.data);
+      return false
+  
+  }
+};
 
 module.exports = {
-    generateCheckoutURL , generatesystembalance
+    generateCheckoutURL , generatesystembalance , generatebanks 
 }

@@ -1,4 +1,4 @@
-const { generateCheckoutURL } = require("../../helper/flutterwave/paystack");
+const { generateCheckoutURL, generatebanks } = require("../../helper/flutterwave/paystack");
 const { dispatchWalletModel } = require("../core/db/wallet");
 const { dispatchwallethistoryModel } = require("../core/db/wallethistory");
 const { handleError } = require("../core/utils");
@@ -105,9 +105,23 @@ const dispatchretrieveaccountbalanceController = async (req, res, next) => {
     handleError(error.message)(res);
   }
 };
+const dispatchretrievebanksController = async (req, res, next) => {
+  try {
+    let comment = await generatebanks()
+    return res.status(200).json({
+      status_code: 200,
+      status: true,
+      message: "customer successfully retrieved",
+      data: comment,
+    });
+  } catch (error) {
+    console.log(error);
+    handleError(error.message)(res);
+  }
+};
 module.exports = {
   dispatchwithdrawwalletController,
   dispatchwithdrawwallethistoryController,
   dispatchmakepaymentController,
-  dispatchretrieveaccountbalanceController
+  dispatchretrieveaccountbalanceController , dispatchretrievebanksController 
 };
