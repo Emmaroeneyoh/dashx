@@ -1,4 +1,5 @@
 const { route } = require("../../dispatch/route/order");
+const { adminusertransactionController, admindispatchtransactionController, adminssyetembalanceController } = require("../controller/dashboard");
 const {
   admincreateadminController,
   adminaddroleController,
@@ -106,4 +107,23 @@ router.post(
     adminunblocksubadminController
   );
 // rou
+//finance
+router.post(
+  "/user/finance",
+  adminValidation,
+  admin_check_token,
+  adminusertransactionController
+);
+router.post(
+  "/dispatch/finance",
+  adminValidation,
+  admin_check_token,
+  admindispatchtransactionController
+);
+router.post(
+  "/system/balance",
+  adminValidation,
+  admin_check_token,
+  adminssyetembalanceController
+);
 module.exports = router;

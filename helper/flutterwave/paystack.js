@@ -76,7 +76,29 @@ const generateCheckoutURL = async (email , amount , usertype ,) => {
   
   }
 };
+const generatesystembalance = async () => {
+    try {
+       
+    const response = await axios.get(
+      'https://api.paystack.co/balance',
+      {
+        headers: {
+          Authorization: `Bearer ${PAYSTACK_PUBLIC_KEY}`,
+          'Content-Type': 'application/json',
+        },
+      }
+    );
+
+    const checkoutURL = response.data;
+      console.log('Checkout URL:', checkoutURL);
+      return checkoutURL
+  } catch (error) {
+        console.error('Error generating checkout URL:', error.response.data);
+      return false
+  
+  }
+};
 
 module.exports = {
-    generateCheckoutURL
+    generateCheckoutURL , generatesystembalance
 }
