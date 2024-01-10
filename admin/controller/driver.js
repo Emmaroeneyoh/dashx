@@ -15,8 +15,8 @@ const adminretrievealldriverController = async (req, res, next) => {
     let driver = await dispatchModel.find({ personel_account: true });
     const blockeddriver = await dispatchModel.countDocuments({
       dispatch_blocked: true,
-    })
-    const driverdata =  {driver ,blockeddriver }
+    });
+    const driverdata = { driver, blockeddriver };
     return res.status(200).json({
       status_code: 200,
       status: true,
@@ -255,6 +255,24 @@ const adminchatdispatchrController = async (req, res, next) => {
     return handleError(error.message)(res);
   }
 };
+const admindriverchathistoryController = async (req, res, next) => {
+  try {
+    const chat = await dispatchsupportModel.find();
+    const userids = chat.map((x) => x.dispatchid);
+    const users = await dispatchModel
+      .find({ _id: { $in: userids } })
+      .select("name email ");
+    return res.status(200).json({
+      status_code: 200,
+      status: true,
+      message: "user is blocked",
+      data: users,
+    });
+  } catch (error) {
+    console.log(error);
+    return handleError(error.message)(res);
+  }
+};
 const adminunblockdriverController = async (req, res, next) => {
   try {
     const { dispatchid } = req.body;
@@ -324,5 +342,6 @@ module.exports = {
   adminretrieveallbussiessController,
   adminretrievesinglebussinessController,
   adminretrievebussinessdriverController,
-  adminretrievebussinessorderController, adminchatdispatchrController
+  adminretrievebussinessorderController,
+  adminchatdispatchrController, admindriverchathistoryController
 };

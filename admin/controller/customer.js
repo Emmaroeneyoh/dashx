@@ -60,7 +60,23 @@ const adminuserchatController = async (req, res, next) => {
       status_code: 200,
       status: true,
       message: "user is blocked",
-      chat,
+      data : chat,
+    });
+  } catch (error) {
+    console.log(error);
+    return handleError(error.message)(res);
+  }
+};
+const adminuserchathistoryController = async (req, res, next) => {
+  try {
+    const chat = await usersupportModel.find()
+    const userids = chat.map((x) => x.userid)
+    const users = await userModel.find({ _id: { $in: userids } }).select('name email ')
+    return res.status(200).json({
+      status_code: 200,
+      status: true,
+      message: "user is blocked",
+      data : users
     });
   } catch (error) {
     console.log(error);
@@ -92,5 +108,5 @@ module.exports = {
   adminblockuserController,
   adminretrievesingleuserController,
   adminretrievealluserController,
-  adminuserchatController,
+  adminuserchatController, adminuserchathistoryController 
 };
