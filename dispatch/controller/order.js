@@ -10,6 +10,7 @@ const {
   dispatchpickuporderModel,
   dispatchdeliverorderModel,
   dispatchstartdispatchModel,
+  dispatchcancelorderModel,
 } = require("../model/order");
 
 const dashxcreateorderController = async (req, res, next) => {
@@ -143,16 +144,18 @@ const dispatchpickuporderController = async (req, res, next) => {
   }
 };
 const dispatchcancelorderController = async (req, res, next) => {
-  const { orderid } = req.body;
+  const { orderid , dispatchid} = req.body;
   try {
-    await userorderModel.findByIdAndUpdate(orderid, {
-      $set: {
-        order_taken: false,
-        dispatchid: "65935b6b4c3205b88adfcf88",
-        order_status: "pending",
-      },
-    });
-
+    const order = await userorderModel.findById(orderid)
+    if (order.order_status == 'delivered' || order.order_completed) {
+      return res.status(400).json({
+        status_code: 400,
+        status: false,
+        message: "order cant be cancelled",
+      });
+    }
+    const data = {orderid , dispatchid}
+    let trainee = await  dispatchcancelorderModel(data, res);
     return res.status(200).json({
       status_code: 200,
       status: true,
@@ -334,5 +337,6 @@ module.exports = {
   dispatchstartdispatchController,
   dispatchacceptedorderController,
   dispatchlistcityController,
-  dispatchorderhistoryController,   dispatchcancelorderController
+  dispatchorderhistoryController,
+  dispatchcancelorderController,
 };

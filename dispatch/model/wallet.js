@@ -20,6 +20,22 @@ const dispatchfundwalletModel = async (datas, res) => {
     await form.save();
 
     if (status == 'success') {
+      //check for debt
+      const dispatchwallet = await dispatchWalletModel.findById(walletid)
+      const dispatchdebt = dispatchwallet.debt
+      const dispatchbalance = dispatchwallet.balance
+      if (dispatchdebt > 0) {
+        const totalbalance = dispatchbalance - dispatchdebt
+        //update the wallet
+        await dispatchWalletModel.findOneAndUpdate(
+          { dispatchid },
+          {
+            $set: {
+              balance : totalbalance , debt : 0
+            },
+          }
+        );
+      }
       await dispatchWalletModel.findOneAndUpdate(
         {dispatchid, _id: walletid },
         { $inc: { balance: amount } }

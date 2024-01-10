@@ -66,6 +66,15 @@ const Wallet_schema = new schema({
         total_fee: {
             type:Number, 
     },
+    commission_fee: {
+            type:Number, 
+    },
+    payment_method: {
+            type:Boolean, 
+    },
+    order_paid: {
+            type:Boolean, 
+    },
     order_status: {
         type:String,   default :"pending"
 },

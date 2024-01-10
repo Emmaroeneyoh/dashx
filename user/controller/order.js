@@ -24,11 +24,9 @@ const usercreateorderController = async (req, res, next) => {
     receiverlandmark,
     receiverlat,
     receiverlong,
-    delivery_fee,
-    userid,  total_fee
+    userid,  total_fee , payment_method
   } = req.body;
     try {
-    
         const city = sendercity.toLowerCase();
     const data = {
       vehicle_type,
@@ -47,20 +45,22 @@ const usercreateorderController = async (req, res, next) => {
       receiveraddress,
       receivercity,
       receiverlandmark,
-      delivery_fee,
-      userid,  total_fee
+      userid,  total_fee , payment_method
     };
         //check if the customer balance is enough
-      const wallet = await userWalletModel.findOne({ userid })
+      if (payment_method) {
+        const wallet = await userWalletModel.findOne({ userid })
     
-    const balance = wallet.balance
-    //   if (total_fee > balance) {
-    //     return res.status(400).json({
-    //       status_code: 400,
-    //       status: false,
-    //       message: "insufficient fund",
-    //     });
-    //   }
+        const balance = wallet.balance
+          if (total_fee > balance) {
+            return res.status(400).json({
+              status_code: 400,
+              status: false,
+              message: "insufficient fund",
+            });
+          }
+      }
+   
     let trainee = await usercreateorderModel(data, res);
     return res.status(200).json({
       status_code: 200,

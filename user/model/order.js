@@ -1,3 +1,4 @@
+const { pricingModel } = require("../../admin/core/db/pricing");
 const { ordercodemodel } = require("../../dispatch/core/db/order_code");
 const { userorderModel } = require("../core/db/order");
 const { userModel } = require("../core/db/user");
@@ -20,14 +21,27 @@ const usercreateorderModel = async (data, res) => {
         receiverphone,
         receiveraddress,
         receivercity,
-        receiverlandmark, delivery_fee , userid , total_fee ,      senderlat,
+        receiverlandmark, userid , total_fee ,      senderlat,
         senderlong, 
         receiverlat,
-        receiverlong,
+        receiverlong, payment_method
        
       } = data;
+      //calculate commission and deloverfee
+      const pricing = await pricingModel.findOne({ systemid: 'dashx' })
+      const commision = pricing.comision
+      const commission_fee = (commision / 100) * total_fee 
+      const delivery_fee = total_fee - commission_fee
+    
+      //check if payment method is true , then order paid should be true 
+      let order_paid 
+      if (payment_method) {
+        order_paid  = true
+      } else {
+        order_paid  = false
+      }
       const form = await new userorderModel ({
-        vehicle_type,
+        vehicle_type, payment_method , order_paid ,  commission_fee,
         sendername,
         productname,
         senderphone,
@@ -45,13 +59,14 @@ const usercreateorderModel = async (data, res) => {
       });
         const userDetails = await form.save()
         
-        //update wallet of user
-        //find the wallet of the user
-        // const wallet = await userWalletModel.findOne({ userid })
-        // const walletid = wallet._id
-        // await userWalletModel.findByIdAndUpdate(walletid, 
-        //     { $inc: { balance: -total_fee } }
-        //   );
+        // update wallet of user
+        // find the wallet of the user
+      if (payment_method) {
+        await userWalletModel.findOneAndUpdate({userid}  ,
+          { $inc: { balance: -total_fee } }
+        );
+      }
+       
       return userDetails;
     } catch (error) {
       console.log('error' , error);

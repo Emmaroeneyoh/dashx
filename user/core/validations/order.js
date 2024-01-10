@@ -15,13 +15,14 @@ const usercreateorderValidation = (req, res, next) => {
     sendercity: joi.string().required(),
     senderlandmark: joi.string().optional().allow(''),
     userid: joi.string().required(),
-    delivery_fee: joi.number().required(),
     receivername: joi.string().required(),
     receiverphone: joi.string().required(),
     receiveraddress: joi.string().required(),
     receivercity: joi.string().required(),
     receiverlat: joi.string().required(),
     receiverlong: joi.string().required(),
+   total_fee: joi.number().required(),
+   payment_method: joi.boolean().required(),
     receiverlandmark: joi.string().optional().allow(''),
   });
   const { error } = schema.validate(req.body);

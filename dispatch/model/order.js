@@ -67,6 +67,15 @@ const dispatchaddordereventModel = async (data, res) => {
 const dispatchacceptorderModel = async (data, res) => {
   try {
     const { orderid, dispatchid } = data;
+    //check if the order is pay on delivery
+    const order = await userorderModel.findById(orderid)
+    const payment_method = order.payment_method  
+    if (!payment_method) {
+      await dispatchWalletModel.findOneAndUpdate(
+        { dispatchid},
+        { $inc: { debt:  order.commission_fee } }
+      );
+    }
     await userorderModel.findByIdAndUpdate(orderid, {
       $set: {
         order_taken: true,
@@ -185,7 +194,7 @@ const dispatchdeliverorderModel = async (data, res) => {
     //update the order status
     await userorderModel.findByIdAndUpdate(orderid, {
       $set: {
-        order_status: "delivered",
+        order_status: "delivered", order_paid : true
       },
     });
     //update the order code
@@ -200,13 +209,85 @@ const dispatchdeliverorderModel = async (data, res) => {
     
     //update the balance of dispatcher
     const order = await userorderModel.findById(orderid);
- 
-    //update the order code
+    const delivery_fee =  order.delivery_fee
     const dispatchwallet = await dispatchWalletModel.findOne({dispatchid})
-    await dispatchWalletModel.findOneAndUpdate(
-      { dispatchid, _id: dispatchwallet._id },
-      { $inc: { balance:  order.commison_fee } }
+    const payment_method = order.payment_method
+    //update the order code
+    if (payment_method) {
+
+      //check if the dispatch is in debt 
+      const dispatchdebt = dispatchwallet.debt
+      const dispatchbalance = dispatchwallet.balance
+      if (dispatchdebt > 0) {
+        const totalbalance = dispatchbalance - dispatchdebt
+        //update the wallet
+        await dispatchWalletModel.findOneAndUpdate(
+          { dispatchid },
+          {
+            $set: {
+              balance : totalbalance , debt : 0
+            },
+          }
+        );
+      }
+
+      //update the wallet with delivery fee
+      await dispatchWalletModel.findOneAndUpdate(
+        { dispatchid, _id: dispatchwallet._id },
+        { $inc: { balance:  order.delivery_fee } }
+      )
+    }
+  ;
+
+    return "success";
+  } catch (error) {
+    console.log("error", error);
+    return error.message;
+  }
+};
+const dispatchcancelorderModel = async (data, res) => {
+  try {
+    const { orderid, dispatchid } = data;
+    //check order payment method
+    //update the order status
+    await userorderModel.findByIdAndUpdate(orderid, {
+      $set: {
+        order_taken: false,
+        dispatchid: "65935b6b4c3205b88adfcf88",
+        order_status: "pending",
+      },
+    });
+    //update the order code
+    await ordercodemodel.findOneAndUpdate(
+      { orderid },
+      {
+        $set: {
+          code_used: true,
+        },
+      }
     );
+    
+    //update the balance of dispatcher
+    const order = await userorderModel.findById(orderid);
+    const dispatchwallet = await dispatchWalletModel.findOne({dispatchid})
+    const payment_method = order.payment_method
+    //update the order code
+    if (!payment_method) {
+
+      //check if the dispatch is in debt 
+      const dispatchdebt = dispatchwallet.debt
+      const dispatchbalance = dispatchdebt - order.commission_fee
+      await dispatchWalletModel.findOneAndUpdate(
+        { dispatchid },
+        {
+          $set: {
+           debt : dispatchbalance
+          },
+        }
+      );
+    
+    }
+  ;
 
     return "success";
   } catch (error) {
@@ -220,5 +301,5 @@ module.exports = {
   dispatchacceptorderModel,
   dispatchaddordereventModel,
   dispatchpickuporderModel,
-  dispatchdeliverorderModel,  dispatchstartdispatchModel
+  dispatchdeliverorderModel,  dispatchstartdispatchModel ,  dispatchcancelorderModel
 };
