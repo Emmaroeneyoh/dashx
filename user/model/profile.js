@@ -2,13 +2,26 @@ const { userModel } = require("../core/db/user");
 
 const userUpdateprofileModel = async (data, res) => {
   try {
-    const { userEmail, userid, phone, name ,  address , longitude , latitude , state} = data;
+    const {
+      userEmail,
+      userid,
+      phone,
+      name,
+      address,
+      longitude,
+      latitude,
+      state,  city
+    } = data;
 
     const form = await userModel.findByIdAndUpdate(userid, {
       $set: {
         email: userEmail,
         phone,
-        name,  address , longitude , latitude , state
+        name,
+        address,
+        longitude,
+        latitude,
+        state,  city
       },
     });
 

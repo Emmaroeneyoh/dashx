@@ -15,6 +15,9 @@ const Riderschema = new schema({
        state : {
             type:String,
         },
+       city : {
+            type:String,
+        },
        latitude : {
             type:String,
         },

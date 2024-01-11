@@ -9,13 +9,13 @@ const userSignupModel = async (data, res) => {
     const {
         userEmail,
         Harshpassword,
-        phone, name , code , address , latitude , longitude ,  state
+        phone, name , code , address , latitude , longitude ,  state ,  city
      
     } = data;
     const form = await new userModel ({
         email:userEmail,
        password : Harshpassword,
-        phone, name , address , latitude , longitude ,  state
+        phone, name , address , latitude , longitude ,  state ,  city
     });
    
       const userDetails = await form.save()

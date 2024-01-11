@@ -12,6 +12,7 @@ const usersignupValidation = (req, res, next) => {
     latitude: joi.string().required(),
     longitude: joi.string().required(),
     state: joi.string().required(),
+    city: joi.string().required(),
   });
   const { error } = schema.validate(req.body);
   if (error) {
