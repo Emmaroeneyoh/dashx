@@ -8,7 +8,7 @@ const { userUpdateprofileModel, userretrieveprofileModel, userUpdatepasswordMode
 
 
 const userupdateprofileController = async (req, res, next) => {
-  const {  email, phone, name, userid} =
+  const {  email, phone, name, userid ,  address , longitude , latitude ,  state} =
     req.body;
   const userEmail = email.toLowerCase();
   //check if the email exist already , by confirming if the xist email belongs to the current user
@@ -29,7 +29,7 @@ const userupdateprofileController = async (req, res, next) => {
       userEmail,
       userid,
       phone,
-      name,
+      name,   address , longitude , latitude ,  state
     };
 
     let trainee = await userUpdateprofileModel(data, res);

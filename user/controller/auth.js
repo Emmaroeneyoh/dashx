@@ -10,7 +10,7 @@ const { userfulteraccount, createvirtualaccount } = require("../../helper/flutte
 
 
 const userSignupController = async (req, res, next) => {
-  const {  email, password, phone, name , address } = req.body;
+  const {  email, password, phone, name , address , latitude , longitude  ,  state} = req.body;
   const userEmail = email.toLowerCase();
   const code = generateRandomString(5);
     try {
@@ -89,7 +89,7 @@ const userSignupController = async (req, res, next) => {
     const data = {
       userEmail,
       Harshpassword,
-      phone, name , code , address
+      phone, name , code , address , latitude , longitude ,  state
     };
 
     let trainee = await userSignupModel(data, res);

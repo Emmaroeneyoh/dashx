@@ -31,6 +31,10 @@ const userupdateprofileValidation = (req, res, next) => {
       email: joi.string().required(),
       phone: joi.string().required(),
       name: joi.string().required(),
+      address: joi.string().required(),  
+      longitude: joi.string().required(),
+      latitude: joi.string().required(), 
+      state: joi.string().required(), 
       
     });
     const { error } = schema.validate(req.body);

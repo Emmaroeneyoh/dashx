@@ -23,6 +23,7 @@ const usercreateorderValidation = (req, res, next) => {
     receiverlong: joi.string().required(),
    total_fee: joi.number().required(),
    payment_method: joi.boolean().required(),
+  default_sender: joi.boolean().required(),
     receiverlandmark: joi.string().optional().allow(''),
   });
   const { error } = schema.validate(req.body);

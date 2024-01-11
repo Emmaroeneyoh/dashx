@@ -1,5 +1,6 @@
 const { ordercodemodel } = require("../../dispatch/core/db/order_code");
 const { userorderModel } = require("../core/db/order");
+const { userModel } = require("../core/db/user");
 const { userWalletModel } = require("../core/db/wallet");
 const {
   usercreateorderModel,
@@ -7,7 +8,7 @@ const {
 } = require("../model/order");
 
 const usercreateorderController = async (req, res, next) => {
-  const {
+let {
     vehicle_type,
     sendername,
     productname,
@@ -24,9 +25,15 @@ const usercreateorderController = async (req, res, next) => {
     receiverlandmark,
     receiverlat,
     receiverlong,
-    userid,  total_fee , payment_method
+    userid,  total_fee , payment_method , default_sender
   } = req.body;
-    try {
+ 
+  try {
+    const sender = await userModel.findById(userid)
+
+    if (default_sender) {
+       sendername = sender.name
+    }
         const city = sendercity.toLowerCase();
     const data = {
       vehicle_type,

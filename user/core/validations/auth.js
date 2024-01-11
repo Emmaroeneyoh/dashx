@@ -6,9 +6,12 @@ const usersignupValidation = (req, res, next) => {
     // adminId: joi.string().required(),
     name: joi.string().required(),
     email: joi.string().required(),
-    password: joi.string().required(),
+    password: joi.string().required(),  
     phone: joi.string().required(),
     address: joi.string().required(),
+    latitude: joi.string().required(),
+    longitude: joi.string().required(),
+    state: joi.string().required(),
   });
   const { error } = schema.validate(req.body);
   if (error) {

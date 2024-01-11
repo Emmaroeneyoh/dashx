@@ -12,6 +12,15 @@ const Riderschema = new schema({
        address: {
             type:String,
         },
+       state : {
+            type:String,
+        },
+       latitude : {
+            type:String,
+        },
+       longitude : {
+            type:String,
+        },
         password:{
             type:String
         },
