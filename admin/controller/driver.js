@@ -242,13 +242,12 @@ const adminblockdriverController = async (req, res, next) => {
 const adminchatdispatchrController = async (req, res, next) => {
   try {
     const { dispatchid } = req.body;
-    const data = { dispatchid };
     const chat = await dispatchsupportModel.find({dispatchid});
     return res.status(200).json({
       status_code: 200,
       status: true,
       message: "dispatch is blocked",
-      chat,
+        data: chat,
     });
   } catch (error) {
     console.log(error);
