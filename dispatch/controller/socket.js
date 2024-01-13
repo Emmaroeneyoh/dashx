@@ -7,7 +7,7 @@ const updatedispatchcord = (io) => {
     io.on('connection', (socket) => {
         console.log('socket id', socket.id)
 
-        try {
+   
             
         //coonect after logged in or signup
         socket.on('updatecordinate', async (data) => {
@@ -33,8 +33,12 @@ const updatedispatchcord = (io) => {
         const city = data.city
         const dispatchid= data.dispatchid
         const sendercity = city.toLowerCase();
-        let order = await userorderModel.find({ order_taken: false, sendercity });
+        try {
+            let order = await userorderModel.find({ order_taken: false, sendercity });
         io.to(dispatchid).emit('receieve_pending_order', order)
+        } catch (error) {
+            console.log('error' , error)
+        }
       })
         
       //for my order
@@ -47,7 +51,8 @@ const updatedispatchcord = (io) => {
         
           //for pending order
       socket.on('request_city', async (data) => {
-        const dispatchid= data.dispatchid
+        try {
+            const dispatchid= data.dispatchid
         let city = await userorderModel
         .find({ order_taken: false })
         .select("sendercity");
@@ -68,11 +73,11 @@ const updatedispatchcord = (io) => {
       // Convert the object to an array
       const citiesArray = Object.values(citiesWithOrders);
         io.emit('receieve_city', citiesArray)
+        } catch (error) {
+            console.log('error' , error) 
+        }
       })
     
-        } catch (error) {
-            console.error('Socket error:', error);
-        }
    
     })
 }
