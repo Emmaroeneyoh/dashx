@@ -65,7 +65,7 @@ const updatedispatchcord = (io) => {
   
       // Convert the object to an array
       const citiesArray = Object.values(citiesWithOrders);
-        io.emit('receieve_city', order)
+        io.emit('receieve_city', citiesArray)
       })
     })
 }
