@@ -6,7 +6,9 @@ const { dispatchModel } = require("../core/db/dispatch")
 const updatedispatchcord = (io) => {
     io.on('connection', (socket) => {
         console.log('socket id', socket.id)
-        
+
+        try {
+            
         //coonect after logged in or signup
         socket.on('updatecordinate', async (data) => {
             const userid = data.dispatchid
@@ -67,6 +69,11 @@ const updatedispatchcord = (io) => {
       const citiesArray = Object.values(citiesWithOrders);
         io.emit('receieve_city', citiesArray)
       })
+    
+        } catch (error) {
+            console.error('Socket error:', error);
+        }
+   
     })
 }
 
