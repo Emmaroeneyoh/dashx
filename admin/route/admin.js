@@ -1,4 +1,4 @@
-const { adminupdatesubadminprofileController, adminupdateprofileController, adminupdatepasswordController } = require("../controller/admin");
+const { adminupdatesubadminprofileController, adminupdateprofileController, adminupdatepasswordController, adminretrieveprofileController } = require("../controller/admin");
 const { admindashbaordController } = require("../controller/dashboard");
 const { admin_check_token, checkAdminRoles } = require("../core/authorization");
 const { adminupdatesubadminprofilValidation, adminupdateprofilValidation, adminupdatepasswordValidation } = require("../core/validation/admin");
@@ -18,6 +18,12 @@ router.post(
     adminupdateprofilValidation,
   admin_check_token,
   adminupdateprofileController
+);
+router.post(
+    "/profile",
+    adminValidation,
+  admin_check_token,
+  adminretrieveprofileController
 );
 router.post(
     "/update/password",

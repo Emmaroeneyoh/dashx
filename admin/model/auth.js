@@ -8,13 +8,14 @@ const adminLoginModel = async (data,res) => {
     const { userEmail, } = data
     const userDetails = await adminModel.findOne({ email: userEmail });
     const roles = userDetails.roles
+    console.log('roles' , roles)
     const adminrole = await  adminroleModel.find({ _id: { $in: roles } })
      const token = create_admin_token(userDetails._id)
      const userData = {
          id: userDetails._id,
          name: userDetails.name,
          email: userDetails.email,
-         token, adminrole 
+         token, roles
       }
    
      return userData

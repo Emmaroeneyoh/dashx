@@ -1,5 +1,6 @@
 const bcrypt = require("bcrypt");
 const { adminModel } = require("../core/db/admin");
+const { adminroleModel } = require("../core/db/role");
 const { handleError } = require("../core/utils");
 const { adminupdatesubadminprofileModel, adminupdateprofileModel, adminUpdatepasswordModel } = require("../model/admin");
 
@@ -68,6 +69,27 @@ const userretrieveprofileController = async (req, res, next) => {
     handleError(error.message)(res);
   }
 };
+const adminretrieveprofileController = async (req, res, next) => {
+  const { adminid } = req.body;
+  try {
+    console.log('touch')
+    const admin = await adminModel.findById(adminid);
+    const roles = admin.roles
+    const adminrole = await  adminroleModel.find({ _id: { $in: roles } })
+     const userData = {
+     adminrole , admin
+      }
+    return res.status(200).json({
+      status_code: 200,
+      status: true,
+      message: "user successfully retrieved",
+      data: userData
+    });
+  } catch (error) {
+    console.log(error);
+    handleError(error.message)(res);
+  }
+};
 
 const adminupdatepasswordController = async (req, res, next) => {
   const { adminid, currentpassword, newpassword } = req.body;
@@ -120,5 +142,5 @@ module.exports = {
     adminupdatesubadminprofileController,
     adminupdateprofileController ,
   userretrieveprofileController,
-  adminupdatepasswordController 
+  adminupdatepasswordController  ,  adminretrieveprofileController
 };
