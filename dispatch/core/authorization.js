@@ -25,7 +25,7 @@ const dispatch_check_token = async (req, res, next) => {
           const decoded = jwt.verify(token, riderJWT)
         const dispatchid = decoded.user
         if (dispatch != dispatchid) {
-          console.og('id' , dispatchid , dispatch)
+          console.log('id' , dispatchid , dispatch)
           return res.status(400).json({
             status_code: 400,
             status: false,
