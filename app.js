@@ -107,7 +107,7 @@ const port = PORT || 5000;
 
 http.listen(port, () => console.log("coonected"));
 registeruser(io)
-updatedispatchcord(io)
+// updatedispatchcord(io)
 
 // app.listen(port, () => {
 //   console.log("server connected", port);
