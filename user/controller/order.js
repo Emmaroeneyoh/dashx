@@ -72,7 +72,7 @@ let {
     return res.status(200).json({
       status_code: 200,
       status: true,
-      message: "signup process successful",
+      message: "order successfully added",
       data: "order created",
     });
   } catch (error) {
