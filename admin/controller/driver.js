@@ -183,8 +183,11 @@ const adminretrieveactivetripController = async (req, res, next) => {
 };
 const adminretrievetripController = async (req, res, next) => {
   try {
-    const { startDate, endDate, status, name } = req.body;
+    const {  orderid ,startDate, endDate, status, name } = req.body;
     var query = { $and: [] };
+    if (orderid != "") {
+      query.$and.push({ _id: orderid });
+    }
     if (status != "") {
       query.$and.push({ order_status: status });
     }

@@ -82,7 +82,7 @@ const dispatchacceptorderModel = async (data, res) => {
         dispatchid, order_status:"accepted"
       },
     });
-
+    updatedispatchcord(io)
     return "success";
   } catch (error) {
     console.log("error", error);
