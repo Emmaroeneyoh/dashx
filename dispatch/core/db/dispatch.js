@@ -6,6 +6,9 @@ const Riderschema = new schema({
         name: {
             type:String,
     },
+        city: {
+            type: String, default :""
+    },
     online_status: {
         type: Boolean,
         default: false

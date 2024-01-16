@@ -63,6 +63,16 @@ const dispatchacceptorderController = async (req, res, next) => {
   const { orderid, dispatchid } = req.body;
   try {
     const order = await userorderModel.findById(orderid);
+    const dispatch = await dispatchModel.findById(dispatchid)
+    const ordercity = order.sendercity.toLowerCase()
+    const dispatchcity = dispatch.city.toLowerCase()
+    if (ordercity == dispatchcity) {
+      return res.status(400).json({
+        status_code: 400,
+        status: true,
+        message: "order not in current city",
+      });
+    }
     if (order.order_taken == true) {
       return res.status(400).json({
         status_code: 400,

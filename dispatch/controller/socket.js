@@ -14,10 +14,12 @@ const updatedispatchcord = (io) => {
             const userid = data.dispatchid
             const latitude =  data.latitude           
             const longitude = data.longitude   
+          const city = data.city 
+          const dispatchcity = city.toLowerCase()
             await dispatchModel.findByIdAndUpdate(userid, {
                 $set: {
                'cordinate.latitude':latitude,
-               'cordinate.longitude':longitude,
+               'cordinate.longitude':longitude, city : dispatchcity
                 },
               });
         })
