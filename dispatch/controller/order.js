@@ -167,8 +167,16 @@ const dispatchcancelorderController = async (req, res, next) => {
   }
 };
 const dispatchstartdispatchController = async (req, res, next) => {
-  const { orderid } = req.body;
+  const { orderid , dispatchid} = req.body;
   try {
+    const checkorder = await userorderModel.find({ dispatchid, order_status: 'shipping' })
+    if (checkorder) {
+      return res.status(400).json({
+        status_code: 400,
+        status: true,
+        message: "can't run two dispatch simultaneously",
+      });
+ }
     const data = {
       orderid,
     };

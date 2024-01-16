@@ -6,6 +6,7 @@ const { orderuploadmodel } = require("../core/db/order_upload");
 const axios = require("axios");
 const { userorderModel } = require("../../user/core/db/order");
 const { dispatchWalletModel } = require("../core/db/wallet");
+const { captureOrderTime } = require("../../helper/order_time/time_check");
 
 const dashxcreateorderModel = async (data, res) => {
   try {
@@ -70,6 +71,7 @@ const dispatchacceptorderModel = async (data, res) => {
     //check if the order is pay on delivery
     const order = await userorderModel.findById(orderid)
     const payment_method = order.payment_method  
+    const orderacceptedtime = captureOrderTime()
     if (!payment_method) {
       await dispatchWalletModel.findOneAndUpdate(
         { dispatchid},
@@ -79,10 +81,10 @@ const dispatchacceptorderModel = async (data, res) => {
     await userorderModel.findByIdAndUpdate(orderid, {
       $set: {
         order_taken: true,
-        dispatchid, order_status:"accepted"
+        dispatchid, order_status:"accepted" , order_accepted_time : orderacceptedtime 
       },
     });
-    updatedispatchcord(io)
+    
     return "success";
   } catch (error) {
     console.log("error", error);

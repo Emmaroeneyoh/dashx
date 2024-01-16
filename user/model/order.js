@@ -1,5 +1,6 @@
 const { pricingModel } = require("../../admin/core/db/pricing");
 const { ordercodemodel } = require("../../dispatch/core/db/order_code");
+const { dispatchWalletModel } = require("../../dispatch/core/db/wallet");
 const { userorderModel } = require("../core/db/order");
 const { userModel } = require("../core/db/user");
 const { userWalletModel } = require("../core/db/wallet");
@@ -91,6 +92,36 @@ const userretrievesingleorderModel = async (data, res) => {
       // handleError(error.message)(res)
     }
 };
+
+const usercancelorderModel = async (data, res) => {
+  try {
+    const { orderid  , userid} = data;
+    const order = await userorderModel.findById(orderid)
+    const amount = order.total_fee
+    const payment_method = order.payment_method
+    const dispatchid = order.dispatchid
+    const commission_fee = order.commission_fee
+//update the order
+    await userorderModel.findByIdAndDelete(orderid);
+
+    //refund back the user wallet 
+    if (payment_method) {
+      await userWalletModel.findOneAndUpdate({userid}  ,
+        { $inc: { balance: amount } }
+      );
+    } else {
+      await dispatchWalletModel.findOneAndUpdate(
+        { dispatchid},
+        { $inc: { debt:  -commission_fee } }
+      );
+    }
+
+    return "success";
+  } catch (error) {
+    console.log("error", error);
+    return error.message;
+  }
+};
 module.exports = {
-    usercreateorderModel , userretrievesingleorderModel
+    usercreateorderModel , userretrievesingleorderModel  , usercancelorderModel
 }

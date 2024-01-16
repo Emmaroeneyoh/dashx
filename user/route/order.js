@@ -3,6 +3,7 @@ const {
   usercreateorderController,
   userretrievesingleorderController,
   userretrieveallorderController,
+  usercancelorderController,
 } = require("../controller/order");
 const { user_check_token } = require("../core/authorization");
 const { userValidation } = require("../core/validations/auth");
@@ -26,15 +27,18 @@ router.post(
   userretrievesingleorderController
 );
 router.post(
+  "/cancel/order",
+  userretrievesingleorderValidation,
+  user_check_token,
+  usercancelorderController
+);
+router.post(
   "/retrieve/all/order",
   userValidation,
   user_check_token,
   userretrieveallorderController
 );
 
-router.post(
-    "/retrieve/price",
-    retrievepricingController
-);
+router.post("/retrieve/price", retrievepricingController);
 
 module.exports = router;

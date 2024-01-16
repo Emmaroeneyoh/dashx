@@ -5,6 +5,7 @@ const { userWalletModel } = require("../core/db/wallet");
 const {
   usercreateorderModel,
   userretrievesingleorderModel,
+  usercancelorderModel,
 } = require("../model/order");
 
 const usercreateorderController = async (req, res, next) => {
@@ -30,7 +31,6 @@ let {
  
   try {
     const sender = await userModel.findById(userid)
-
     if (default_sender) {
        sendername = sender.name
     }
@@ -98,6 +98,34 @@ const userretrievesingleorderController = async (req, res, next) => {
     return handleError(error.message)(res);
   }
 };
+const usercancelorderController = async (req, res, next) => {
+  const { orderid , userid } = req.body;
+  try {
+    const order = await userorderModel.findById(orderid)
+    console.log(order.order_status)
+    if (order.order_status == 'shipping' || order.order_status == 'pickup' || order.order_status == 'delivered') {
+       console.log('its is truthy')
+      return res.status(400).json({
+        status_code: 400,
+        status: true,
+        message: "order has been picked up",
+      });
+    }
+    const data = {
+      orderid, userid
+    };
+    let trainee = await usercancelorderModel(data, res);
+    return res.status(200).json({
+      status_code: 200,
+      status: true,
+      message: "signup process successful",
+      data: trainee,
+    });
+  } catch (error) {
+    console.log(error);
+    return handleError(error.message)(res);
+  }
+};
 const userretrieveallorderController = async (req, res, next) => {
   const { userid } = req.body;
   try {
@@ -117,5 +145,5 @@ const userretrieveallorderController = async (req, res, next) => {
 module.exports = {
   usercreateorderController,
   userretrievesingleorderController,
-  userretrieveallorderController,
+  userretrieveallorderController, usercancelorderController
 };

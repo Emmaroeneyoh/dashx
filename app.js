@@ -41,6 +41,7 @@ const adminuser = require('./admin/route/user');
 const admindispatch = require('./admin/route/dispatch');
 const { registeruser } = require("./user/controller/socket");
 const { updatedispatchcord } = require("./dispatch/controller/socket");
+const { checkforoverscheduledorder } = require("./helper/order_time/cron");
 
 //connecting the database
 coonectdb();
@@ -73,7 +74,8 @@ app.use(admin, adminhr)
 app.use(admin, adminuser)
 app.use(admin, admindispatch)
 
-
+//for cron jobs 
+checkforoverscheduledorder()
 
 
 //for admin

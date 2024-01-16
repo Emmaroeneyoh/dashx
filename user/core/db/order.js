@@ -78,6 +78,9 @@ const Wallet_schema = new schema({
     order_status: {
         type:String,   default :"pending"
 },
+    order_accepted_time: {
+        type:String,   default :""
+},
         order_taken: {
             type:Boolean, default : false
         },
