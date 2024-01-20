@@ -66,7 +66,16 @@ const dispatchacceptorderController = async (req, res, next) => {
     const dispatch = await dispatchModel.findById(dispatchid)
     const ordercity = order.sendercity.toLowerCase()
     const dispatchcity = dispatch.city.toLowerCase()
-    console.log('ordercity' , ordercity , 'dispatchcity' , dispatchcity )
+    console.log('ordercity', ordercity, 'dispatchcity', dispatchcity)
+    //check if dispatch is verified
+    const verifydispatch = dispatch.dispatch_approved
+    if (!verifydispatch) {
+      return res.status(400).json({
+        status_code: 400,
+        status: true,
+        message: "account not approved",
+      });
+    }
     if (ordercity != dispatchcity) {
       return res.status(400).json({
         status_code: 400,

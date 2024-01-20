@@ -36,7 +36,9 @@ const updatedispatchcord = (io) => {
         const dispatchid= data.dispatchid
         const sendercity = city.toLowerCase();
         try {
-            let order = await userorderModel.find({ order_taken: false, sendercity });
+          const dispatch = await dispatchModel.findById(dispatchid)
+          const vehicle = dispatch.vehicle.vehicle_type
+            let order = await userorderModel.find({ order_taken: false, sendercity  , vehicle_type:vehicle});
         io.to(dispatchid).emit('receieve_pending_order', order)
         } catch (error) {
             console.log('error' , error)
