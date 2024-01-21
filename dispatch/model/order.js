@@ -67,7 +67,7 @@ const dispatchaddordereventModel = async (data, res) => {
 };
 const dispatchacceptorderModel = async (data, res) => {
   try {
-    const { orderid, dispatchid, totalkm } = data;
+    const { orderid, dispatchid } = data;
     //check if the order is pay on delivery
     const order = await userorderModel.findById(orderid);
     const payment_method = order.payment_method;
@@ -83,7 +83,7 @@ const dispatchacceptorderModel = async (data, res) => {
         order_taken: true,
         dispatchid,
         order_status: "accepted",
-        order_accepted_time: orderacceptedtime, totalkm
+        order_accepted_time: orderacceptedtime
       },
     });
 
@@ -165,12 +165,12 @@ const dispatchpickuporderModel = async (data, res) => {
 };
 const dispatchstartdispatchModel = async (data, res) => {
   try {
-    const { orderid } = data;
+    const { orderid , totalkm } = data;
 
     //update the order status to shipping
     await userorderModel.findByIdAndUpdate(orderid, {
       $set: {
-        order_status: "shipping",
+        order_status: "shipping", totalkm
       },
     });
 

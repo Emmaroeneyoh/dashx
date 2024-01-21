@@ -60,7 +60,7 @@ const dashxcreateorderController = async (req, res, next) => {
 };
 
 const dispatchacceptorderController = async (req, res, next) => {
-  const { orderid, dispatchid , totalkm} = req.body;
+  const { orderid, dispatchid } = req.body;
   try {
     const order = await userorderModel.findById(orderid);
     const dispatch = await dispatchModel.findById(dispatchid)
@@ -92,7 +92,7 @@ const dispatchacceptorderController = async (req, res, next) => {
     }
     const data = {
       orderid,
-      dispatchid, totalkm
+      dispatchid
     };
 
     let trainee = await dispatchacceptorderModel(data, res);
@@ -187,7 +187,7 @@ const dispatchcancelorderController = async (req, res, next) => {
   }
 };
 const dispatchstartdispatchController = async (req, res, next) => {
-  const { orderid , dispatchid} = req.body;
+  const { orderid , dispatchid , totalkm} = req.body;
   try {
     const checkorder = await userorderModel.find({ dispatchid, order_status: 'shipping' })
     if (checkorder) {
@@ -198,7 +198,7 @@ const dispatchstartdispatchController = async (req, res, next) => {
       });
  }
     const data = {
-      orderid,
+      orderid, totalkm
     };
 
     let trainee = await dispatchstartdispatchModel(data, res);
