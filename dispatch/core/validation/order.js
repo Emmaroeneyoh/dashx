@@ -35,6 +35,7 @@ const dispatchacceptorderValidation = (req, res, next) => {
   const schema = joi.object({
     orderid: joi.string().required(),
     dispatchid: joi.string().required(),
+    totalkm: joi.number().required(),
   });
   const { error } = schema.validate(req.body);
   if (error) {

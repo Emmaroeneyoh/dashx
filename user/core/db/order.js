@@ -37,6 +37,9 @@ const Wallet_schema = new schema({
         pickuptime: {
             type:String , default :''
         },
+        totalkm: {
+            type:Number , default :0
+        },
         receivername: {
             type:String
         },

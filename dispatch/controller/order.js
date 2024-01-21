@@ -60,7 +60,7 @@ const dashxcreateorderController = async (req, res, next) => {
 };
 
 const dispatchacceptorderController = async (req, res, next) => {
-  const { orderid, dispatchid } = req.body;
+  const { orderid, dispatchid , totalkm} = req.body;
   try {
     const order = await userorderModel.findById(orderid);
     const dispatch = await dispatchModel.findById(dispatchid)
@@ -92,7 +92,7 @@ const dispatchacceptorderController = async (req, res, next) => {
     }
     const data = {
       orderid,
-      dispatchid,
+      dispatchid, totalkm
     };
 
     let trainee = await dispatchacceptorderModel(data, res);
@@ -189,14 +189,14 @@ const dispatchcancelorderController = async (req, res, next) => {
 const dispatchstartdispatchController = async (req, res, next) => {
   const { orderid , dispatchid} = req.body;
   try {
-//     const checkorder = await userorderModel.find({ dispatchid, order_status: 'shipping' })
-//     if (checkorder) {
-//       return res.status(400).json({
-//         status_code: 400,
-//         status: true,
-//         message: "can't run two dispatch simultaneously",
-//       });
-//  }
+    const checkorder = await userorderModel.find({ dispatchid, order_status: 'shipping' })
+    if (checkorder) {
+      return res.status(400).json({
+        status_code: 400,
+        status: true,
+        message: "can't run two dispatch simultaneously",
+      });
+ }
     const data = {
       orderid,
     };
