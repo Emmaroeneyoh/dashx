@@ -190,7 +190,8 @@ const dispatchstartdispatchController = async (req, res, next) => {
   const { orderid , dispatchid , totalkm} = req.body;
   try {
     const checkorder = await userorderModel.find({ dispatchid, order_status: 'shipping' })
-    if (checkorder) {
+    console.log('check pending' , checkorder)
+    if (checkorder.length > 0) {
       return res.status(400).json({
         status_code: 400,
         status: true,
@@ -201,12 +202,12 @@ const dispatchstartdispatchController = async (req, res, next) => {
       orderid, totalkm
     };
 
-    let trainee = await dispatchstartdispatchModel(data, res);
+    // let trainee = await dispatchstartdispatchModel(data, res);
     return res.status(200).json({
       status_code: 200,
       status: true,
       message: "signup process successful",
-      data: trainee,
+      // data: trainee,
     });
   } catch (error) {
     console.log(error);
