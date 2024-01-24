@@ -101,6 +101,7 @@ const bussinessadddispatchModel = async (data, res) => {
       password: Harshpassword,
       phone,
       name,
+      dispatch_approved : true,
       "bussiess.bussiness_type": true,
       "bussiess.bussinessid": dispatchid,
       "auth.auth_verified": true,
