@@ -166,7 +166,6 @@ const dispatchpickuporderModel = async (data, res) => {
 const dispatchstartdispatchModel = async (data, res) => {
   try {
     const { orderid , totalkm } = data;
-   console.log('start dispatcj')
     //update the order status to shipping
     await userorderModel.findByIdAndUpdate(orderid, {
       $set: {
