@@ -202,7 +202,7 @@ const dispatchstartdispatchController = async (req, res, next) => {
       orderid, totalkm
     };
 
-    // let trainee = await dispatchstartdispatchModel(data, res);
+    let trainee = await dispatchstartdispatchModel(data, res);
     return res.status(200).json({
       status_code: 200,
       status: true,
