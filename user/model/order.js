@@ -4,6 +4,7 @@ const { dispatchWalletModel } = require("../../dispatch/core/db/wallet");
 const { userorderModel } = require("../core/db/order");
 const { userModel } = require("../core/db/user");
 const { userWalletModel } = require("../core/db/wallet");
+const { generateordercode } = require("../core/utils");
 
 
 
@@ -25,7 +26,7 @@ const usercreateorderModel = async (data, res) => {
         receiverlandmark, userid , total_fee ,      senderlat,
         senderlong, 
         receiverlat,
-        receiverlong, payment_method
+        receiverlong, payment_method , trackingid
        
       } = data;
       //calculate commission and deloverfee
@@ -41,8 +42,13 @@ const usercreateorderModel = async (data, res) => {
       } else {
         order_paid  = false
       }
+      let trackid;
+      if (trackingid == 0) {
+        trackid = await generateordercode()
+      }
+      
       const form = await new userorderModel ({
-        vehicle_type, payment_method , order_paid ,  commission_fee,
+        vehicle_type, payment_method , order_paid ,  commission_fee, trackingid:trackid ,
         sendername,
         productname,
         senderphone,

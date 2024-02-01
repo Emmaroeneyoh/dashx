@@ -1,26 +1,16 @@
-// Function to capture the order time
-function captureOrderTime() {
-  return Date.now(); // Returns the current timestamp
-}
+function generateRandomNumber(length) {
+  let result = '';
+  const characters = '0123456789';
 
-// Function to check if it's been more than 12 hours since the order
-function isOrderExpired(orderTime) {
-  var currentTimestamp = Date.now();
-  var twelveHoursInMillis = 12 * 60 * 60 * 1000; // 12 hours in milliseconds
+  for (let i = 0; i < length; i++) {
+      const randomIndex = Math.floor(Math.random() * characters.length);
+      result += characters.charAt(randomIndex);
+  }
 
-  // Check if the difference between the current time and order time is greater than 12 hours
-  return currentTimestamp - orderTime > twelveHoursInMillis;
+  // Parse the result as an integer before returning
+  return parseInt(result, 10);
 }
 
 // Example usage
-var orderTime = captureOrderTime(); // Capture the order time when the user places an order
-
-// ... some time later ...
-
-var isExpired = isOrderExpired(orderTime);
-
-if (isExpired) {
-  console.log("The order is expired. Cancel the order." , isExpired);
-} else {
-  console.log("The order is still valid." , isExpired);
-}
+const randomNum = generateRandomNumber(6);
+console.log(randomNum);

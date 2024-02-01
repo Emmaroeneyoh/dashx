@@ -26,7 +26,7 @@ let {
     receiverlandmark,
     receiverlat,
     receiverlong,
-    userid,  total_fee , payment_method , default_sender
+    userid,  total_fee , payment_method , default_sender , trackingid
   } = req.body;
  
   try {
@@ -52,7 +52,7 @@ let {
       receiveraddress,
       receivercity,
       receiverlandmark,
-      userid,  total_fee , payment_method
+      userid,  total_fee , payment_method , trackingid
     };
         //check if the customer balance is enough
       if (payment_method) {

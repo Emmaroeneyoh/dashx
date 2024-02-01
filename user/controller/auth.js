@@ -1,5 +1,5 @@
 const { appPassword, userpasswordjwt } = require("../../helper/utils");
-const { handleError, generateRandomString } = require("../core/utils");
+const { handleError, generateRandomString, generateTrackingid, generateuserauthcode } = require("../core/utils");
 const bcrypt = require("bcrypt");
 const nodemailer = require("nodemailer");
 const jwt = require("jsonwebtoken");
@@ -24,7 +24,7 @@ const userSignupController = async (req, res, next) => {
     state,
   } = req.body;
   const userEmail = email.toLowerCase();
-  const code = generateRandomString(5);
+  const code = await generateuserauthcode();
   try {
     const people = await userModel.findOne({ email: userEmail });
     if (people && people.auth.auth_verified) {

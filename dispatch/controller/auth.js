@@ -1,6 +1,6 @@
 const { appPassword, riderpasswordjwt } = require("../../helper/utils");
 const { dispatchModel } = require("../core/db/dispatch");
-const { handleError, generateRandomString } = require("../core/utils");
+const { handleError, generateRandomString, generatedispatchrauthcode } = require("../core/utils");
 const bcrypt = require("bcrypt");
 const nodemailer = require("nodemailer");
 const jwt = require("jsonwebtoken");
@@ -12,7 +12,7 @@ const { dispatchWalletModel } = require("../core/db/wallet");
 const dispatchSignupController = async (req, res, next) => {
   const {  email, password, phone, name , personel_account } = req.body;
   const dispatchEmail = email.toLowerCase();
-  const code = generateRandomString(5);
+  const code = await generatedispatchrauthcode()
   try {
     const dispatch = await dispatchModel.findOne({ email: dispatchEmail });
     if (dispatch && dispatch.auth.auth_verified) {

@@ -10,6 +10,9 @@ const Wallet_schema = new schema({
         sendername: {
             type:String
         },
+        trackingid: {
+            type:Number
+        },
         productname: {
             type:String
         },
@@ -93,6 +96,9 @@ const Wallet_schema = new schema({
         userid: {
             type:  mongoose.Schema.Types.ObjectId,
             ref:'user'
+    },
+   from_altinsmart: {
+        type:Boolean, default : false
     },
     dispatchid: {
         type:  mongoose.Schema.Types.ObjectId,

@@ -22,6 +22,7 @@ const usercreateorderValidation = (req, res, next) => {
     receiverlat: joi.string().required(),
     receiverlong: joi.string().required(),
    total_fee: joi.number().required(),
+   trackingid: joi.number().required(),
    payment_method: joi.boolean().required(),
     receiverlandmark: joi.string().optional().allow(''),
   });
