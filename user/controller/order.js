@@ -55,6 +55,7 @@ let {
       userid,  total_fee , payment_method , trackingid
     };
         //check if the customer balance is enough
+    if (trackingid == 0) {
       if (payment_method) {
         const wallet = await userWalletModel.findOne({ userid })
     
@@ -67,6 +68,8 @@ let {
             });
           }
       }
+    }
+      
    
     let trainee = await usercreateorderModel(data, res);
     return res.status(200).json({

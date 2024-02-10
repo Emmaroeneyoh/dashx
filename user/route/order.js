@@ -21,6 +21,11 @@ router.post(
   usercreateorderController
 );
 router.post(
+  "/altinsmart/add/order",
+  usercreateorderValidation,
+  usercreateorderController
+);
+router.post(
   "/retrieve/single/order",
   userretrievesingleorderValidation,
   user_check_token,

@@ -70,6 +70,7 @@ const dispatchacceptorderModel = async (data, res) => {
     const { orderid, dispatchid } = data;
     //check if the order is pay on delivery
     const order = await userorderModel.findById(orderid);
+    const from_altinsmart = order.from_altinsmart;
     const payment_method = order.payment_method;
     const orderacceptedtime = captureOrderTime();
     if (!payment_method) {
@@ -83,10 +84,27 @@ const dispatchacceptorderModel = async (data, res) => {
         order_taken: true,
         dispatchid,
         order_status: "accepted",
-        order_accepted_time: orderacceptedtime
+        order_accepted_time: orderacceptedtime,
       },
     });
 
+    //check if the order is from altinsmart and update it
+    if (from_altinsmart) {
+      const requestData = {
+        trackingid: order.trackingid.toString(),
+        status: "accepted",
+      };
+      const apiUrl = "http://localhost:3000/customer/dashx/order/status";
+      const response = await axios.post(apiUrl, requestData, {
+        headers: {
+          "Content-Type": "application/json", // Adjust content type based on your API requirements
+        },
+      });
+
+      if (!response.data.status) {
+        return "failed";
+      }
+    }
     return "success";
   } catch (error) {
     console.log("error", error);
@@ -141,21 +159,25 @@ const dispatchpickuporderModel = async (data, res) => {
       },
     });
 
-    // //update seller status on altinsmart
-    // const order = await dispatchordermodel.findById(orderid);
-    // const requestData = {
-    //   orderid: order.altid,
-    //   status:'shipping'
-    // };
-    // const apiUrl = "http://localhost:3000/seller/change/order/status";
-    // const bearerToken = "iamtryingybest";
-    // const response = await axios.post(apiUrl, requestData, {
-    //   headers: {
-    //     // 'Authorization': `Bearer ${bearerToken}`,
-    //     "Content-Type": "application/json", // Adjust content type based on your API requirements
-    //   },
-    // });
-    // console.log("data", response.data);
+    //check if the order is from altinsmart and update it
+    const order = await userorderModel.findById(orderid);
+    const from_altinsmart = order.from_altinsmart;
+    if (from_altinsmart) {
+      const requestData = {
+        trackingid: order.trackingid.toString(),
+        status: "pickup",
+      };
+      const apiUrl = "http://localhost:3000/customer/dashx/order/status";
+      const response = await axios.post(apiUrl, requestData, {
+        headers: {
+          "Content-Type": "application/json", // Adjust content type based on your API requirements
+        },
+      });
+
+      if (!response.data.status) {
+        return "failed";
+      }
+    }
 
     return "success";
   } catch (error) {
@@ -165,29 +187,34 @@ const dispatchpickuporderModel = async (data, res) => {
 };
 const dispatchstartdispatchModel = async (data, res) => {
   try {
-    const { orderid , totalkm } = data;
+    const { orderid, totalkm } = data;
     //update the order status to shipping
     await userorderModel.findByIdAndUpdate(orderid, {
       $set: {
-        order_status: "shipping", totalkm
+        order_status: "shipping",
+        totalkm,
       },
     });
 
-    // //update seller status on altinsmart
-    // const order = await dispatchordermodel.findById(orderid);
-    // const requestData = {
-    //   orderid: order.altid,
-    //   status:'shipping'
-    // };
-    // const apiUrl = "http://localhost:3000/seller/change/order/status";
-    // const bearerToken = "iamtryingybest";
-    // const response = await axios.post(apiUrl, requestData, {
-    //   headers: {
-    //     // 'Authorization': `Bearer ${bearerToken}`,
-    //     "Content-Type": "application/json", // Adjust content type based on your API requirements
-    //   },
-    // });
-    // console.log("data", response.data);
+    //check if the order is from altinsmart and update it
+    const order = await userorderModel.findById(orderid);
+    const from_altinsmart = order.from_altinsmart;
+    if (from_altinsmart) {
+      const requestData = {
+        trackingid: order.trackingid.toString(),
+        status: "shipping",
+      };
+      const apiUrl = "http://localhost:3000/customer/dashx/order/status";
+      const response = await axios.post(apiUrl, requestData, {
+        headers: {
+          "Content-Type": "application/json", // Adjust content type based on your API requirements
+        },
+      });
+
+      if (!response.data.status) {
+        return "failed";
+      }
+    }
 
     return "success";
   } catch (error) {
@@ -246,6 +273,26 @@ const dispatchdeliverorderModel = async (data, res) => {
         { $inc: { balance: order.delivery_fee } }
       );
     }
+
+    //check if the order is from altinsmart and update it
+    const from_altinsmart = order.from_altinsmart;
+    if (from_altinsmart) {
+      const requestData = {
+        trackingid: order.trackingid.toString(),
+        status: "delivered",
+      };
+      const apiUrl = "http://localhost:3000/customer/dashx/order/status";
+      const response = await axios.post(apiUrl, requestData, {
+        headers: {
+          "Content-Type": "application/json", // Adjust content type based on your API requirements
+        },
+      });
+
+      if (!response.data.status) {
+        return "failed";
+      }
+    }
+
     return "success";
   } catch (error) {
     console.log("error", error);
@@ -264,15 +311,15 @@ const dispatchcancelorderModel = async (data, res) => {
         order_status: "pending",
       },
     });
-    //update the order code
-    await ordercodemodel.findOneAndUpdate(
-      { orderid },
-      {
-        $set: {
-          code_used: true,
-        },
-      }
-    );
+    // //update the order code
+    // await ordercodemodel.findOneAndUpdate(
+    //   { orderid },
+    //   {
+    //     $set: {
+    //       code_used: true,
+    //     },
+    //   }
+    // );
 
     //update the balance of dispatcher
     const order = await userorderModel.findById(orderid);
@@ -291,6 +338,25 @@ const dispatchcancelorderModel = async (data, res) => {
           },
         }
       );
+    }
+
+    //check if the order is from altinsmart and update it
+    const from_altinsmart = order.from_altinsmart;
+    if (from_altinsmart) {
+      const requestData = {
+        trackingid: order.trackingid.toString(),
+        status: "pending",
+      };
+      const apiUrl = "http://localhost:3000/customer/dashx/order/status";
+      const response = await axios.post(apiUrl, requestData, {
+        headers: {
+          "Content-Type": "application/json", // Adjust content type based on your API requirements
+        },
+      });
+
+      if (!response.data.status) {
+        return "failed";
+      }
     }
     return "success";
   } catch (error) {

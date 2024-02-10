@@ -43,10 +43,29 @@ const usercreateorderModel = async (data, res) => {
         order_paid  = false
       }
       let trackid;
-      if (trackingid == 0) {
-        trackid = await generateordercode()
+      if (trackingid != 0) {
+
+        const form = await new userorderModel ({
+          vehicle_type, payment_method , order_paid ,  commission_fee, trackingid,
+          sendername,
+          productname,
+          senderphone,
+          senderaddress,
+          sendercity : city,
+          senderlandmark,
+          receivername,
+          receiverphone,
+          receiveraddress,
+          receivercity,
+            receiverlandmark, delivery_fee, userid, total_fee, from_altinsmart :true ,
+            sendercordinate : {  senderlat,
+              senderlong, } ,  receivercordinate: {    receiverlat,
+                  receiverlong, }
+        });
+        const userDetails = await form.save()
+        return userDetails;
       }
-      
+      trackid = await generateordercode()
       const form = await new userorderModel ({
         vehicle_type, payment_method , order_paid ,  commission_fee, trackingid:trackid ,
         sendername,
