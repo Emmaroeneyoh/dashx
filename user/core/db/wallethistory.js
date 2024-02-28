@@ -13,7 +13,12 @@ const Wallet_schema = new schema({
         trx_type: {
             type:String, 
         },
-     
+        transref: {
+            type:String, default : ''
+        },
+        paystackid: {
+            type:String, default : ''
+        },
         userid: {
             type:  mongoose.Schema.Types.ObjectId,
             ref:'user'
